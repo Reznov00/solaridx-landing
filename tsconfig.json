@@ -1,3 +1,85 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es2015",
+    "lib": [
+      "es6",
+      "dom",
+      "es2015",
+      "es2016",
+      "esnext"
+    ],
+    "allowJs": true,
+    "jsx": "react",
+    "sourceMap": true,
+    "noEmit": true,
+    // "importHelpers": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": [
+        "./src/*"
+      ],
+      "assets/*": [
+        "./src/assets/*"
+      ],
+      "components/*": [
+        "./src/components/*"
+      ],
+      "enums/*": [
+        "./src/enums/*"
+      ],
+      "navigation/*": [
+        "./src/navigation/*"
+      ],
+      "screens/*": [
+        "./src/screens/*"
+      ],
+      "themes/*": [
+        "src/themes/*"
+      ],
+      "utilities/*": [
+        "./src/utilities/*"
+      ],
+      "constants/*": [
+        "./src/constants/*"
+      ],
+      "store/*": [
+        "./src/store/*"
+      ],
+      "services/*": [
+        "./src/services/*"
+      ],
+    },
+    "types": [
+      "jest"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "pretty": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "exclude": [
+    ".coverage",
+    ".vscode",
+    "android",
+    "build",
+    "ios",
+    "jest",
+    "native-assets",
+    "node_modules",
+    "index.js"
+  ]
 }

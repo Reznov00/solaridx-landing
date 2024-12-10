@@ -1,0 +1,25 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/FunnelDisplay-Bold.ttf",
+      "sha1": "42c18c96a7e49e8d2b7ceca60a437254d53eb146"
+    },
+    {
+      "path": "src/assets/fonts/FunnelDisplay-Light.ttf",
+      "sha1": "6b045bbefa93bea0a1cc9c54c34019ea68bdf033"
+    },
+    {
+      "path": "src/assets/fonts/FunnelDisplay-Medium.ttf",
+      "sha1": "0e9e51db064726bf27d8ad1d334452becf6d33b0"
+    },
+    {
+      "path": "src/assets/fonts/FunnelDisplay-Regular.ttf",
+      "sha1": "66f58da1dd40c4a6261c2ab961bf92f5dbc96fa0"
+    },
+    {
+      "path": "src/assets/fonts/FunnelDisplay-SemiBold.ttf",
+      "sha1": "600d11a32d11a4e3e1d37cd45edeae1a71343695"
+    }
+  ]
+}
