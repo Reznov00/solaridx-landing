@@ -12,7 +12,7 @@ type TextProp = TextProps & {
 
 const TextBase = ({
   fontSize = 'sh1',
-  color = 'fontPrimary',
+  color = 'gray_900',
   shrinkText = false,
   ...props
 }: TextProp) => {

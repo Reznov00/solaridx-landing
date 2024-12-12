@@ -10,7 +10,7 @@ import { BackArrowIcon, CloseIcon } from 'src/assets';
 import { Colors } from 'src/themes';
 import { NavigationService } from 'src/utilities';
 import { TextRegular } from './Text';
-import { Touchable } from './Touchable';
+import { Touchable } from './Buttons';
 
 type HeaderBarI = {
   title: string;
@@ -38,17 +38,16 @@ const HeaderBar = (props: HeaderBarI) => {
       <View style={[styles.container, containerStyle]}>
         {showBackButton && (
           <Touchable
-            contentContainerStyle={[
+            style={[
               styles.backButtonContainer,
               { marginRight: widthPercentageToDP(3) },
             ]}
-            ripple
             disabled={disabled}
-            onTap={() => {
+            onPress={() => {
               NavigationService.goBack();
               onBackPressAction && onBackPressAction();
             }}>
-            <BackArrowIcon size={2.5} color={Colors.designPrimary} />
+            <BackArrowIcon size={2.5} color={Colors.primary_600} />
           </Touchable>
         )}
         {title && (
@@ -60,13 +59,13 @@ const HeaderBar = (props: HeaderBarI) => {
         )}
         {rightButton && (
           <Touchable
-            contentContainerStyle={styles.backButtonContainer}
-            ripple
+            style={styles.backButtonContainer}
+
             disabled={disabled}
-            onTap={() => {
+            onPress={() => {
               rightButtonAction && rightButtonAction();
             }}>
-            <CloseIcon size={2.5} color={Colors.designPrimary} />
+            <CloseIcon size={2.5} color={Colors.primary_600} />
           </Touchable>
         )}
       </View>

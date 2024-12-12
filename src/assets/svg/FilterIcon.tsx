@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-import Svg, {Path, SvgProps} from 'react-native-svg';
-import {Colors} from 'src/themes';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import Svg, { Path, SvgProps } from 'react-native-svg';
+import { Colors } from 'src/themes';
 
 interface SVGPropsII extends SvgProps {
   size?: number;
 }
-const FilterIcon = ({size = 5, ...props}: SVGPropsII) => (
+const FilterIcon = ({ size = 5, ...props }: SVGPropsII) => (
   <Svg
     onPress={props.onPress}
     width={heightPercentageToDP(size)}
@@ -15,7 +15,7 @@ const FilterIcon = ({size = 5, ...props}: SVGPropsII) => (
     {...props}
     viewBox="0.7 0.5 23 23">
     <Path
-      stroke={props.color ?? Colors.designPrimary}
+      stroke={props.color ?? Colors.primary_600}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit={10}
@@ -24,4 +24,4 @@ const FilterIcon = ({size = 5, ...props}: SVGPropsII) => (
     />
   </Svg>
 );
-export {FilterIcon};
+export { FilterIcon };

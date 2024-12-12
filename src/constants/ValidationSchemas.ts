@@ -17,10 +17,10 @@ export const signupValidationSchema = Yup.object().shape({
     )
     .min(8)
     .label('Password'),
-  confirmPassword: Yup.string()
-    .required(`Confirm password is required`)
-    .equals([Yup.ref('password'), null], `Passwords don't match`)
-    .label('confirmPassword'),
+  // confirmPassword: Yup.string()
+  //   .required(`Confirm password is required`)
+  //   .equals([Yup.ref('password'), null], `Passwords don't match`)
+  //   .label('confirmPassword'),
 });
 
 export const signInValidationSchema = Yup.object().shape({

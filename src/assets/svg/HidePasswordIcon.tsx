@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-import Svg, {SvgProps, Path} from 'react-native-svg';
-import {Colors} from 'src/themes';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import Svg, { SvgProps, Path } from 'react-native-svg';
+import { Colors } from 'src/themes';
 
 interface SVGPropsII extends SvgProps {
   size?: number;
 }
-const HidePasswordIcon = ({size = 5, ...props}: SVGPropsII) => (
+const HidePasswordIcon = ({ size = 5, ...props }: SVGPropsII) => (
   <Svg
     {...props}
     width={heightPercentageToDP(size)}
@@ -14,7 +14,7 @@ const HidePasswordIcon = ({size = 5, ...props}: SVGPropsII) => (
     viewBox="0 0 23 20"
     fill="none">
     <Path
-      stroke={props.color ? props.color : Colors.designPrimary}
+      stroke={props.color ? props.color : Colors.gray_800}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
@@ -22,4 +22,4 @@ const HidePasswordIcon = ({size = 5, ...props}: SVGPropsII) => (
     />
   </Svg>
 );
-export {HidePasswordIcon};
+export { HidePasswordIcon };

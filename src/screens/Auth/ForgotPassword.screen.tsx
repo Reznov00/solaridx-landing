@@ -7,7 +7,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, LogoIcon } from 'src/assets';
+import { BackArrowIcon, MessageIcon } from 'src/assets';
 import {
   FullScreenView,
   PrimaryButton,
@@ -38,27 +38,26 @@ const ForgotPasswordScreen = () => {
     <FullScreenView>
       <View style={styles.container}>
         <Touchable
-          contentContainerStyle={styles.backButtonContainer}
-          ripple
-          disabled={isPending}
-          onTap={() => NavigationService.goBack()}>
-          <BackArrowIcon size={2.5} color={Colors.designPrimary} />
+          // disabled={isPending}
+          style={styles.backButtonContainer}
+          onPress={() => NavigationService.goBack()}>
+          <BackArrowIcon size={2.5} color={Colors.gray_600} />
         </Touchable>
         <View style={styles.mainBodyContainer}>
           <View style={styles.logoContainer}>
-            <LogoIcon size={5} />
-            <TextRegular fontSize="h2">Forgot Password</TextRegular>
+            <MessageIcon size={10} />
+            <TextBold color='primary_600' fontSize="h2">Forget Password</TextBold>
           </View>
-          <View style={styles.formContainer}>
-            <View>
-              <TextRegular style={styles.textStyle}>
-                We will send you a{' '}
-                <TextBold style={styles.spanTextStyle}>
-                  One Time Passcode
-                </TextBold>{' '}
-                via this email address
-              </TextRegular>
-            </View>
+          <View>
+            <TextRegular style={styles.textStyle}>
+              We will send you a{' '}
+              <TextBold style={styles.spanTextStyle}>
+                One Time Passcode
+              </TextBold>{' '}
+              via this email address
+            </TextRegular>
+          </View>
+          <View >
             <TextInput
               control={control}
               name="userEmail"
@@ -101,12 +100,14 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
+    gap: heightPercentageToDP(2)
+
   },
   formContainer: {
     marginTop: heightPercentageToDP(3),
   },
   signUpButtonContainer: {
-    backgroundColor: Colors.designPrimary,
+    backgroundColor: Colors.primary_600,
     alignSelf: 'center',
     marginVertical: heightPercentageToDP(3),
     alignItems: 'center',
@@ -120,15 +121,15 @@ const styles = StyleSheet.create({
     width: widthPercentageToDP(80),
   },
   textStyle: {
-    fontSize: RFValue(14),
-    color: Colors.fontPrimary,
+    fontSize: RFValue(12),
+    color: Colors.gray_700,
     lineHeight: heightPercentageToDP(2.5),
-    marginBottom: heightPercentageToDP(2),
+    marginVertical: heightPercentageToDP(2),
     textAlign: 'center',
   },
   spanTextStyle: {
-    fontSize: RFValue(14),
-    color: Colors.designPrimary,
+    fontSize: RFValue(12),
+    color: Colors.gray_700,
     lineHeight: heightPercentageToDP(2.5),
     marginBottom: heightPercentageToDP(2),
     textAlign: 'center',

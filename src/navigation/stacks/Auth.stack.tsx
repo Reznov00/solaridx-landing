@@ -1,4 +1,4 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import React, { Fragment } from 'react';
 import { SCREENS_ENUM } from 'src/enums';
 import { AuthStackParamList } from 'src/interfaces';
@@ -21,15 +21,17 @@ const AuthStack = () => {
         <Stack.Group
           screenOptions={{
             headerShown: false,
+            ...TransitionPresets.ModalFadeTransition,
           }}>
           <Stack.Screen
             name={SCREENS_ENUM.SIGN_IN_SCREEN}
             component={SignInScreen}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name={SCREENS_ENUM.SIGN_UP_SCREEN}
             component={SignUpScreen}
           />
+
           <Stack.Screen
             name={SCREENS_ENUM.FORGOT_PASSWORD_SCREEN}
             component={ForgotPasswordScreen}
@@ -45,7 +47,7 @@ const AuthStack = () => {
           <Stack.Screen
             name={SCREENS_ENUM.RESET_PASSWORD_SUCCESS_SCREEN}
             component={ResetPassSuccessScreen}
-          /> */}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </Fragment>

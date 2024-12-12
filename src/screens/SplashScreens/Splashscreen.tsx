@@ -1,14 +1,13 @@
-import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-import {LogoIcon} from 'src/assets';
-import {Colors} from 'src/themes';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+import { Colors } from 'src/themes';
 
 const SplashScreen = () => {
   const rippleSize = useSharedValue(10);
@@ -16,9 +15,9 @@ const SplashScreen = () => {
   const mainViewOpacity = useSharedValue(1);
 
   useEffect(() => {
-    rippleSize.value = withTiming(heightPercentageToDP(150), {duration: 500});
-    logoOpacity.value = withDelay(500, withTiming(1, {duration: 500}));
-    mainViewOpacity.value = withDelay(1600, withTiming(0, {duration: 400}));
+    rippleSize.value = withTiming(heightPercentageToDP(150), { duration: 500 });
+    logoOpacity.value = withDelay(500, withTiming(1, { duration: 500 }));
+    mainViewOpacity.value = withDelay(1600, withTiming(0, { duration: 400 }));
   }, []);
 
   const rippleStyle = useAnimatedStyle(() => {
@@ -45,23 +44,24 @@ const SplashScreen = () => {
     <Animated.View style={[styles.container, mainViewStyle]}>
       <Animated.View style={[styles.ripple, rippleStyle]} />
       <Animated.View style={logoStyle}>
-        <LogoIcon size={5} version="Compact" secondaryFill="black" />
+        {/* <LogoIcon size={5} version="Basic" /> */}
+        <Image style={{ width: widthPercentageToDP(80), height: widthPercentageToDP(80) }} resizeMode='contain' source={require('src/assets/pngs/AppLogo.png')} />
       </Animated.View>
     </Animated.View>
   );
 };
 
-export {SplashScreen};
+export { SplashScreen };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: Colors.white,
+    backgroundColor: Colors.white,
   },
   ripple: {
     position: 'absolute',
-    backgroundColor: Colors.designPrimary,
+    backgroundColor: Colors.white,
   },
 });

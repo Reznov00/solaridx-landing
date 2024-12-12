@@ -1,18 +1,18 @@
 import React from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import {EditIcon} from 'src/assets';
-import {Colors} from 'src/themes';
+import { EditIcon } from 'src/assets';
+import { Colors } from 'src/themes';
 
 interface Props {
   textData: string;
   setTextData: React.Dispatch<React.SetStateAction<string>>;
 }
-const TextArea = ({setTextData, textData}: Props) => {
+const TextArea = ({ setTextData, textData }: Props) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -26,14 +26,14 @@ const TextArea = ({setTextData, textData}: Props) => {
       />
       {!textData && (
         <View style={styles.iconContainer}>
-          <EditIcon size={3} color={Colors.designPrimary} />
+          <EditIcon size={3} color={Colors.primary_600} />
         </View>
       )}
     </View>
   );
 };
 
-export {TextArea};
+export { TextArea };
 
 const styles = StyleSheet.create({
   container: {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     fontFamily: 'FunnelDisplay-Regular',
     fontSize: RFValue(12),
-    color: Colors.fontPrimary,
+    color: Colors.gray_900,
     textAlignVertical: 'top',
     height: '100%',
   },

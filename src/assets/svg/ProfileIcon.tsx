@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-import Svg, {Path, SvgProps} from 'react-native-svg';
-import {Colors} from 'src/themes';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import Svg, { Path, SvgProps } from 'react-native-svg';
+import { Colors } from 'src/themes';
 
 interface SVGPropsII extends SvgProps {
   size?: number;
 }
-const ProfileIcon = ({size = 5, ...props}: SVGPropsII) => (
+const ProfileIcon = ({ size = 5, ...props }: SVGPropsII) => (
   <Svg
     onPress={props.onPress}
     width={heightPercentageToDP(size)}
@@ -15,7 +15,7 @@ const ProfileIcon = ({size = 5, ...props}: SVGPropsII) => (
     {...props}
     viewBox="-3 -3 120 120">
     <Path
-      stroke={props.color ?? Colors.fontPrimary}
+      stroke={props.color ?? Colors.gray_900}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={8}
@@ -23,4 +23,4 @@ const ProfileIcon = ({size = 5, ...props}: SVGPropsII) => (
     />
   </Svg>
 );
-export {ProfileIcon};
+export { ProfileIcon };

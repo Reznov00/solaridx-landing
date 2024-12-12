@@ -2,15 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   TextInput,
-  TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, LogoIcon } from 'src/assets';
+import { BackArrowIcon, MessageIcon } from 'src/assets';
 import {
   FullScreenView,
   PrimaryButton,
@@ -110,34 +109,27 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
 
   return (
     <FullScreenView>
-      <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
-        <View style={styles.container}>
-          <Touchable
-            disabled={isPending || loading}
-            contentContainerStyle={styles.backButtonContainer}
-            ripple
-            onTap={() => NavigationService.goBack()}>
-            <BackArrowIcon size={2.5} color={Colors.designPrimary} />
-          </Touchable>
-          <View style={styles.authBox}>
-            <View style={{ alignItems: 'center' }}>
-              <LogoIcon size={5} />
-              <TextRegular
-                fontSize="sh1"
-                style={{
-                  textAlign: 'center',
-                  marginBottom: heightPercentageToDP(3),
-                }}>
-                {'Enter your Verification code'}
-              </TextRegular>
-            </View>
-
-            <TextRegular fontSize="st" color="fontPrimary">
+      <View style={styles.container}>
+        <Touchable
+          // disabled={isPending}
+          style={styles.backButtonContainer}
+          onPress={() => NavigationService.goBack()}>
+          <BackArrowIcon size={2.5} color={Colors.gray_600} />
+        </Touchable>
+        <View style={styles.mainBodyContainer}>
+          <View style={styles.logoContainer}>
+            <MessageIcon size={10} />
+            <TextBold color='primary_600' fontSize="h2">Enter OTP</TextBold>
+          </View>
+          <View style={{ alignItems: 'center', marginTop: heightPercentageToDP(2) }}>
+            <TextRegular fontSize="st" color="gray_700">
               {'Please enter the code we just sent to email'}
             </TextRegular>
-            <TextBold fontSize="st" color="designPrimary">
+            <TextBold fontSize="st" color="primary_600">
               {email}
             </TextBold>
+          </View>
+          <View >
             <View style={styles.otpForm}>
               {inputs.map((inputRef, index) => (
                 <TextInput
@@ -148,7 +140,7 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
                   keyboardType="number-pad"
                   maxLength={1}
                   placeholder=""
-                  placeholderTextColor={Colors.borderColour}
+                  placeholderTextColor={Colors.gray_100}
                   style={styles.codeVerifyBlock}
                   selectTextOnFocus
                   onFocus={() => focusInput(index)}
@@ -157,19 +149,19 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
                 />
               ))}
             </View>
+            <PrimaryButton
+              title="Verify OTP"
+              onPress={handleVerifyOTP}
+              disabled={!isOTPComplete()}
+              loading={isPending || loading}
+              buttonStyle={{
+                opacity: isOTPComplete() ? 1 : 0.8,
+                marginVertical: heightPercentageToDP(1),
+              }}
+            />
           </View>
-          <PrimaryButton
-            title="Verify OTP"
-            onPress={handleVerifyOTP}
-            disabled={!isOTPComplete()}
-            loading={isPending || loading}
-            buttonStyle={{
-              opacity: isOTPComplete() ? 1 : 0.8,
-              marginVertical: heightPercentageToDP(1),
-            }}
-          />
-          <View style={styles.signUpButtonContainer}>
-            <TextRegular fontSize="st" color="fontPrimary">
+          <View style={styles.noCodeReceivedContainer}>
+            <TextRegular fontSize="st" color="gray_900">
               {'Didn’t recieve a code?'}
             </TextRegular>
             <Touchable
@@ -181,14 +173,14 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
                 gap: widthPercentageToDP(1),
               }}
               disabled={isTimerRunning}
-              onTap={resendOTP}>
-              <TextRegular fontSize="st" color="designPrimary">
+              onPress={resendOTP}>
+              <TextRegular fontSize="st" color="primary_600">
                 {`Resend (${timer})`}
               </TextRegular>
             </Touchable>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </View>
     </FullScreenView>
   );
 };
@@ -214,12 +206,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E6E6E6',
   },
-  authHeaderText: {
-    fontSize: RFValue(20),
-    color: Colors.fontPrimary,
-    fontWeight: '500',
-    paddingBottom: heightPercentageToDP(2),
-  },
   otpForm: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -228,34 +214,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: widthPercentageToDP(3),
   },
   codeVerifyBlock: {
-    borderRadius: heightPercentageToDP(5.5),
-    width: heightPercentageToDP(5.5),
-    height: heightPercentageToDP(5.5),
+    borderRadius: widthPercentageToDP(3),
+    width: heightPercentageToDP(6),
+    height: heightPercentageToDP(7),
     textAlign: 'center',
     fontSize: RFValue(16),
-    color: Colors.fontPrimary,
+    color: Colors.gray_900,
     marginHorizontal: widthPercentageToDP(1),
-    backgroundColor: Colors.white,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 2,
-    shadowOpacity: 0.8,
-    shadowColor: Colors.designPrimary,
-    elevation: 10,
-    // margin: heightPercentageToDP(2),
+    backgroundColor: Colors.gray_50,
+    borderWidth: 1,
+    borderColor: Colors.gray_100
   },
-  errorMessage: {
-    color: Colors.error,
-    fontSize: RFValue(16),
-    marginHorizontal: widthPercentageToDP(1),
-    marginVertical: heightPercentageToDP(1),
-  },
-  noAccountText: {
-    fontSize: RFValue(13),
-    color: Colors.borderColour,
-    textAlign: 'center',
-    alignItems: 'center',
-  },
-  signUpButtonContainer: {
+  noCodeReceivedContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -264,8 +234,29 @@ const styles = StyleSheet.create({
   registerButton: {
     marginTop: heightPercentageToDP(2),
     paddingVertical: heightPercentageToDP(1.5),
-    backgroundColor: Colors.designPrimary,
+    backgroundColor: Colors.primary_600,
     alignItems: 'center',
     borderRadius: 5,
+  },
+  mainBodyContainer: {
+    marginTop: heightPercentageToDP(3),
+  },
+  logoContainer: {
+    alignItems: 'center',
+    gap: heightPercentageToDP(2)
+  },
+  textStyle: {
+    fontSize: RFValue(12),
+    color: Colors.gray_700,
+    lineHeight: heightPercentageToDP(2.5),
+    marginVertical: heightPercentageToDP(2),
+    textAlign: 'center',
+  },
+  spanTextStyle: {
+    fontSize: RFValue(12),
+    color: Colors.gray_700,
+    lineHeight: heightPercentageToDP(2.5),
+    marginBottom: heightPercentageToDP(2),
+    textAlign: 'center',
   },
 });

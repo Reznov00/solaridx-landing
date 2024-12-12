@@ -8,7 +8,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, LogoIcon } from 'src/assets';
+import { BackArrowIcon, WaveIcon } from 'src/assets';
 import {
   CustomCheckBox,
   FullScreenView,
@@ -24,6 +24,7 @@ import { SignupFormInterface } from 'src/interfaces';
 // import {SignUpService} from 'src/services';
 import { Colors } from 'src/themes';
 import { NavigationService } from 'src/utilities';
+import { SocialContainer } from './components';
 
 const SignUpScreen = () => {
   const [checkBoxSelected, setCheckBox] = useState(false);
@@ -58,17 +59,23 @@ const SignUpScreen = () => {
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Touchable
-            contentContainerStyle={styles.backButtonContainer}
-            ripple
-            onTap={() => NavigationService.goBack()}>
-            <BackArrowIcon size={2.5} color={Colors.designPrimary} />
+            // disabled={isPending}
+            style={styles.backButtonContainer}
+            onPress={() => NavigationService.goBack()}>
+            <BackArrowIcon size={2.5} color={Colors.gray_600} />
           </Touchable>
           <View style={styles.mainBodyContainer}>
             <View style={styles.logoContainer}>
-              <LogoIcon size={5} />
-              <TextRegular fontSize="h2">Create an account</TextRegular>
+              <WaveIcon size={10} />
+              <TextBold color='primary_600' fontSize="h2">Sign Up</TextBold>
             </View>
-            <View style={styles.formContainer}>
+            <SocialContainer />
+            <View style={styles.seperator}>
+              <View style={styles.orText} >
+                <TextRegular color='gray_900' fontSize='sh2'>Or</TextRegular>
+              </View>
+            </View>
+            <View >
               <TextInput
                 control={control}
                 name="name"
@@ -97,41 +104,29 @@ const SignUpScreen = () => {
                 touched={!!errors.password?.message}
                 error={errors.password?.message}
               />
-              <TextInput
-                control={control}
-                name="confirmPassword"
-                label="Confirm Password*"
-                placeholder="*************"
-                editable={!isPending}
-                secureTextEntry
-                touched={!!errors.confirmPassword?.message}
-                error={errors.confirmPassword?.message}
-              />
               <View style={styles.privacyPolicyContainer}>
                 <Touchable
-                  disabled={isPending}
+                  // disabled={isPending}
                   style={{ marginTop: heightPercentageToDP(0.5) }}
-                  onTap={() => setCheckBox(prev => !prev)}>
-                  <CustomCheckBox size={6} checked={checkBoxSelected} />
+                  onPress={() => setCheckBox(prev => !prev)}>
+                  <CustomCheckBox size={5} checked={checkBoxSelected} />
                 </Touchable>
                 <View style={styles.textContainer}>
                   <TextRegular style={styles.textStyle}>
-                    {`By registering, you are agreeing with our `}
+                    {`I agree to the `}
                   </TextRegular>
                   <Touchable
-                    opaque
-                    onTap={() => handlePrivacyNUsePress('termsofuse')}>
+                    onPress={() => handlePrivacyNUsePress('termsofuse')}>
                     <TextBold
-                      style={[styles.textStyle, { color: Colors.designPrimary }]}>
+                      style={[styles.textStyle, { color: Colors.primary_600 }]}>
                       {`Terms of Use `}
                     </TextBold>
                   </Touchable>
                   <TextRegular style={styles.textStyle}>{`and`}</TextRegular>
                   <Touchable
-                    opaque
-                    onTap={() => handlePrivacyNUsePress('privacypolicy')}>
+                    onPress={() => handlePrivacyNUsePress('privacypolicy')}>
                     <TextBold
-                      style={[styles.textStyle, { color: Colors.designPrimary }]}>
+                      style={[styles.textStyle, { color: Colors.primary_600 }]}>
                       {` Privacy Policy `}
                     </TextBold>
                   </Touchable>
@@ -141,28 +136,21 @@ const SignUpScreen = () => {
                 title="Sign Up"
                 onPress={handleSubmit(handleSignUpPress)}
                 buttonStyle={{ marginVertical: heightPercentageToDP(1.5) }}
+                disabled={isPending}
                 loading={isPending}
               />
               <View style={styles.optionalText}>
-                <TextRegular fontSize="st" color="fontPrimary">
+                <TextRegular fontSize="st" color="gray_900">
                   {`You already have an account?`}
                 </TextRegular>
-                <Touchable onTap={handleSignInNavigate} disabled={isPending}>
-                  <TextRegular fontSize="st" color="designPrimary">
+                <Touchable onPress={handleSignInNavigate}
+                // disabled={isPending}
+                >
+                  <TextRegular fontSize="st" color="primary_600">
                     {`Sign In`}
                   </TextRegular>
                 </Touchable>
               </View>
-              <TextRegular
-                style={{
-                  textAlign: 'center',
-                  marginVertical: heightPercentageToDP(1.5),
-                }}
-                fontSize="st"
-                color="fontPrimary">
-                {`Or`}
-              </TextRegular>
-
             </View>
           </View>
         </View>
@@ -187,10 +175,28 @@ const styles = StyleSheet.create({
     borderColor: '#E6E6E6',
   },
   mainBodyContainer: {
-    marginTop: heightPercentageToDP(3),
+    marginTop: heightPercentageToDP(2),
   },
   logoContainer: {
     alignItems: 'center',
+    gap: heightPercentageToDP(2)
+  },
+  seperator: {
+    flexDirection: 'row',
+    width: widthPercentageToDP(90),
+    height: 1,
+    backgroundColor: Colors.gray_200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: heightPercentageToDP(3),
+    marginTop: heightPercentageToDP(1)
+  },
+  orText: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '15%',
+    backgroundColor: Colors.white
   },
   formContainer: {
     marginTop: heightPercentageToDP(5),
@@ -212,9 +218,9 @@ const styles = StyleSheet.create({
     width: widthPercentageToDP(80),
   },
   textStyle: {
-    fontSize: RFValue(12),
-    color: Colors.fontPrimary,
-    lineHeight: heightPercentageToDP(2.5),
+    fontSize: RFValue(10),
+    color: Colors.gray_900,
+    lineHeight: heightPercentageToDP(3),
   },
   socialButtonsContainer: {
     flexDirection: 'row',

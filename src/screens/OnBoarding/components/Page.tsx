@@ -1,37 +1,34 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import {LogoIcon} from 'src/assets';
-import {TextBold, TextRegular} from 'src/components';
-import {PageInterface} from 'src/constants';
+import { TextBold, TextRegular } from 'src/components';
+import { PageInterface } from 'src/constants';
+import { Colors } from 'src/themes';
 
 interface PageProps {
   page: PageInterface;
 }
 
-// const {width: PAGE_WIDTH, height: PAGE_HEIGHT} = Dimensions.get('window');
-
-const Page = ({page}: PageProps) => {
+const Page = ({ page }: PageProps) => {
   return (
     <View style={styles.container}>
-      <Image source={page.source} style={[styles.image]} resizeMode={'cover'} />
       <View style={styles.iconContainer}>
-        <LogoIcon size={8} version="Compact" />
+        <Image source={page.source} style={[styles.image]} resizeMode={'contain'} />
       </View>
       <View style={styles.dataContainer}>
         <TextBold
           fontSize="h1"
           color="white"
-          style={{marginBottom: 10, textAlign: 'center'}}>
+          style={{ marginBottom: 10, textAlign: 'center' }}>
           {page.title}
         </TextBold>
         <TextRegular
-          fontSize="sh2"
-          color="borderColour"
-          style={{textAlign: 'center'}}>
+          fontSize="bt"
+          color="gray_300"
+          style={{ textAlign: 'center' }}>
           {page.description}
         </TextRegular>
       </View>
@@ -41,27 +38,27 @@ const Page = ({page}: PageProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: heightPercentageToDP(5),
     width: widthPercentageToDP(100),
-    height: heightPercentageToDP(100),
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: Colors.gray_800,
+    gap: heightPercentageToDP(5)
   },
   image: {
-    height: heightPercentageToDP(100),
-    width: widthPercentageToDP(100),
-    opacity: 0.5,
+    height: '100%',
+    width: '100%',
+    opacity: 1,
   },
   dataContainer: {
-    position: 'absolute',
     alignItems: 'center',
     marginHorizontal: widthPercentageToDP(7),
-    bottom: heightPercentageToDP(20),
   },
   iconContainer: {
-    position: 'absolute',
     alignItems: 'center',
-    top: heightPercentageToDP(8),
+    width: widthPercentageToDP(80),
+    height: heightPercentageToDP(50),
+
   },
 });
 
-export {Page};
+export { Page };

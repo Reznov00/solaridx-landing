@@ -1,26 +1,27 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { CloseIcon, LogoIcon } from 'src/assets';
+import { BackArrowIcon, WaveIcon } from 'src/assets';
 import {
   FullScreenView,
   PrimaryButton,
-  // PrimaryButton,
+  TextBold,
   TextInput,
   TextRegular,
   Touchable,
 } from 'src/components';
 import { signInValidationSchema } from 'src/constants';
-import { SCREENS_ENUM } from 'src/enums';
 import { Colors } from 'src/themes';
 import { NavigationService } from 'src/utilities';
+import { SocialContainer } from './components';
+import { SCREENS_ENUM } from 'src/enums';
 
 const SignInScreen = () => {
   const isPending = false
@@ -37,7 +38,7 @@ const SignInScreen = () => {
     return data
   };
   const handleSignUpNavigate = () => {
-    // NavigationService.navigate(SCREENS_ENUM.SIGN_UP_SCREEN);
+    NavigationService.navigate(SCREENS_ENUM.SIGN_UP_SCREEN);
     console.log('first')
   };
 
@@ -47,24 +48,28 @@ const SignInScreen = () => {
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Touchable
-            opaque
-            disabled={isPending}
-            contentContainerStyle={styles.backButtonContainer}
-            ripple
-            onTap={() => NavigationService.goBack()}>
-            <CloseIcon size={2.5} color={Colors.designPrimary} />
+            // disabled={isPending}
+            style={styles.backButtonContainer}
+            onPress={() => NavigationService.goBack()}>
+            <BackArrowIcon size={2.5} color={Colors.gray_600} />
           </Touchable>
           <View style={styles.mainBodyContainer}>
             <View style={styles.logoContainer}>
-              <LogoIcon size={5} />
-              <TextRegular fontSize="h2">Sign In</TextRegular>
+              <WaveIcon size={10} />
+              <TextBold color='primary_600' fontSize="h2">Sign In</TextBold>
             </View>
-            <View style={styles.formContainer}>
+            <SocialContainer />
+            <View style={styles.seperator}>
+              <View style={styles.orText} >
+                <TextRegular color='gray_900' fontSize='sh2'>Or</TextRegular>
+              </View>
+            </View>
+            <View >
               <TextInput
                 control={control}
                 name="email"
-                label="Email*"
-                placeholder="johndoe@example.com"
+                label="Email"
+                placeholder="Email"
                 touched={!!errors.email?.message}
                 error={errors.email?.message}
                 editable={!isPending}
@@ -72,27 +77,25 @@ const SignInScreen = () => {
               <TextInput
                 control={control}
                 name="password"
-                label="Password*"
-                placeholder="*************"
+                label="Password"
+                placeholder="Password"
                 secureTextEntry
                 touched={!!errors.password?.message}
                 error={errors.password?.message}
                 editable={!isPending}
                 autoCapitalize='none'
-
               />
 
               <View style={styles.privacyPolicyContainer}>
                 <Touchable
-                  disabled={isPending}
-                  opaque
-                  onTap={() => {
-                    //  NavigationService.navigate(
-                    //   SCREENS_ENUM.FORGOT_PASSWORD_SCREEN,
-                    // )
+                  // disabled={isPending}
+                  onPress={() => {
+                    NavigationService.navigate(
+                      SCREENS_ENUM.FORGOT_PASSWORD_SCREEN,
+                    )
                   }
                   }>
-                  <TextRegular fontSize="st" color="designPrimary">
+                  <TextRegular fontSize="st" color="gray_600">
                     {`Forgot Password?`}
                   </TextRegular>
                 </Touchable>
@@ -105,11 +108,13 @@ const SignInScreen = () => {
                 loading={isPending}
               />
               <View style={styles.optionalText}>
-                <TextRegular fontSize="st" color="fontPrimary">
+                <TextRegular fontSize="st" color="gray_800">
                   {`You already have an account?`}
                 </TextRegular>
-                <Touchable opaque disabled={isPending} onTap={handleSignUpNavigate}>
-                  <TextRegular fontSize="st" color="designPrimary">
+                <Touchable
+                  //  disabled={isPending}
+                  onPress={handleSignUpNavigate}>
+                  <TextRegular fontSize="st" color="primary_500">
                     {`Sign Up`}
                   </TextRegular>
                 </Touchable>
@@ -130,34 +135,39 @@ const styles = StyleSheet.create({
     marginTop: heightPercentageToDP(2),
   },
   backButtonContainer: {
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
     padding: RFValue(8),
     borderRadius: 50,
-    borderWidth: 1,
-    borderColor: '#E6E6E6',
+    borderWidth: 2,
+    borderColor: Colors.gray_600,
   },
   mainBodyContainer: {
     marginTop: heightPercentageToDP(3),
   },
+  seperator: {
+    flexDirection: 'row',
+    width: widthPercentageToDP(90),
+    height: 1,
+    backgroundColor: Colors.gray_200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: heightPercentageToDP(3)
+  },
+  orText: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '15%',
+    backgroundColor: Colors.white
+  },
   logoContainer: {
     alignItems: 'center',
-  },
-  formContainer: {
-    marginTop: heightPercentageToDP(5),
+    gap: heightPercentageToDP(2)
   },
   privacyPolicyContainer: {
     flexDirection: 'row',
     gap: widthPercentageToDP(2),
-    alignItems: 'flex-start',
-  },
-  signUpButtonContainer: {
-    backgroundColor: Colors.designPrimary,
-    alignSelf: 'center',
-    marginVertical: heightPercentageToDP(3),
-    alignItems: 'center',
-    paddingVertical: heightPercentageToDP(1),
-    paddingHorizontal: widthPercentageToDP(25),
-    borderRadius: RFValue(30),
+    justifyContent: 'flex-end',
   },
   optionalText: {
     flexDirection: 'row',

@@ -1,17 +1,17 @@
 import React from 'react';
-import {View} from 'react-native';
-import {HistoryIcon, HomeIcon, ProfileIcon} from 'src/assets';
-import {BottomTabTypes} from 'src/interfaces';
-import {Colors} from 'src/themes';
+import { View } from 'react-native';
+import { HistoryIcon, HomeIcon, ProfileIcon } from 'src/assets';
+import { BottomTabTypes } from 'src/interfaces';
+import { Colors } from 'src/themes';
 
 interface Props {
   route: BottomTabTypes;
   isFocused: boolean;
 }
 
-const BottomTabIcon = ({route, isFocused}: Props) => {
+const BottomTabIcon = ({ route, isFocused }: Props) => {
   const renderIcon = (route: BottomTabTypes, isFocused: boolean) => {
-    const color = isFocused ? Colors.white : Colors.fontPrimary;
+    const color = isFocused ? Colors.white : Colors.gray_900;
     switch (route) {
       case 'HOME_MAIN_SCREEN':
         return <HomeIcon size={3} color={color} />;
@@ -27,4 +27,4 @@ const BottomTabIcon = ({route, isFocused}: Props) => {
   return <View>{renderIcon(route, isFocused)}</View>;
 };
 
-export {BottomTabIcon};
+export { BottomTabIcon };

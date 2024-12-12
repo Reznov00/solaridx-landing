@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   I18nManager,
   TextInput as RNTextInput,
@@ -10,15 +10,15 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {Control, Controller, RegisterOptions} from 'react-hook-form';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Control, Controller, RegisterOptions } from 'react-hook-form';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import {HidePasswordIcon, ShowPasswordIcon} from 'src/assets';
-import {Colors} from 'src/themes';
-import {TextRegular} from './Text';
+import { HidePasswordIcon, ShowPasswordIcon } from 'src/assets';
+import { Colors } from 'src/themes';
+import { TextRegular } from './Text';
 
 type TextInputProps = React.ComponentProps<typeof RNTextInput> & {
   label?: string;
@@ -37,7 +37,7 @@ type TextInputProps = React.ComponentProps<typeof RNTextInput> & {
 };
 
 const TextInput = (props: TextInputProps) => {
-  const {editable = true} = props;
+  const { editable = true } = props;
   const [secureTextEntry, setSecureTextEntry] = useState(props.secureTextEntry);
 
   return (
@@ -46,12 +46,12 @@ const TextInput = (props: TextInputProps) => {
       control={props.control}
       rules={props.rules ?? {}}
       defaultValue={props.initialValue}
-      render={({field: {onChange, value, onBlur}}) => {
+      render={({ field: { onChange, value, onBlur } }) => {
         return (
           <View style={styles.mainContainer}>
             {!!props.label && (
-              <View style={{marginBottom: 5, alignSelf: 'flex-start'}}>
-                <TextRegular fontSize="st" color="designSecondary">
+              <View style={{ marginBottom: 5, alignSelf: 'flex-start' }}>
+                <TextRegular fontSize="st" color="gray_900">
                   {props.label}
                 </TextRegular>
               </View>
@@ -81,8 +81,8 @@ const TextInput = (props: TextInputProps) => {
                     props.style,
                     {
                       color: editable
-                        ? Colors.fontPrimary
-                        : Colors.designSecondary,
+                        ? Colors.gray_900
+                        : Colors.gray_600,
                       opacity: !editable ? 0.5 : 1,
                       textAlign: I18nManager.isRTL ? 'right' : 'left',
                       height: true ? '100%' : heightPercentageToDP(4.5),
@@ -107,7 +107,7 @@ const TextInput = (props: TextInputProps) => {
                 <View style={[styles.rightIconContainer]}>
                   <TouchableOpacity
                     onPress={() => setSecureTextEntry(prev => !prev)}
-                    style={{padding: 7}}>
+                    style={{ padding: 7 }}>
                     {secureTextEntry ? (
                       <HidePasswordIcon size={3} />
                     ) : (
@@ -144,20 +144,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: heightPercentageToDP(5),
     flexDirection: 'row',
-    backgroundColor: Colors.white,
-    borderWidth: 1,
-    borderRadius: 20,
-    borderColor: Colors.borderColour,
-    shadowOffset: {width: 0, height: 0},
-    shadowRadius: 1,
-    shadowOpacity: 0.1,
-    shadowColor: Colors.black,
-    elevation: 2,
+    backgroundColor: Colors.gray_50,
+    borderRadius: widthPercentageToDP(3),
     paddingHorizontal: widthPercentageToDP(3),
   },
   textInput: {
     fontSize: RFValue(12),
-    color: Colors.black,
+    color: Colors.gray_900,
     fontFamily: 'FunnelDisplay-Regular',
     fontWeight: '400',
     textAlign: 'center',
@@ -169,11 +162,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 5,
     paddingRight: 5,
-  },
-  divider: {
-    height: '70%',
-    width: 1,
-    backgroundColor: Colors.designSecondary,
   },
   leftIconSubContainer: {
     width: '100%',
@@ -191,7 +179,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   errorMessage: {
-    color: Colors.error,
+    color: Colors.danger,
     marginTop: 2,
     marginLeft: widthPercentageToDP(4),
     alignSelf: 'flex-start',
@@ -202,11 +190,11 @@ const styles = StyleSheet.create({
     marginTop: heightPercentageToDP(0.5),
   },
   optionalMessage: {
-    color: Colors.designSecondary,
+    color: Colors.gray_600,
     marginTop: 2,
     marginLeft: 5,
     fontSize: RFValue(11),
   },
 });
 
-export {TextInput};
+export { TextInput };

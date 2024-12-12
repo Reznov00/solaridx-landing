@@ -2,7 +2,6 @@ export * from './BackArrowIcon';
 export * from './CloseIcon';
 export * from './HidePasswordIcon';
 export * from './ShowPasswordIcon';
-export * from './LogoIcon';
 export * from './HomeIcon';
 export * from './ProfileIcon';
 export * from './SearchIcon';
@@ -29,3 +28,4 @@ export * from './CoinIcon';
 
 export * from './SocialMediaIcons';
 export * from './FilterIcon';
+export * from './AuthScreenSvgs';

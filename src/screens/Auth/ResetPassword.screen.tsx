@@ -2,19 +2,18 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, LogoIcon } from 'src/assets';
+import { BackArrowIcon, LockIcon } from 'src/assets';
 import {
   FullScreenView,
   PrimaryButton,
+  TextBold,
   TextInput,
-  TextRegular,
-  Touchable,
+  Touchable
 } from 'src/components';
 import { resetPasswordSchema } from 'src/constants';
 import { SCREENS_ENUM } from 'src/enums';
@@ -42,51 +41,48 @@ const ResetPasswordScreen = ({
 
   return (
     <FullScreenView>
-      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          <Touchable
-            disabled={isPending}
-            contentContainerStyle={styles.backButtonContainer}
-            ripple
-            onTap={() => NavigationService.goBack()}>
-            <BackArrowIcon size={2.5} color={Colors.designPrimary} />
-          </Touchable>
-          <View style={styles.mainBodyContainer}>
-            <View style={styles.logoContainer}>
-              <LogoIcon size={5} />
-              <TextRegular fontSize="h2">Update Password</TextRegular>
-            </View>
-            <View style={styles.formContainer}>
-              <TextInput
-                control={control}
-                name="password"
-                label="Password*"
-                placeholder="*************"
-                secureTextEntry
-                editable={!isPending}
-                touched={!!errors.password?.message}
-                error={errors.password?.message}
-              />
-              <TextInput
-                control={control}
-                name="confirmPassword"
-                label="Confirm Password*"
-                placeholder="*************"
-                editable={!isPending}
-                secureTextEntry
-                touched={!!errors.confirmPassword?.message}
-                error={errors.confirmPassword?.message}
-              />
-              <PrimaryButton
-                title="Create New Password"
-                onPress={handleSubmit(handleResetPassword)}
-                disabled={isPending}
-                loading={isPending}
-              />
-            </View>
+      <View style={styles.container}>
+        <Touchable
+          // disabled={isPending}
+          style={styles.backButtonContainer}
+          onPress={() => NavigationService.goBack()}>
+          <BackArrowIcon size={2.5} color={Colors.gray_600} />
+        </Touchable>
+        <View style={styles.mainBodyContainer}>
+          <View style={styles.logoContainer}>
+            <LockIcon size={10} />
+            <TextBold color='primary_600' fontSize="h2">Update Password</TextBold>
+          </View>
+          <View style={styles.formContainer}>
+            <TextInput
+              control={control}
+              name="password"
+              label="Password*"
+              placeholder="*************"
+              secureTextEntry
+              editable={!isPending}
+              touched={!!errors.password?.message}
+              error={errors.password?.message}
+            />
+            <TextInput
+              control={control}
+              name="confirmPassword"
+              label="Confirm Password*"
+              placeholder="*************"
+              editable={!isPending}
+              secureTextEntry
+              touched={!!errors.confirmPassword?.message}
+              error={errors.confirmPassword?.message}
+            />
+            <PrimaryButton
+              title="Create New Password"
+              onPress={handleSubmit(handleResetPassword)}
+              disabled={isPending}
+              loading={isPending}
+            />
           </View>
         </View>
-      </KeyboardAwareScrollView>
+      </View>
     </FullScreenView>
   );
 };
@@ -110,22 +106,23 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
+    gap: heightPercentageToDP(2)
   },
   formContainer: {
     marginTop: heightPercentageToDP(5),
   },
-  privacyPolicyContainer: {
-    flexDirection: 'row',
-    gap: widthPercentageToDP(2),
-    alignItems: 'flex-start',
+  textStyle: {
+    fontSize: RFValue(12),
+    color: Colors.gray_700,
+    lineHeight: heightPercentageToDP(2.5),
+    marginVertical: heightPercentageToDP(2),
+    textAlign: 'center',
   },
-  signUpButtonContainer: {
-    backgroundColor: Colors.designPrimary,
-    alignSelf: 'center',
-    marginVertical: heightPercentageToDP(3),
-    alignItems: 'center',
-    paddingVertical: heightPercentageToDP(1),
-    paddingHorizontal: widthPercentageToDP(25),
-    borderRadius: RFValue(30),
+  spanTextStyle: {
+    fontSize: RFValue(12),
+    color: Colors.gray_700,
+    lineHeight: heightPercentageToDP(2.5),
+    marginBottom: heightPercentageToDP(2),
+    textAlign: 'center',
   },
 });

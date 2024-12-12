@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 const RootNavigator = () => {
   const { authToken } = useAuthTokenAtom();
   const initialRoute =
-    authToken !== null ? STACKS_ENUM.ONBOARDING_STACK : STACKS_ENUM.AUTH_STACK;
+    authToken === null ? STACKS_ENUM.ONBOARDING_STACK : STACKS_ENUM.AUTH_STACK;
 
   return (
     <>
@@ -26,15 +26,19 @@ const RootNavigator = () => {
         ref={navigatorRef => {
           NavigationService.setTopLevelNavigator(navigatorRef);
         }}>
-        <Stack.Navigator
-          screenOptions={{ headerShown: false }}
-          initialRouteName={initialRoute}>
+        <Stack.Navigator screenOptions={{
+          headerShown: false,
+          ...TransitionPresets.ModalFadeTransition
+        }}
+        // initialRouteName={initialRoute}
+        >
+
           {/* <Stack.Screen
             name={STACKS_ENUM.ONBOARDING_STACK}
             component={OnboardingStack}
           /> */}
           <Stack.Screen name={STACKS_ENUM.AUTH_STACK} component={AuthStack} />
-          {/* <Stack.Screen name={STACKS_ENUM.MAIN_STACK} component={MainStack} /> */}
+          <Stack.Screen name={STACKS_ENUM.MAIN_STACK} component={MainStack} />
         </Stack.Navigator>
       </NavigationContainer>
       <Toast config={toastConfig} />

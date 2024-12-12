@@ -6,10 +6,9 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { Colors } from 'src/themes';
-import { TextBold } from './Text';
+import { TextBold } from '../Text';
 import { Touchable } from './Touchable';
 
 export interface PrimaryButtonProps {
@@ -31,17 +30,12 @@ const PrimaryButton = ({
   disabled = false,
   loading = false,
   leftIcon,
-  shadowEnabled = true,
 }: PrimaryButtonProps) => {
   return (
     <Touchable
-      ripple
-      opaque
-      rippleColor="designTertiary"
-      onTap={onPress}
+      onPress={onPress}
       disabled={disabled || loading}
-      shadowOpacity={shadowEnabled ? 0.2 : 0}
-      contentContainerStyle={[
+      style={[
         styles.signUpButtonContainer,
         buttonStyle,
         { opacity: disabled ? 0.5 : 1 },
@@ -62,14 +56,14 @@ export { PrimaryButton };
 
 const styles = StyleSheet.create({
   signUpButtonContainer: {
-    backgroundColor: Colors.designPrimary,
+    backgroundColor: Colors.primary_500,
     alignSelf: 'center',
     marginVertical: heightPercentageToDP(3),
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: heightPercentageToDP(1.5),
-    width: '85%',
-    borderRadius: RFValue(30),
+    width: '100%',
+    borderRadius: widthPercentageToDP(3),
     height: heightPercentageToDP(6),
   },
 });

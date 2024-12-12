@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-import Svg, {SvgProps, Path} from 'react-native-svg';
-import {Colors} from 'src/themes';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import Svg, { SvgProps, Path } from 'react-native-svg';
+import { Colors } from 'src/themes';
 
 interface SVGPropsII extends SvgProps {
   size?: number;
 }
-const LibraryIcon = ({size = 5, ...props}: SVGPropsII) => (
+const LibraryIcon = ({ size = 5, ...props }: SVGPropsII) => (
   <Svg
     onPress={props.onPress}
     width={heightPercentageToDP(size)}
@@ -15,14 +15,14 @@ const LibraryIcon = ({size = 5, ...props}: SVGPropsII) => (
     {...props}
     viewBox="0.7 0.5 23 23">
     <Path
-      stroke={props.color ?? Colors.designPrimary}
+      stroke={props.color ?? Colors.primary_600}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
       d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7Z"
     />
     <Path
-      stroke={props.color ?? Colors.designPrimary}
+      stroke={props.color ?? Colors.primary_600}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
@@ -30,4 +30,4 @@ const LibraryIcon = ({size = 5, ...props}: SVGPropsII) => (
     />
   </Svg>
 );
-export {LibraryIcon};
+export { LibraryIcon };

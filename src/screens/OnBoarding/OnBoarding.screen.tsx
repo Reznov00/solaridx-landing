@@ -1,17 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, {
-  runOnJS,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useDerivedValue,
-  useSharedValue,
+  useSharedValue
 } from 'react-native-reanimated';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { AnimatedButton } from 'src/components';
+import { TextRegular, Touchable } from 'src/components';
 import { PAGES } from 'src/constants';
 import { STACKS_ENUM } from 'src/enums';
 import { Colors } from 'src/themes';
@@ -21,7 +20,6 @@ import { Dot, Page } from './components';
 const PAGE_WIDTH = widthPercentageToDP(100);
 const OnBoardingScreen = () => {
   const translateX = useSharedValue(0);
-  const [splitted, setSplitted] = useState(false);
 
   const activeIndex = useDerivedValue(() => {
     return Math.round(translateX.value / PAGE_WIDTH);
@@ -30,16 +28,9 @@ const OnBoardingScreen = () => {
   const scrollRef = useAnimatedRef<ScrollView>();
   const onIconPress = useCallback(() => {
     if (activeIndex.value === PAGES.length - 1) {
-      NavigationService.navigate(STACKS_ENUM.MAIN_STACK);
+      NavigationService.navigate(STACKS_ENUM.AUTH_STACK);
     }
     scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value + 1) });
-    setSplitted(true);
-  }, []);
-  const onBackIconPress = useCallback(() => {
-    if (activeIndex.value > 0) {  // Prevent going back from the first card
-      scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value - 1) });
-      setSplitted(false);
-    }
   }, []);
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -49,7 +40,6 @@ const OnBoardingScreen = () => {
       if (activeIndex.value === 0 && newOffsetX < 0) {
         scrollRef.current?.scrollTo({ x: 0, animated: false });
       } else {
-        runOnJS(setSplitted)(newOffsetX !== 0);
         translateX.value = newOffsetX;
       }
     },
@@ -60,7 +50,7 @@ const OnBoardingScreen = () => {
     <View style={styles.container}>
       <Animated.ScrollView
         ref={scrollRef as any}
-        style={{ flex: 1, backgroundColor: Colors.black }}
+        style={{ flex: 1, backgroundColor: Colors.gray_800 }}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -71,24 +61,6 @@ const OnBoardingScreen = () => {
         ))}
       </Animated.ScrollView>
       <View style={styles.footer}>
-        <AnimatedButton
-          splitted={splitted}
-          mainAction={{
-            label: 'Get Started',
-            onPress: onIconPress,
-            backgroundColor: Colors.designPrimary,
-          }}
-          leftAction={{
-            label: 'Back',
-            onPress: onBackIconPress,
-            backgroundColor: Colors.designPrimary,
-          }}
-          rightAction={{
-            label: 'Swipe Next',
-            onPress: onIconPress,
-            backgroundColor: Colors.designPrimary,
-          }}
-        />
         <View style={[styles.fillCenter, { flexDirection: 'row' }]}>
           {PAGES.map((_, index) => {
             return (
@@ -100,8 +72,11 @@ const OnBoardingScreen = () => {
             );
           })}
         </View>
+        <Touchable onPress={onIconPress} style={styles.buttonContainer}>
+          <TextRegular fontSize='bt' color='white'>Next</TextRegular>
+        </Touchable>
       </View>
-    </View>
+    </View >
   );
 };
 
@@ -110,22 +85,26 @@ export { OnBoardingScreen };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F1F1F1',
+    backgroundColor: Colors.gray_800,
   },
   footer: {
     position: 'absolute',
-    bottom: heightPercentageToDP(3),
+    bottom: heightPercentageToDP(4),
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
     paddingVertical: heightPercentageToDP(1),
     width: '100%',
   },
   fillCenter: {
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1
   },
   buttonContainer: {
-    paddingHorizontal: widthPercentageToDP(20),
+    paddingHorizontal: widthPercentageToDP(6),
+    position: 'absolute',
+    right: 0,
+    paddingVertical: heightPercentageToDP(1),
   },
 });
