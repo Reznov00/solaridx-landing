@@ -7,16 +7,17 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, MessageIcon } from 'src/assets';
+import { MessageIcon } from 'src/assets';
 import {
+  BackButton,
   FullScreenView,
   PrimaryButton,
   TextBold,
   TextInput,
-  TextRegular,
-  Touchable,
+  TextRegular
 } from 'src/components';
 import { forgotPasswordSchema } from 'src/constants';
+import { SCREENS_ENUM } from 'src/enums';
 import { Colors } from 'src/themes';
 import { NavigationService } from 'src/utilities';
 
@@ -31,18 +32,13 @@ const ForgotPasswordScreen = () => {
   const isPending = false
 
   const handleEmail = async data => {
-    return data
+    NavigationService.navigate(SCREENS_ENUM.OTP_SCREEN, { email: data.userEmail, mode: 'FORGOT_PASSWORD' });
   };
 
   return (
     <FullScreenView>
       <View style={styles.container}>
-        <Touchable
-          // disabled={isPending}
-          style={styles.backButtonContainer}
-          onPress={() => NavigationService.goBack()}>
-          <BackArrowIcon size={2.5} color={Colors.gray_600} />
-        </Touchable>
+        <BackButton />
         <View style={styles.mainBodyContainer}>
           <View style={styles.logoContainer}>
             <MessageIcon size={10} />
@@ -87,13 +83,6 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: widthPercentageToDP(5),
     marginTop: heightPercentageToDP(2),
-  },
-  backButtonContainer: {
-    alignSelf: 'flex-start',
-    padding: RFValue(8),
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: '#E6E6E6',
   },
   mainBodyContainer: {
     marginTop: heightPercentageToDP(3),

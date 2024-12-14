@@ -44,7 +44,6 @@ const SplashScreen = () => {
     <Animated.View style={[styles.container, mainViewStyle]}>
       <Animated.View style={[styles.ripple, rippleStyle]} />
       <Animated.View style={logoStyle}>
-        {/* <LogoIcon size={5} version="Basic" /> */}
         <Image style={{ width: widthPercentageToDP(80), height: widthPercentageToDP(80) }} resizeMode='contain' source={require('src/assets/pngs/AppLogo.png')} />
       </Animated.View>
     </Animated.View>

@@ -7,13 +7,13 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, LockIcon } from 'src/assets';
+import { LockIcon } from 'src/assets';
 import {
+  BackButton,
   FullScreenView,
   PrimaryButton,
   TextBold,
-  TextInput,
-  Touchable
+  TextInput
 } from 'src/components';
 import { resetPasswordSchema } from 'src/constants';
 import { SCREENS_ENUM } from 'src/enums';
@@ -36,18 +36,14 @@ const ResetPasswordScreen = ({
   });
 
   const handleResetPassword = async data => {
+    NavigationService.navigate(SCREENS_ENUM.RESET_PASSWORD_SUCCESS_SCREEN, { mode: 'FORGOT_PASSWORD' });
     return { data, email }
   };
 
   return (
     <FullScreenView>
       <View style={styles.container}>
-        <Touchable
-          // disabled={isPending}
-          style={styles.backButtonContainer}
-          onPress={() => NavigationService.goBack()}>
-          <BackArrowIcon size={2.5} color={Colors.gray_600} />
-        </Touchable>
+        <BackButton />
         <View style={styles.mainBodyContainer}>
           <View style={styles.logoContainer}>
             <LockIcon size={10} />
@@ -93,13 +89,6 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: widthPercentageToDP(5),
     marginTop: heightPercentageToDP(2),
-  },
-  backButtonContainer: {
-    alignSelf: 'flex-start',
-    padding: RFValue(8),
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: '#E6E6E6',
   },
   mainBodyContainer: {
     marginTop: heightPercentageToDP(3),

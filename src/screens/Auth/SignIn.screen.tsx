@@ -1,15 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, WaveIcon } from 'src/assets';
+import { WaveIcon } from 'src/assets';
 import {
+  BackButton,
   FullScreenView,
   PrimaryButton,
   TextBold,
@@ -18,10 +18,10 @@ import {
   Touchable,
 } from 'src/components';
 import { signInValidationSchema } from 'src/constants';
+import { SCREENS_ENUM, STACKS_ENUM } from 'src/enums';
 import { Colors } from 'src/themes';
 import { NavigationService } from 'src/utilities';
 import { SocialContainer } from './components';
-import { SCREENS_ENUM } from 'src/enums';
 
 const SignInScreen = () => {
   const isPending = false
@@ -35,6 +35,7 @@ const SignInScreen = () => {
   });
 
   const handleSignIn = async (data: { email: string; password: string }) => {
+    NavigationService.navigate(STACKS_ENUM.MAIN_STACK);
     return data
   };
   const handleSignUpNavigate = () => {
@@ -47,12 +48,7 @@ const SignInScreen = () => {
     <FullScreenView>
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <Touchable
-            // disabled={isPending}
-            style={styles.backButtonContainer}
-            onPress={() => NavigationService.goBack()}>
-            <BackArrowIcon size={2.5} color={Colors.gray_600} />
-          </Touchable>
+          <BackButton />
           <View style={styles.mainBodyContainer}>
             <View style={styles.logoContainer}>
               <WaveIcon size={10} />
@@ -133,13 +129,6 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: widthPercentageToDP(5),
     marginTop: heightPercentageToDP(2),
-  },
-  backButtonContainer: {
-    alignSelf: 'flex-start',
-    padding: RFValue(8),
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: Colors.gray_600,
   },
   mainBodyContainer: {
     marginTop: heightPercentageToDP(3),

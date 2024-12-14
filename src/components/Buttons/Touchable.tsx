@@ -26,7 +26,7 @@ const Touchable: React.FC<TouchableProps> = ({
   const gesture = Gesture.Tap()
     .maxDuration(10000)
     .onTouchesDown(() => {
-      if (!disabled) scale.value = withTiming(0.9);
+      if (!disabled) scale.value = withTiming(0.8);
     })
     .onTouchesUp(() => {
       if (onPress && !disabled) {
@@ -44,7 +44,7 @@ const Touchable: React.FC<TouchableProps> = ({
   }, []);
   return (
     <Fragment>
-      {false ? <GestureDetector key={`gesture-6766`} gesture={gesture}>
+      {true ? <GestureDetector key={`gesture-6766`} gesture={gesture}>
         <Animated.View style={[style, rButtonStyle]}>{children}</Animated.View>
       </GestureDetector>
         :

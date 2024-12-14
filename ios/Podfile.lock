@@ -1838,15 +1838,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - snap-kit-react-native (0.4.0):
-    - React-Core
-    - SnapSDK/SCSDKCreativeKit (~> 1.15.0)
-    - SnapSDK/SCSDKLoginKit (~> 1.15.0)
-  - SnapSDK/SCSDKCoreKit (1.15.0)
-  - SnapSDK/SCSDKCreativeKit (1.15.0):
-    - SnapSDK/SCSDKCoreKit
-  - SnapSDK/SCSDKLoginKit (1.15.0):
-    - SnapSDK/SCSDKCoreKit
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
 
@@ -1925,12 +1916,10 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - "snap-kit-react-native (from `../node_modules/@snapchat/snap-kit-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
-    - SnapSDK
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2079,8 +2068,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  snap-kit-react-native:
-    :path: "../node_modules/@snapchat/snap-kit-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2092,7 +2079,7 @@ SPEC CHECKSUMS:
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
   hermes-engine: 06a9c6900587420b90accc394199527c64259db4
-  RCT-Folly: 84578c8756030547307e4572ab1947de1685c599
+  RCT-Folly: bf5c0376ffe4dd2cf438dcf86db385df9fdce648
   RCTDeprecation: fb7d408617e25d7f537940000d766d60149c5fea
   RCTRequired: 9aaf0ffcc1f41f0c671af863970ef25c422a9920
   RCTTypeSafety: e9a6e7d48184646eb0610295b74c0dd02768cbb2
@@ -2157,8 +2144,6 @@ SPEC CHECKSUMS:
   RNReanimated: eb3170ded1ec1f61d8129c6cc2df06778f99703f
   RNScreens: 44a3e358d5ccd7815c5ae9148988c562826992b2
   RNSVG: ec2e9d524612ee95db5df143a54518c5404d93f0
-  snap-kit-react-native: 751006199818fccb38c8a01196495167bc25e9fb
-  SnapSDK: 1e68aad748e080f49e3802559b3b76026666ef62
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: c7ea4c36c1d78ebbf45529b6e78283e4e0fe4956
 

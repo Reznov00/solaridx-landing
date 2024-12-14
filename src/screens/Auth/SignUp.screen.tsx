@@ -8,8 +8,9 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, WaveIcon } from 'src/assets';
+import { WaveIcon } from 'src/assets';
 import {
+  BackButton,
   CustomCheckBox,
   FullScreenView,
   PrimaryButton,
@@ -39,7 +40,7 @@ const SignUpScreen = () => {
 
   const handleSignUpPress = async (formData: SignupFormInterface) => {
     if (checkBoxSelected) {
-      return formData
+      NavigationService.navigate(SCREENS_ENUM.OTP_SCREEN, { email: formData.email });
     }
   };
 
@@ -58,12 +59,7 @@ const SignUpScreen = () => {
     <FullScreenView>
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <Touchable
-            // disabled={isPending}
-            style={styles.backButtonContainer}
-            onPress={() => NavigationService.goBack()}>
-            <BackArrowIcon size={2.5} color={Colors.gray_600} />
-          </Touchable>
+          <BackButton />
           <View style={styles.mainBodyContainer}>
             <View style={styles.logoContainer}>
               <WaveIcon size={10} />
@@ -166,13 +162,6 @@ const styles = StyleSheet.create({
     marginHorizontal: widthPercentageToDP(5),
     marginTop: heightPercentageToDP(2),
     paddingBottom: heightPercentageToDP(4),
-  },
-  backButtonContainer: {
-    alignSelf: 'flex-start',
-    padding: RFValue(8),
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: '#E6E6E6',
   },
   mainBodyContainer: {
     marginTop: heightPercentageToDP(2),

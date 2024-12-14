@@ -9,8 +9,9 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { BackArrowIcon, MessageIcon } from 'src/assets';
+import { MessageIcon } from 'src/assets';
 import {
+  BackButton,
   FullScreenView,
   PrimaryButton,
   TextBold,
@@ -97,9 +98,11 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
   };
 
   const handleEmailVerify = (pin: string) => {
+    NavigationService.navigate(SCREENS_ENUM.RESET_PASSWORD_SUCCESS_SCREEN);
     return pin
   };
   const handleForgotPassVerfy = (pin: string) => {
+    NavigationService.navigate(SCREENS_ENUM.RESET_PASSWORD_SCREEN, { email });
     return pin
   };
 
@@ -110,12 +113,7 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
   return (
     <FullScreenView>
       <View style={styles.container}>
-        <Touchable
-          // disabled={isPending}
-          style={styles.backButtonContainer}
-          onPress={() => NavigationService.goBack()}>
-          <BackArrowIcon size={2.5} color={Colors.gray_600} />
-        </Touchable>
+        <BackButton />
         <View style={styles.mainBodyContainer}>
           <View style={styles.logoContainer}>
             <MessageIcon size={10} />
@@ -198,13 +196,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: heightPercentageToDP(2.5),
     alignItems: 'center',
-  },
-  backButtonContainer: {
-    alignSelf: 'flex-start',
-    padding: RFValue(8),
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: '#E6E6E6',
   },
   otpForm: {
     flexDirection: 'row',
