@@ -9,12 +9,17 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* SolariDXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SolariDXTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-SolariDX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-SolariDX.a */; };
+		0DCC5CB862E84D05BAC2854F /* FunnelDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EB6EA9416D44FEF9055A5D1 /* FunnelDisplay-Bold.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1AE4336BE3924BEEBA22430A /* FunnelDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 460A37AC3BC145B3B8A92273 /* FunnelDisplay-Medium.ttf */; };
+		367316A8FDC84ECBAC3EEBAF /* FunnelDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91B74089E9A34EE1A01B4D8D /* FunnelDisplay-Regular.ttf */; };
 		6DCCC098C83EA4C4B4082D1D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		7699B88040F8A987B510C191 /* libPods-SolariDX-SolariDXTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-SolariDX-SolariDXTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A60E07F35A19421D81939A10 /* FunnelDisplay-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EB7F334BE634620B73A2700 /* FunnelDisplay-SemiBold.ttf */; };
+		EC59FC2D9F7C49809D1558EC /* FunnelDisplay-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4A5CF15056B4F559190AA3C /* FunnelDisplay-Light.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,12 +44,17 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SolariDX/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = SolariDX/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-SolariDX-SolariDXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SolariDX-SolariDXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EB7F334BE634620B73A2700 /* FunnelDisplay-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "FunnelDisplay-SemiBold.ttf"; path = "../src/assets/fonts/FunnelDisplay-SemiBold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-SolariDX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolariDX.debug.xcconfig"; path = "Target Support Files/Pods-SolariDX/Pods-SolariDX.debug.xcconfig"; sourceTree = "<group>"; };
+		460A37AC3BC145B3B8A92273 /* FunnelDisplay-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "FunnelDisplay-Medium.ttf"; path = "../src/assets/fonts/FunnelDisplay-Medium.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-SolariDX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolariDX.release.xcconfig"; path = "Target Support Files/Pods-SolariDX/Pods-SolariDX.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-SolariDX-SolariDXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolariDX-SolariDXTests.debug.xcconfig"; path = "Target Support Files/Pods-SolariDX-SolariDXTests/Pods-SolariDX-SolariDXTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-SolariDX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SolariDX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EB6EA9416D44FEF9055A5D1 /* FunnelDisplay-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "FunnelDisplay-Bold.ttf"; path = "../src/assets/fonts/FunnelDisplay-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SolariDX/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-SolariDX-SolariDXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolariDX-SolariDXTests.release.xcconfig"; path = "Target Support Files/Pods-SolariDX-SolariDXTests/Pods-SolariDX-SolariDXTests.release.xcconfig"; sourceTree = "<group>"; };
+		91B74089E9A34EE1A01B4D8D /* FunnelDisplay-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "FunnelDisplay-Regular.ttf"; path = "../src/assets/fonts/FunnelDisplay-Regular.ttf"; sourceTree = "<group>"; };
+		D4A5CF15056B4F559190AA3C /* FunnelDisplay-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "FunnelDisplay-Light.ttf"; path = "../src/assets/fonts/FunnelDisplay-Light.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -109,6 +119,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6A50B527092D4DA2B989E963 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5EB6EA9416D44FEF9055A5D1 /* FunnelDisplay-Bold.ttf */,
+				D4A5CF15056B4F559190AA3C /* FunnelDisplay-Light.ttf */,
+				460A37AC3BC145B3B8A92273 /* FunnelDisplay-Medium.ttf */,
+				91B74089E9A34EE1A01B4D8D /* FunnelDisplay-Regular.ttf */,
+				2EB7F334BE634620B73A2700 /* FunnelDisplay-SemiBold.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +148,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				6A50B527092D4DA2B989E963 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -247,6 +271,11 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				6DCCC098C83EA4C4B4082D1D /* PrivacyInfo.xcprivacy in Resources */,
+				0DCC5CB862E84D05BAC2854F /* FunnelDisplay-Bold.ttf in Resources */,
+				EC59FC2D9F7C49809D1558EC /* FunnelDisplay-Light.ttf in Resources */,
+				1AE4336BE3924BEEBA22430A /* FunnelDisplay-Medium.ttf in Resources */,
+				367316A8FDC84ECBAC3EEBAF /* FunnelDisplay-Regular.ttf in Resources */,
+				A60E07F35A19421D81939A10 /* FunnelDisplay-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
