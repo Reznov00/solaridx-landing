@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -17,13 +16,13 @@ const CustomBottomTab = ({
   descriptors,
   navigation,
 }: BottomTabBarProps) => {
-  const TAB_BAR_WIDTH = widthPercentageToDP(70);
-  const SelectTabWidth = widthPercentageToDP(35);
-  const NotSelectedTabWidth = widthPercentageToDP(17.5);
+  const TAB_BAR_WIDTH = widthPercentageToDP(100);
+  const SelectTabWidth = widthPercentageToDP(33.3);
+  const HitSlop = widthPercentageToDP(5);
 
   const translateAnimation = useAnimatedStyle(() => {
     const translateXValue =
-      state.index === 0 ? 0 : SelectTabWidth * state.index * 0.5;
+      state.index === 0 ? 0 : SelectTabWidth * state.index;
 
     return {
       transform: [{ translateX: withTiming(translateXValue, { duration: 300 }) }],
@@ -71,36 +70,26 @@ const CustomBottomTab = ({
             }
           };
 
-          const tabStyle = useAnimatedStyle(() => {
-            return {
-              width: withTiming(
-                isFocused ? SelectTabWidth : NotSelectedTabWidth,
-                { duration: 200 },
-              ),
-              opacity: withTiming(isFocused ? 1 : 0.8, { duration: 200 }),
-            };
-          });
-          const textstyle = useAnimatedStyle(() => {
-            return {
-              opacity: withTiming(isFocused ? 1 : 0, { duration: 200 }),
-            };
-          });
 
           return (
-            <Animated.View key={index} style={[tabStyle]}>
+            <Animated.View key={index} >
               <Pressable
                 accessibilityRole="button"
                 accessibilityState={isFocused ? { selected: true } : {}}
                 accessibilityLabel={options.tabBarAccessibilityLabel}
                 onPress={onPress}
-                style={{ flex: 1 }}>
+                hitSlop={{
+                  top: HitSlop,
+                  left: HitSlop,
+                  right: HitSlop,
+                }}
+                style={{ flex: 1 }}
+              >
                 <Animated.View style={[styles.contentContainer]}>
-                  <BottomTabIcon route={routeName} isFocused={isFocused} />
-                  {isFocused && (
-                    <Animated.Text style={[styles.barTextStyle, textstyle]}>
-                      {getRouteName(routeName)}
-                    </Animated.Text>
-                  )}
+                  <BottomTabIcon route={routeName} isFocused={false} />
+                  <Animated.Text style={[styles.barTextStyle]}>
+                    {getRouteName(routeName)}
+                  </Animated.Text>
                 </Animated.View>
               </Pressable>
             </Animated.View>
@@ -122,40 +111,37 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   tabBarContainer: {
-    flex: 1,
     flexDirection: 'row',
-    height: heightPercentageToDP(7),
-    position: 'absolute',
+    height: heightPercentageToDP(12),
     alignSelf: 'center',
     backgroundColor: '#fff',
-    borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'space-between',
-    bottom: heightPercentageToDP(3),
     overflow: 'hidden',
     elevation: 10,
+    paddingHorizontal: widthPercentageToDP(10),
+    // paddingBottom: heightPercentageToDP(3),
+    paddingTop: heightPercentageToDP(2)
   },
   slidingTabContainer: {
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   slidingTab: {
-    width: '90%',
-    height: '80%',
-    borderRadius: 100,
-    backgroundColor: Colors.primary_200,
+    width: '80%',
+    height: '10%',
+    borderRadius: widthPercentageToDP(1),
+    backgroundColor: Colors.gray_600,
   },
   contentContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
-    gap: widthPercentageToDP(3),
+    gap: widthPercentageToDP(2),
+    marginTop: heightPercentageToDP(0.5)
   },
   barTextStyle: {
-    color: Colors.white,
+    color: Colors.gray_900,
     fontSize: RFValue(14),
     fontFamily: 'FunnelDisplay-Bold',
   },

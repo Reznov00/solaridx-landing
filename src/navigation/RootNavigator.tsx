@@ -36,8 +36,8 @@ const RootNavigator = () => {
           {/* <Stack.Screen
             name={STACKS_ENUM.ONBOARDING_STACK}
             component={OnboardingStack}
-          /> */}
-          <Stack.Screen name={STACKS_ENUM.AUTH_STACK} component={AuthStack} />
+          />
+          <Stack.Screen name={STACKS_ENUM.AUTH_STACK} component={AuthStack} /> */}
           <Stack.Screen name={STACKS_ENUM.MAIN_STACK} component={MainStack} />
         </Stack.Navigator>
       </NavigationContainer>

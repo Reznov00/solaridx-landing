@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text } from 'react-native'
+import { FullScreenView } from 'src/components'
 
 const HomeScreen = () => {
   return (
-    <View>
+    <FullScreenView>
       <Text>HomeScreen</Text>
-    </View>
+    </FullScreenView>
   )
 }
 

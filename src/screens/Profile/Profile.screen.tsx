@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { FullScreenView } from 'src/components'
 
 const ProfileScreen = () => {
   return (
-    <View>
+    <FullScreenView>
       <Text>ProfileScreen</Text>
-    </View>
+    </FullScreenView>
   )
 }
 
