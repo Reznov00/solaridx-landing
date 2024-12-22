@@ -1,0 +1,5 @@
+<resources>
+    <string-array name="SCSDKScopes">
+        <item>https://auth.snapchat.com/oauth2/api/user.display_name</item>
+    </string-array>
+</resources>

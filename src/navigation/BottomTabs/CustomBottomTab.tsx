@@ -35,8 +35,8 @@ const CustomBottomTab = ({
         return 'Home';
       case 'PROFILE_MAIN_SCREEN':
         return 'Profile';
-      case 'HISTORY_MAIN_SCREEN':
-        return 'History';
+      case 'LEARNING_MAIN_SCREEN':
+        return 'Learning';
       default:
         return 'Home';
     }
@@ -114,13 +114,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: heightPercentageToDP(12),
     alignSelf: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.gray_50,
     alignItems: 'center',
     justifyContent: 'space-between',
     overflow: 'hidden',
     elevation: 10,
     paddingHorizontal: widthPercentageToDP(10),
-    // paddingBottom: heightPercentageToDP(3),
     paddingTop: heightPercentageToDP(2)
   },
   slidingTabContainer: {

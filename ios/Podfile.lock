@@ -1838,6 +1838,15 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - snap-kit-react-native (0.4.0):
+    - React-Core
+    - SnapSDK/SCSDKCreativeKit (~> 1.15.0)
+    - SnapSDK/SCSDKLoginKit (~> 1.15.0)
+  - SnapSDK/SCSDKCoreKit (1.15.0)
+  - SnapSDK/SCSDKCreativeKit (1.15.0):
+    - SnapSDK/SCSDKCoreKit
+  - SnapSDK/SCSDKLoginKit (1.15.0):
+    - SnapSDK/SCSDKCoreKit
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
 
@@ -1916,10 +1925,12 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - "snap-kit-react-native (from `../node_modules/@snapchat/snap-kit-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - SnapSDK
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2068,6 +2079,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  snap-kit-react-native:
+    :path: "../node_modules/@snapchat/snap-kit-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2144,6 +2157,8 @@ SPEC CHECKSUMS:
   RNReanimated: eb3170ded1ec1f61d8129c6cc2df06778f99703f
   RNScreens: 44a3e358d5ccd7815c5ae9148988c562826992b2
   RNSVG: ec2e9d524612ee95db5df143a54518c5404d93f0
+  snap-kit-react-native: 751006199818fccb38c8a01196495167bc25e9fb
+  SnapSDK: 1e68aad748e080f49e3802559b3b76026666ef62
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: c7ea4c36c1d78ebbf45529b6e78283e4e0fe4956
 

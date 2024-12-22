@@ -19,16 +19,16 @@ export type AuthStackParamList = {
 };
 
 export type HistoryStackParamList = {
-  HISTORY_MAIN_SCREEN: undefined;
+  LEARNING_MAIN_SCREEN: undefined;
 };
 
 export type BottomTabTypes =
   | 'HOME_MAIN_SCREEN'
-  | 'HISTORY_MAIN_SCREEN'
+  | 'LEARNING_MAIN_SCREEN'
   | 'PROFILE_MAIN_SCREEN';
 
 export type BottomTabParamList = {
   HOME_MAIN_SCREEN: undefined;
-  HISTORY_MAIN_SCREEN: undefined;
+  LEARNING_MAIN_SCREEN: undefined;
   PROFILE_MAIN_SCREEN: undefined;
 };
