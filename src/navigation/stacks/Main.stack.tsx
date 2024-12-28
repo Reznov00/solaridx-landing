@@ -3,6 +3,8 @@ import React, { Fragment } from 'react';
 import { STACKS_ENUM } from 'src/enums';
 
 import { BottomTabNavigator } from '../BottomTabs';
+import { ProfileStack } from './Profile.stack';
+import { HomeStack } from './Home.stack';
 
 const Stack = createStackNavigator();
 
@@ -13,10 +15,19 @@ const MainStack = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName={STACKS_ENUM.BOTTOM_TABS_STACK}>
-        <Stack.Screen
+      // initialRouteName={STACKS_ENUM.BOTTOM_TABS_STACK}
+      >
+        {/* <Stack.Screen
           name={STACKS_ENUM.BOTTOM_TABS_STACK}
           component={BottomTabNavigator}
+        />
+        <Stack.Screen
+          name={STACKS_ENUM.PROFILE_STACK}
+          component={ProfileStack}
+        /> */}
+        <Stack.Screen
+          name={STACKS_ENUM.HOME_STACK}
+          component={HomeStack}
         />
       </Stack.Navigator>
     </Fragment>

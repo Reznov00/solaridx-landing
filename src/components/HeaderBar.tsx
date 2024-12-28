@@ -6,15 +6,13 @@ import {
 } from 'react-native-responsive-screen';
 
 import { RFValue } from 'react-native-responsive-fontsize';
-import { BackArrowIcon, CloseIcon } from 'src/assets';
+import { CloseIcon } from 'src/assets';
 import { Colors } from 'src/themes';
-import { NavigationService } from 'src/utilities';
-import { TextRegular } from './Text';
-import { Touchable } from './Buttons';
+import { BackButton, Touchable } from './Buttons';
+import { TextMedium } from './Text';
 
 type HeaderBarI = {
   title: string;
-  onBackPressAction?: () => void;
   disabled?: boolean;
   showBackButton?: boolean;
   rightButton?: boolean;
@@ -25,7 +23,6 @@ type HeaderBarI = {
 const HeaderBar = (props: HeaderBarI) => {
   const {
     title,
-    onBackPressAction,
     disabled,
     showBackButton = true,
     rightButton = false,
@@ -37,24 +34,13 @@ const HeaderBar = (props: HeaderBarI) => {
     <View>
       <View style={[styles.container, containerStyle]}>
         {showBackButton && (
-          <Touchable
-            style={[
-              styles.backButtonContainer,
-              { marginRight: widthPercentageToDP(3) },
-            ]}
-            disabled={disabled}
-            onPress={() => {
-              NavigationService.goBack();
-              onBackPressAction && onBackPressAction();
-            }}>
-            <BackArrowIcon size={2.5} color={Colors.primary_600} />
-          </Touchable>
+          <BackButton />
         )}
         {title && (
           <View style={styles.headerTextContainer}>
-            <TextRegular fontSize="sh2" color="fontTertiary">
+            <TextMedium fontSize="sh2" color="gray_900">
               {title}
-            </TextRegular>
+            </TextMedium>
           </View>
         )}
         {rightButton && (
@@ -77,12 +63,13 @@ const styles = StyleSheet.create({
   container: {
     width: widthPercentageToDP(100),
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     paddingHorizontal: widthPercentageToDP(5),
     paddingBottom: heightPercentageToDP(1),
     marginTop: heightPercentageToDP(2),
+    gap: widthPercentageToDP(3)
   },
 
   headerTextContainer: {
@@ -91,6 +78,7 @@ const styles = StyleSheet.create({
     height: heightPercentageToDP(5),
     alignSelf: 'flex-start',
     flex: 1,
+
   },
   backButtonContainer: {
     alignSelf: 'flex-start',

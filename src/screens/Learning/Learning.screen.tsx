@@ -1,26 +1,12 @@
-import { LoginKit } from '@snapchat/snap-kit-react-native'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { FullScreenView, TextMedium, Touchable } from 'src/components'
+import { StyleSheet, View } from 'react-native'
+import { FullScreenView, TextMedium } from 'src/components'
 
 const LearningScreen = () => {
-
-  const handleval = async () => {
-    LoginKit.login()
-      .then((success) => {
-        console.log('first', success)
-      })
-      .catch((error) => {
-        console.log({ error })
-      });
-  }
   return (
     <FullScreenView>
       <View style={styles.container}>
-        <Text>LearningScreen</Text>
-        <Touchable onPress={handleval}>
-          <TextMedium>hhhhhh</TextMedium>
-        </Touchable>
+        <TextMedium>hhhhhh</TextMedium>
       </View>
     </FullScreenView>
   )

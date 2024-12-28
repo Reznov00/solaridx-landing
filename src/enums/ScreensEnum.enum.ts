@@ -2,6 +2,12 @@ export enum SCREENS_ENUM {
   //OnBoarding Stack Screens
   ONBOARDING_MAIN_SCREEN = 'ONBOARDING_MAIN_SCREEN',
 
+  //Profile Stack Screens
+  EDIT_PROFILE_SCREEN = 'EDIT_PROFILE_SCREEN',
+
+  //Home Stack Screens
+  STAISTICS_SCREEN = 'STAISTICS_SCREEN',
+
   //Auth Stack Screens
   SIGN_IN_SCREEN = 'SIGN_IN_SCREEN',
   SIGN_UP_SCREEN = 'SIGN_UP_SCREEN',

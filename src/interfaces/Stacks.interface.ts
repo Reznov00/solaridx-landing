@@ -22,6 +22,13 @@ export type HistoryStackParamList = {
   LEARNING_MAIN_SCREEN: undefined;
 };
 
+export type ProfileStackParamList = {
+  EDIT_PROFILE_SCREEN: undefined;
+};
+export type HomeStackParamList = {
+  STAISTICS_SCREEN: undefined;
+};
+
 export type BottomTabTypes =
   | 'HOME_MAIN_SCREEN'
   | 'LEARNING_MAIN_SCREEN'

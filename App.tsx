@@ -18,7 +18,9 @@ function App(): React.JSX.Element {
       {loading ? (
         <SplashScreen />
       ) : (
+        // <Suspense>
         <RootNavigator />
+        // </Suspense>
       )}
     </GestureHandlerRootView>
   );

@@ -10,30 +10,12 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-   maven {         
-        url = uri("https://storage.googleapis.com/snap-kit-build/maven")
-    }
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
-
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { 
-            url = uri("https://storage.googleapis.com/snap-kit-build/maven") // Snap Kit repository
-        }
-        jcenter() // Optional but can help find some dependencies
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
 }
 
 apply plugin: "com.facebook.react.rootproject"
-
-
-
-

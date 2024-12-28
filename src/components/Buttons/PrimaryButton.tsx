@@ -42,7 +42,7 @@ const PrimaryButton = ({
       ]}>
       {!!leftIcon && !loading && leftIcon}
       {!loading ? (
-        <TextBold fontSize="sh2" color="white" style={[textStyle, textStyle]}>
+        <TextBold fontSize="sh2" color="white" style={[textStyle]}>
           {title}
         </TextBold>
       ) : (
