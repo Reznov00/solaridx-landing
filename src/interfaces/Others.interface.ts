@@ -9,3 +9,7 @@ export interface LatLongInterface {
     latitude: number
     longitude: number
 }
+export interface ChartViewInterface {
+    labels: string[];
+    datasets: number[];
+}

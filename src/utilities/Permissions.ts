@@ -1,4 +1,4 @@
-import {PermissionsAndroid, Platform} from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 
 export const hasAndroidPermission = async () => {
   const getCheckPermissionPromise = async () => {
@@ -7,10 +7,24 @@ export const hasAndroidPermission = async () => {
         PermissionsAndroid.check(
           PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
         ),
-      ]).then(([hasReadMediaImagesPermission]) => hasReadMediaImagesPermission);
+        PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        ),
+      ]).then(
+        ([hasReadMediaImagesPermission, hasLocationPermission]) =>
+          hasReadMediaImagesPermission && hasLocationPermission,
+      );
     } else {
-      return PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      return Promise.all([
+        PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        ),
+        PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        ),
+      ]).then(
+        ([hasReadExternalStoragePermission, hasLocationPermission]) =>
+          hasReadExternalStoragePermission && hasLocationPermission,
       );
     }
   };
@@ -19,19 +33,32 @@ export const hasAndroidPermission = async () => {
   if (hasPermission) {
     return true;
   }
+
   const getRequestPermissionPromise = async () => {
     if ((Platform.Version as number) >= 33) {
       return PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-      ]).then(
-        statuses =>
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      ]).then(statuses => {
+        return (
           statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] ===
-          PermissionsAndroid.RESULTS.GRANTED,
-      );
+          PermissionsAndroid.RESULTS.GRANTED &&
+          statuses[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
+          PermissionsAndroid.RESULTS.GRANTED
+        );
+      });
     } else {
-      return PermissionsAndroid.request(
+      return PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      ]).then(statuses => {
+        return (
+          statuses[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] ===
+          PermissionsAndroid.RESULTS.GRANTED &&
+          statuses[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
+          PermissionsAndroid.RESULTS.GRANTED
+        );
+      });
     }
   };
 

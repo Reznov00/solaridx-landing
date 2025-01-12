@@ -17,14 +17,14 @@ const MainStack = () => {
         }}
       // initialRouteName={STACKS_ENUM.BOTTOM_TABS_STACK}
       >
-        {/* <Stack.Screen
+        <Stack.Screen
           name={STACKS_ENUM.BOTTOM_TABS_STACK}
           component={BottomTabNavigator}
         />
         <Stack.Screen
           name={STACKS_ENUM.PROFILE_STACK}
           component={ProfileStack}
-        /> */}
+        />
         <Stack.Screen
           name={STACKS_ENUM.HOME_STACK}
           component={HomeStack}

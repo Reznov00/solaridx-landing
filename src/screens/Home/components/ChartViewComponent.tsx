@@ -3,18 +3,17 @@ import { StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+import { ChartViewInterface } from 'src/interfaces';
 import { Colors } from 'src/themes';
 
-const ChartViewComponent = () => {
+
+const ChartViewComponent = ({ data }: { data: ChartViewInterface }) => {
 
     const solarIrradiationData = {
-        labels: Array.from({ length: 9 }, (_, i) => `${i}:00`),
-        // labels: Array.from({ length: 9 }, () => `${Math.random() * 10}`),
+        labels: data.labels ?? Array.from({ length: 9 }, (_, i) => `${i}:00`),
         datasets: [
             {
-                data: Array.from({ length: 9 }, () => Math.random() * 10),
-                // data: Array.from({ length: 9 }, (_, i) => i),
-                color: (opacity = 1) => `rgba(255, 99, 132, ${opacity})`,
+                data: data.datasets ?? Array.from({ length: 9 }, () => Math.random() * 10),
             },
         ]
     };
@@ -24,7 +23,7 @@ const ChartViewComponent = () => {
         <View style={styles.container}>
             <LineChart
                 data={solarIrradiationData}
-                width={widthPercentageToDP(100)}
+                width={widthPercentageToDP(90)}
                 height={heightPercentageToDP(50)}
                 fromZero
                 // xLabelsOffset={ }
@@ -43,8 +42,8 @@ const ChartViewComponent = () => {
                         fontSize: RFValue(9),
                     },
                     propsForDots: {
-                        r: "4",
-                        strokeWidth: "2",
+                        r: "5",
+                        strokeWidth: "4",
                         stroke: "#ffa726",
                     },
 
@@ -52,7 +51,6 @@ const ChartViewComponent = () => {
                 bezier
                 style={{
                     paddingTop: heightPercentageToDP(3),
-                    // paddingRight: widthPercentageToDP(13)
                 }}
 
             />
@@ -64,9 +62,8 @@ export { ChartViewComponent };
 
 const styles = StyleSheet.create({
     container: {
-        // height: widthPercentageToDP(100),
-        // width: widthPercentageToDP(100),
-        // justifyContent: 'flex-end',
-        // alignItems: 'center',
+        width: widthPercentageToDP(100),
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });

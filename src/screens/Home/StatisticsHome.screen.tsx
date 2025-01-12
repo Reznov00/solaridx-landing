@@ -4,93 +4,100 @@ import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
   useDerivedValue,
-  useSharedValue
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS,
 } from 'react-native-reanimated';
-import { AnimatedScrollView } from 'react-native-reanimated/lib/typescript/component/ScrollView';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { FullScreenView, HeaderBar, TextRegular, Touchable } from 'src/components';
+import { FullScreenView, HeaderBar, Touchable } from 'src/components';
 import { ChartViewComponent } from './components';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Colors } from 'src/themes';
+import { BackArrowIcon } from 'src/assets';
+import { dummySolarData } from 'src/constants';
 
 const PAGE_WIDTH = widthPercentageToDP(100);
+
 const StatisticsHomeScreen = () => {
   const translateX = useSharedValue(0);
-  const [pages,] = useState(Array(15).fill('a'))
+  const [pages,] = useState(Array(15).fill('a'));
+  const [dates] = useState(Array(15).fill(null).map((_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+    return date.toDateString();
+  }));
+  const [currentDate, setCurrentDate] = useState(dates[0]);
 
   const activeIndex = useDerivedValue(() => {
-    return Math.round(translateX.value / PAGE_WIDTH);
+    const index = Math.round(translateX.value / PAGE_WIDTH);
+    runOnJS(setCurrentDate)(dates[index]);
+    return index;
   });
 
-  const scrollRef = useAnimatedRef<AnimatedScrollView>();
-  const onIconPress = useCallback(() => {
-    if (activeIndex.value === pages.length - 1) {
+  const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
+  const onIconPress = useCallback(() => {
+    if (activeIndex.value < pages.length - 1) {
+      scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value + 1) });
     }
-    scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value + 1) });
   }, []);
 
   const onBackIconPress = useCallback(() => {
-    if (activeIndex.value > 0) {  // Prevent going back from the first card
+    if (activeIndex.value > 0) {
       scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value - 1) });
     }
   }, []);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: event => {
-      // Only allow scrolling to the left if at the first card
-      const newOffsetX = event.contentOffset.x;
-      if (activeIndex.value === 0 && newOffsetX < 0) {
-        scrollRef.current?.scrollTo({ x: 0, animated: false });
-      } else {
-        translateX.value = newOffsetX;
-      }
+      translateX.value = event.contentOffset.x;
     },
   });
 
+  // Animated opacity for the date
+  const animatedDateStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(1, { duration: 0 }),
+    };
+  });
 
   return (
     <FullScreenView>
       <HeaderBar title='Predictions' />
       <Animated.ScrollView
         ref={scrollRef}
-        style={{ maxHeight: heightPercentageToDP(60), }}
+        style={{ maxHeight: heightPercentageToDP(60) }}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
         scrollEventThrottle={16}>
-        {pages.map((_, index) => (
-          <View style={styles.chartContainer} key={index}>
-            <ChartViewComponent />
-          </View>
+        {dummySolarData.map((item, index) => (
+          <ChartViewComponent key={index} data={item} />
         ))}
       </Animated.ScrollView>
       <View style={styles.footer}>
         <Touchable onPress={onBackIconPress} style={styles.buttonContainer}>
-          <TextRegular fontSize='bt' color='gray_900'>Previous</TextRegular>
+          <BackArrowIcon size={3} color={Colors.gray_900} />
         </Touchable>
+        <Animated.Text style={[styles.dateStyle, animatedDateStyle]}>
+          {currentDate}
+        </Animated.Text>
         <Touchable onPress={onIconPress} style={styles.buttonContainer}>
-          <TextRegular fontSize='bt' color='gray_900'>Next</TextRegular>
+          <BackArrowIcon style={{ transform: [{ rotate: '180deg' }] }} size={3} color={Colors.gray_900} />
         </Touchable>
       </View>
-    </FullScreenView >
+    </FullScreenView>
   );
 };
 
 export { StatisticsHomeScreen };
 
 const styles = StyleSheet.create({
-  chartContainer: {
-    // width: widthPercentageToDP(100),
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  dataContainer: {
-    alignItems: 'center',
-    marginHorizontal: widthPercentageToDP(7),
-  },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -101,6 +108,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: widthPercentageToDP(6),
     paddingVertical: heightPercentageToDP(1),
   },
+  dateStyle: {
+    fontSize: RFValue(14),
+    color: Colors.gray_900,
+  },
 });
-
-

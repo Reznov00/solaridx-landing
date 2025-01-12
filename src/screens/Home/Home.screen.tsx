@@ -1,26 +1,28 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import MapView, { MapMarker, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
-import { FullScreenView, PrimaryButton, TextInput, VirtualizedView } from 'src/components';
+import { FullScreenView, PrimaryButton, TextInput, TextRegular, Touchable, VirtualizedView } from 'src/components';
 import { latLongSchema } from 'src/constants';
 import { STACKS_ENUM } from 'src/enums';
 import { LatLongInterface } from 'src/interfaces';
-import { NavigationService } from 'src/utilities';
+import { useRecentCoordsAtom } from 'src/store';
+import { Colors } from 'src/themes';
+import { dissmissKeyBoard, NavigationService } from 'src/utilities';
 
 
 const HomeScreen = () => {
+  const { recentCoords, setRecentCoords } = useRecentCoordsAtom()
   const [initalCoordinates, setInitalCoordinates] = useState({
     latitude: 33.565471,
     longitude: 73.024163,
   });
   const mapRef = useRef<MapView | null>(null);
-  const markerRef = useRef<MapMarker | null>(null);
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(latLongSchema)
   });
 
@@ -30,6 +32,11 @@ const HomeScreen = () => {
     moveToRegion(newLatitude, newLongitude)
     setTimeout(() => {
       NavigationService.navigate(STACKS_ENUM.HOME_STACK)
+      setRecentCoords({
+        latitude: data.latitude,
+        longitude: data.longitude,
+      })
+      reset()
     }, 5000);
   };
 
@@ -51,7 +58,6 @@ const HomeScreen = () => {
       longitude: longitude
     })
   }
-
   return (
     <FullScreenView>
       <View style={styles.container}>
@@ -67,9 +73,18 @@ const HomeScreen = () => {
               latitudeDelta: 0.025,
               longitudeDelta: 0.025,
             }}
+
+            showsIndoors={true}
+            showsMyLocationButton={true}
+            zoomControlEnabled={true}
+            zoomEnabled={true}
+            zoomTapEnabled={true}
+            showsScale={true}
+            showsBuildings={true}
+            showsCompass={true}
+
           >
             <Marker
-              ref={markerRef}
               coordinate={initalCoordinates}
               title="Hello"
               description="I am a marker."
@@ -77,28 +92,30 @@ const HomeScreen = () => {
           </MapView>
         </View>
         <VirtualizedView style={styles.mapInputs}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              label="Latitude"
-              placeholder="Latitude"
-              name="latitude"
-              control={control}
-              keyboardType="decimal-pad"
-              maxLength={9}
-              touched={!!errors.latitude?.message}
-              error={errors.latitude?.message}
-            />
-            <TextInput
-              label="Longitude"
-              placeholder="Longitude"
-              name="longitude"
-              control={control}
-              keyboardType="decimal-pad"
-              maxLength={9}
-              touched={!!errors.longitude?.message}
-              error={errors.longitude?.message}
-            />
-          </View>
+          <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                label="Latitude"
+                placeholder="Latitude"
+                name="latitude"
+                control={control}
+                keyboardType="decimal-pad"
+                maxLength={9}
+                touched={!!errors.latitude?.message}
+                error={errors.latitude?.message}
+              />
+              <TextInput
+                label="Longitude"
+                placeholder="Longitude"
+                name="longitude"
+                control={control}
+                keyboardType="decimal-pad"
+                maxLength={9}
+                touched={!!errors.longitude?.message}
+                error={errors.longitude?.message}
+              />
+            </View>
+          </TouchableWithoutFeedback>
           <View style={styles.inputContainer}>
             <PrimaryButton
               onPress={handleSubmit(handleForm)}
@@ -113,6 +130,16 @@ const HomeScreen = () => {
               }}
             />
           </View>
+          {!!recentCoords && <View>
+            <View style={{ marginBottom: 5, alignSelf: 'flex-start' }}>
+              <TextRegular fontSize="st" color="gray_900">
+                Recent Coordinates
+              </TextRegular>
+            </View>
+            <Touchable onPress={() => moveToRegion(recentCoords.latitude, recentCoords.longitude)} style={styles.recentCoordinates}>
+              <TextRegular fontSize='bt' >{`>  ${recentCoords?.latitude} , ${recentCoords?.longitude}`}</TextRegular>
+            </Touchable>
+          </View>}
         </VirtualizedView>
       </View>
     </FullScreenView>
@@ -142,4 +169,10 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  recentCoordinates: {
+    backgroundColor: Colors.gray_100,
+    borderRadius: RFValue(5),
+    paddingHorizontal: widthPercentageToDP(3),
+    paddingVertical: heightPercentageToDP(1),
+  }
 });
