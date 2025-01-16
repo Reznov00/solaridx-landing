@@ -4,6 +4,7 @@ const STORAGE_KEYS = {
   TOKEN: 'token',
   USER: 'user',
   APPLE_USER_DATA: 'APPLE_USER_DATA',
+  RECENT_COORDS: 'RECENT_COORDS',
 };
 
 async function saveItem(key: string, value: string | boolean) {

@@ -70,3 +70,19 @@ export const passwordUpdateSchema = Yup.object().shape({
     .equals([Yup.ref('newPassword'), null], `Passwords don't match`)
     .label('confirmPassword'),
 });
+
+
+export const latLongSchema = Yup.object({
+  latitude: Yup
+    .number()
+    .typeError("Latitude must be a number")
+    .required("Latitude is required")
+    .min(-90, "Latitude must be at least -90")
+    .max(90, "Latitude must be at most 90"),
+  longitude: Yup
+    .number()
+    .typeError("Longitude must be a number")
+    .required("Longitude is required")
+    .min(-180, "Longitude must be at least -180")
+    .max(180, "Longitude must be at most 180"),
+});

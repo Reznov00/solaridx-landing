@@ -18,13 +18,15 @@ import {
   Touchable,
 } from 'src/components';
 import { signInValidationSchema } from 'src/constants';
-import { SCREENS_ENUM, STACKS_ENUM } from 'src/enums';
+import { SCREENS_ENUM } from 'src/enums';
+import { useSignInService } from 'src/services';
 import { Colors } from 'src/themes';
 import { NavigationService } from 'src/utilities';
 import { SocialContainer } from './components';
 
 const SignInScreen = () => {
-  const isPending = false
+  const { handleService, isPending } = useSignInService();
+
 
   const {
     handleSubmit,
@@ -35,12 +37,14 @@ const SignInScreen = () => {
   });
 
   const handleSignIn = async (data: { email: string; password: string }) => {
-    NavigationService.navigate(STACKS_ENUM.MAIN_STACK);
-    return data
+    handleService({
+      email: data.email,
+      password: data.password,
+      provider: 'email',
+    });
   };
   const handleSignUpNavigate = () => {
     NavigationService.navigate(SCREENS_ENUM.SIGN_UP_SCREEN);
-    console.log('first')
   };
 
 

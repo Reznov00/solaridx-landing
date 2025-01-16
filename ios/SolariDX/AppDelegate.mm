@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-
+#import <GoogleMaps/GoogleMaps.h>
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
@@ -8,6 +8,12 @@
 {
   self.moduleName = @"SolariDX";
   // You can add your custom initial props in the dictionary below.
+
+
+  // For Google Maps
+  [GMSServices provideAPIKey:@"AIzaSyCK-nWD9Qs2Yy-LGFfan69WGX-zFBKBLeI"]; 
+
+  
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 

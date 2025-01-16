@@ -18,14 +18,15 @@ import {
 import { resetPasswordSchema } from 'src/constants';
 import { SCREENS_ENUM } from 'src/enums';
 import { AuthStackProps } from 'src/interfaces';
+import { useResetPasswordService } from 'src/services';
 import { Colors } from 'src/themes';
-import { NavigationService } from 'src/utilities';
 
 const ResetPasswordScreen = ({
   route,
 }: AuthStackProps<SCREENS_ENUM.RESET_PASSWORD_SCREEN>) => {
   const email = route?.params?.email;
-  const isPending = false
+  const { handleService, isPending } = useResetPasswordService();
+
 
   const {
     handleSubmit,
@@ -36,8 +37,10 @@ const ResetPasswordScreen = ({
   });
 
   const handleResetPassword = async data => {
-    NavigationService.navigate(SCREENS_ENUM.RESET_PASSWORD_SUCCESS_SCREEN, { mode: 'FORGOT_PASSWORD' });
-    return { data, email }
+    handleService({
+      email: email,
+      password: data.password,
+    });
   };
 
   return (

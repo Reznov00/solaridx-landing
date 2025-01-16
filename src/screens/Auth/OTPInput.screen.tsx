@@ -20,8 +20,9 @@ import {
 } from 'src/components';
 import { SCREENS_ENUM } from 'src/enums';
 import { AuthStackProps } from 'src/interfaces';
+import { useHandleOTPService, useResendOTPService } from 'src/services';
 import { Colors } from 'src/themes';
-import { dissmissKeyBoard, NavigationService } from 'src/utilities';
+import { dissmissKeyBoard } from 'src/utilities';
 
 const TIMER_LENGTH = 60;
 const OTP_LENGTH = 6;
@@ -31,8 +32,9 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''));
   const [timer, setTimer] = useState<number>(TIMER_LENGTH);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(true);
-  const isPending = false
-  const loading = false
+  const { handleService, isPending } = useHandleOTPService();
+  const { handleService: resendOTPService, isPending: loading } =
+    useResendOTPService();
   const inputs = Array.from({ length: OTP_LENGTH }, () =>
     useRef<TextInput>(null),
   );
@@ -56,9 +58,11 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
   }, [isTimerRunning]);
 
   const resendOTP = async () => {
-    setTimer(TIMER_LENGTH);
-    setIsTimerRunning(true);
-    setOtp(Array(OTP_LENGTH).fill(''));
+    resendOTPService({ email: email, }).then(() => {
+      setTimer(TIMER_LENGTH);
+      setIsTimerRunning(true);
+      setOtp(Array(OTP_LENGTH).fill(''));
+    });
   };
 
   const focusInput = (index: number) => {
@@ -98,12 +102,10 @@ const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
   };
 
   const handleEmailVerify = (pin: string) => {
-    NavigationService.navigate(SCREENS_ENUM.RESET_PASSWORD_SUCCESS_SCREEN);
-    return pin
+    handleService({ authCode: pin, email, type: mode });
   };
   const handleForgotPassVerfy = (pin: string) => {
-    NavigationService.navigate(SCREENS_ENUM.RESET_PASSWORD_SCREEN, { email });
-    return pin
+    handleService({ authCode: pin, email, type: mode });
   };
 
   const isOTPComplete = () => {

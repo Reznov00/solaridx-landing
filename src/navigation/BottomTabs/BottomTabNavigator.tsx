@@ -2,11 +2,11 @@ import {
   BottomTabBarProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import React, {Fragment} from 'react';
-import {SCREENS_ENUM} from 'src/enums';
-import {BottomTabParamList} from 'src/interfaces';
-import {HistoryScreen, HomeScreen, ProfileScreen} from 'src/screens';
-import {CustomBottomTab} from './CustomBottomTab';
+import React, { Fragment } from 'react';
+import { SCREENS_ENUM } from 'src/enums';
+import { BottomTabParamList } from 'src/interfaces';
+import { LearningScreen, HomeScreen, ProfileScreen } from 'src/screens';
+import { CustomBottomTab } from './CustomBottomTab';
 
 const CustomBottomTabs = (props: BottomTabBarProps) => {
   return <CustomBottomTab {...props} />;
@@ -24,21 +24,21 @@ const BottomTabNavigator = () => {
         <Tab.Screen
           name={SCREENS_ENUM.HOME_MAIN_SCREEN}
           component={HomeScreen}
-          options={{unmountOnBlur: true}}
+        // options={{ unmountOnBlur: true }}
         />
         <Tab.Screen
-          name={SCREENS_ENUM.HISTORY_MAIN_SCREEN}
-          component={HistoryScreen}
-          options={{unmountOnBlur: true}}
+          name={SCREENS_ENUM.LEARNING_MAIN_SCREEN}
+          component={LearningScreen}
+        // options={{ unmountOnBlur: true }}
         />
         <Tab.Screen
           name={SCREENS_ENUM.PROFILE_MAIN_SCREEN}
           component={ProfileScreen}
-          options={{unmountOnBlur: true}}
+        // options={{ unmountOnBlur: true }}
         />
       </Tab.Navigator>
     </Fragment>
   );
 };
 
-export {BottomTabNavigator};
+export { BottomTabNavigator };

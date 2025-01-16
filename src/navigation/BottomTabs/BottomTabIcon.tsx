@@ -17,7 +17,7 @@ const BottomTabIcon = ({ route, isFocused }: Props) => {
         return <HomeIcon size={3} color={color} />;
       case 'PROFILE_MAIN_SCREEN':
         return <ProfileIcon size={3} color={color} />;
-      case 'HISTORY_MAIN_SCREEN':
+      case 'LEARNING_MAIN_SCREEN':
         return <HistoryIcon size={3} color={color} />;
       default:
         break;
