@@ -13,7 +13,6 @@ import { Colors } from 'src/themes';
 import { NavigationService } from 'src/utilities';
 
 const ProfileScreen = () => {
-
   const { setShowLogoutBottomSheet } = useLogoutBottomSheetAtom()
   const { setShowDeleteAccountBotomSheet } = useDeleteAccountBottomSheetAtom()
   const PrivacyPolicyURL = 'https://www.fashx.ai/privacy-policy';

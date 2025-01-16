@@ -19,10 +19,8 @@ const recentCoordsAtom = atom<LatLongInterface | null>();
 //   asyncStorage as AsyncStorage<null | LatLongInterface>,
 // );
 const deleteAccountBottomSheet = atom<AccountDeletionType>('none');
-const logoutAtom = atom(false);
 
 // Atom Hooks
-
 export const useUserAtom = () => {
   const [user, setUser] = useAtom(userAtom);
   return { user, setUser };
@@ -38,8 +36,4 @@ export const useDeleteAccountBottomSheetAtom = () => {
   return { showDeleteAccountBotomSheet, setShowDeleteAccountBotomSheet };
 };
 
-export const useLogoutBottomSheetAtom = () => {
-  const [showLogoutBottomSheet, setShowLogoutBottomSheet] = useAtom(logoutAtom);
-  return { showLogoutBottomSheet, setShowLogoutBottomSheet };
-};
 

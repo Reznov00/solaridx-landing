@@ -10,10 +10,11 @@ import {
 import { TickIcon } from 'src/assets';
 import { PrimaryButton, TextInput, TextRegular } from 'src/components';
 import { passwordUpdateSchema } from 'src/constants';
+import { useUpdatePasswordService } from 'src/services';
 import { Colors } from 'src/themes';
 
 const ChangePasswordComponent = () => {
-  const isPending = false
+  const { handleService, isPending } = useUpdatePasswordService()
   const {
     control,
     formState: { errors },
@@ -25,7 +26,7 @@ const ChangePasswordComponent = () => {
 
   const changePassword = data => {
     reset();
-    return data
+    handleService({ newPassword: data.newPassword, oldPassword: data.currentPassword })
   };
 
   return (

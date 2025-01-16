@@ -17,11 +17,11 @@ import {
   TextRegular
 } from 'src/components';
 import { forgotPasswordSchema } from 'src/constants';
-import { SCREENS_ENUM } from 'src/enums';
+import { useForgetPasswordService } from 'src/services';
 import { Colors } from 'src/themes';
-import { NavigationService } from 'src/utilities';
 
 const ForgotPasswordScreen = () => {
+  const { handleService, isPending } = useForgetPasswordService();
   const {
     handleSubmit,
     control,
@@ -29,10 +29,10 @@ const ForgotPasswordScreen = () => {
   } = useForm({
     resolver: yupResolver(forgotPasswordSchema),
   });
-  const isPending = false
+
 
   const handleEmail = async data => {
-    NavigationService.navigate(SCREENS_ENUM.OTP_SCREEN, { email: data.userEmail, mode: 'FORGOT_PASSWORD' });
+    handleService({ email: data.userEmail });
   };
 
   return (

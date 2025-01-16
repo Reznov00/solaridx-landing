@@ -26,10 +26,11 @@ import { SignupFormInterface } from 'src/interfaces';
 import { Colors } from 'src/themes';
 import { NavigationService } from 'src/utilities';
 import { SocialContainer } from './components';
+import { useSignUpService } from 'src/services';
 
 const SignUpScreen = () => {
   const [checkBoxSelected, setCheckBox] = useState(false);
-  const isPending = false
+  const { handleService, isPending } = useSignUpService();
   const {
     handleSubmit,
     control,
@@ -40,7 +41,12 @@ const SignUpScreen = () => {
 
   const handleSignUpPress = async (formData: SignupFormInterface) => {
     if (checkBoxSelected) {
-      NavigationService.navigate(SCREENS_ENUM.OTP_SCREEN, { email: formData.email });
+      handleService({
+        email: formData.email,
+        provider: 'email',
+        name: formData.name,
+        password: formData.password,
+      });
     }
   };
 

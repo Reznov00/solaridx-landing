@@ -3,6 +3,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { DeleteDataBottomSheet, LogoutBottomSheet } from 'src/components';
 import { STACKS_ENUM } from 'src/enums';
 import { useAuthTokenAtom } from 'src/store';
 import { toastConfig } from 'src/themes';
@@ -49,14 +50,16 @@ const RootNavigator = () => {
         // initialRouteName={initialRoute}
         >
 
-          {/* <Stack.Screen
+          <Stack.Screen
             name={STACKS_ENUM.ONBOARDING_STACK}
             component={OnboardingStack}
           />
-          <Stack.Screen name={STACKS_ENUM.AUTH_STACK} component={AuthStack} /> */}
+          <Stack.Screen name={STACKS_ENUM.AUTH_STACK} component={AuthStack} />
           <Stack.Screen name={STACKS_ENUM.MAIN_STACK} component={MainStack} />
         </Stack.Navigator>
       </NavigationContainer>
+      <DeleteDataBottomSheet />
+      <LogoutBottomSheet />
       <Toast config={toastConfig} />
     </>
   );
