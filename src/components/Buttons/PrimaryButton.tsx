@@ -20,6 +20,7 @@ export interface PrimaryButtonProps {
   shadowEnabled?: boolean;
   loading?: boolean;
   leftIcon?: React.ReactElement;
+  rightIcon?: React.ReactElement;
 }
 
 const PrimaryButton = ({
@@ -30,6 +31,7 @@ const PrimaryButton = ({
   disabled = false,
   loading = false,
   leftIcon,
+  rightIcon,
 }: PrimaryButtonProps) => {
   return (
     <Touchable
@@ -48,6 +50,8 @@ const PrimaryButton = ({
       ) : (
         <ActivityIndicator size={'small'} color={Colors.white} />
       )}
+      {!!rightIcon && !loading && rightIcon}
+
     </Touchable>
   );
 };
@@ -65,5 +69,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: widthPercentageToDP(3),
     height: heightPercentageToDP(6),
+    flexDirection: 'row',
+    gap: widthPercentageToDP(2)
   },
 });

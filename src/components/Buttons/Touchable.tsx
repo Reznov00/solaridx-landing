@@ -13,20 +13,22 @@ type TouchableProps = {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   disabled?: boolean
+  scaleValue?: number
 };
 
 const Touchable: React.FC<TouchableProps> = ({
   children,
   onPress,
   style,
-  disabled = false
+  disabled = false,
+  scaleValue = 0.8
 }) => {
   const scale = useSharedValue(1);
 
   const gesture = Gesture.Tap()
     .maxDuration(10000)
     .onTouchesDown(() => {
-      if (!disabled) scale.value = withTiming(0.8);
+      if (!disabled) scale.value = withTiming(scaleValue);
     })
     .onTouchesUp(() => {
       if (onPress && !disabled) {

@@ -10,6 +10,8 @@ export interface LatLongInterface {
     longitude: number
 }
 export interface ChartViewInterface {
-    labels: string[];
-    datasets: number[];
+    hour: number,
+    cloudySkyEnergy: number,
+    clearSkyEnergy: number,
+    date: string
 }

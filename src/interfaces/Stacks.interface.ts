@@ -28,6 +28,9 @@ export type ProfileStackParamList = {
 export type HomeStackParamList = {
   STAISTICS_SCREEN: undefined;
 };
+export type ChatStackParamList = {
+  CHAT_ROOM_SCREEN: undefined;
+};
 
 export type BottomTabTypes =
   | 'HOME_MAIN_SCREEN'
