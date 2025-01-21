@@ -48,7 +48,7 @@ const TextInput = (props: TextInputProps) => {
       defaultValue={props.initialValue}
       render={({ field: { onChange, value, onBlur } }) => {
         return (
-          <View style={styles.mainContainer}>
+          <View style={[styles.mainContainer, props.containerStyle]}>
             {!!props.label && (
               <View style={{ marginBottom: 5, alignSelf: 'flex-start' }}>
                 <TextRegular fontSize="st" color="gray_900">
@@ -57,7 +57,7 @@ const TextInput = (props: TextInputProps) => {
               </View>
             )}
 
-            <View style={[styles.container, props.containerStyle]}>
+            <View style={[styles.container]}>
               {props.leftIcon && (
                 <View style={[styles.leftIconContainer]}>
                   <View style={styles.leftIconSubContainer}>
@@ -78,15 +78,15 @@ const TextInput = (props: TextInputProps) => {
                   placeholder={props.placeholder || ''}
                   style={[
                     styles.textInput,
-                    props.style,
                     {
                       color: editable
                         ? Colors.gray_900
                         : Colors.gray_600,
                       opacity: !editable ? 0.5 : 1,
                       textAlign: I18nManager.isRTL ? 'right' : 'left',
-                      height: true ? '100%' : heightPercentageToDP(4.5),
+                      height: '100%',
                     },
+                    props.style,
                   ]}
                   placeholderTextColor={
                     props.placeholderTextColor || '#rgba(11, 10, 10, 0.5)'
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '100%',
-    height: heightPercentageToDP(5),
+    height: heightPercentageToDP(6),
     flexDirection: 'row',
     backgroundColor: Colors.gray_50,
     borderRadius: widthPercentageToDP(3),

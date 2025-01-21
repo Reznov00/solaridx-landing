@@ -1,2 +1,2 @@
-export * from './ProductCardShimmer';
-export * from './ProductListShimmer';
+export * from './ChatRoomItemShimmer';
+export * from './ChatListShimmer';

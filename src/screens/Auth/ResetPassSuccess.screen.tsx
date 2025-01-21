@@ -13,12 +13,12 @@ import {
   TextRegular,
 } from 'src/components';
 import { SCREENS_ENUM, STACKS_ENUM } from 'src/enums';
-import { AuthStackProps } from 'src/interfaces';
+import { GenericRouteProps } from 'src/interfaces';
 import { NavigationService } from 'src/utilities';
 
 const ResetPassSuccessScreen = ({
   route,
-}: AuthStackProps<SCREENS_ENUM.RESET_PASSWORD_SUCCESS_SCREEN>) => {
+}: GenericRouteProps<SCREENS_ENUM.RESET_PASSWORD_SUCCESS_SCREEN>) => {
   const resetPassMode = route?.params?.mode === 'FORGOT_PASSWORD';
   const [checked, setChecked] = useState(false);
   const title = resetPassMode

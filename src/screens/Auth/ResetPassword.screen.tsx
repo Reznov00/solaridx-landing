@@ -17,13 +17,13 @@ import {
 } from 'src/components';
 import { resetPasswordSchema } from 'src/constants';
 import { SCREENS_ENUM } from 'src/enums';
-import { AuthStackProps } from 'src/interfaces';
+import { GenericRouteProps } from 'src/interfaces';
 import { useResetPasswordService } from 'src/services';
 import { Colors } from 'src/themes';
 
 const ResetPasswordScreen = ({
   route,
-}: AuthStackProps<SCREENS_ENUM.RESET_PASSWORD_SCREEN>) => {
+}: GenericRouteProps<SCREENS_ENUM.RESET_PASSWORD_SCREEN>) => {
   const email = route?.params?.email;
   const { handleService, isPending } = useResetPasswordService();
 

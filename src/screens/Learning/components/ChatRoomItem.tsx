@@ -3,8 +3,10 @@ import { StyleSheet, ViewToken } from 'react-native'
 import Animated, { SharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
 import { TextMedium, Touchable } from 'src/components'
+import { SCREENS_ENUM, STACKS_ENUM } from 'src/enums'
 import { ChatRoomInterface } from 'src/interfaces'
 import { Colors } from 'src/themes'
+import { NavigationService } from 'src/utilities'
 
 type ChatRoomProps = {
     viewableItems: SharedValue<ViewToken<ChatRoomInterface>[]>;
@@ -12,13 +14,13 @@ type ChatRoomProps = {
 };
 
 const ChatRoomItem = ({ item, viewableItems }: ChatRoomProps) => {
-    const { createdAt, id, name } = item
+    const { _id, name } = item
 
     const rStyle = useAnimatedStyle(() => {
         const isVisible = Boolean(
             viewableItems.value
                 .filter(item => item.isViewable)
-                .find(viewableItem => viewableItem.item.id === id),
+                .find(viewableItem => viewableItem.item._id === _id),
         );
 
         return {
@@ -31,11 +33,14 @@ const ChatRoomItem = ({ item, viewableItems }: ChatRoomProps) => {
         };
     }, []);
 
-    const handleChatPress = () => { }
+    const handleChatPress = () => {
+        NavigationService.nestedNavigate(STACKS_ENUM.CHAT_STACK, SCREENS_ENUM.CHAT_ROOM_SCREEN, { roomDetails: item })
+    }
     return (
         <Animated.View style={rStyle}>
             <Touchable onPress={handleChatPress} scaleValue={0.95} style={styles.container}>
                 <TextMedium numberOfLines={1} fontSize='st'>{name}</TextMedium>
+                {/* <BackArrowIcon size={2} style={{ transform: [{ rotate: '180deg' }] }} color={Colors.gray_900} /> */}
             </Touchable>
         </Animated.View>
     )
@@ -55,5 +60,8 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         elevation: 10,
         backgroundColor: Colors.white,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
 })

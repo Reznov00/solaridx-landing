@@ -1,16 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, ListRenderItemInfo, StyleSheet, View, ViewToken } from 'react-native'
+import { useSharedValue } from 'react-native-reanimated'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
-import { ChatIcon } from 'src/assets'
-import { FullScreenView, PrimaryButton, TextMedium } from 'src/components'
+import { ChatIcon, EmptyBoxIcon } from 'src/assets'
+import { ChatListShimmer, FullScreenView, PrimaryButton, TextMedium, TextRegular } from 'src/components'
 import { chatRooms } from 'src/constants'
+import { SCREENS_ENUM, STACKS_ENUM } from 'src/enums'
 import { ChatRoomInterface } from 'src/interfaces'
 import { FontSizes, LineHeight } from 'src/themes'
+import { NavigationService } from 'src/utilities'
 import { ChatRoomItem } from './components'
-import { useSharedValue } from 'react-native-reanimated'
+
+const NoChatFound = () => {
+  return <View style={styles.noChatsFoundContainer}>
+    <EmptyBoxIcon size={20} />
+    <TextRegular>No Chats Found</TextRegular>
+  </View>
+}
 
 const LearningScreen = () => {
   const viewableItems = useSharedValue<ViewToken<ChatRoomInterface>[]>([]);
+  const [data, setData] = useState<ChatRoomInterface[]>()
+  const [isPending, setIsPending] = useState(true)
+
+
+  useEffect(() => {
+    setTimeout(() => {
+      setData(chatRooms)
+      setIsPending(false)
+    }, 3000);
+  }, [])
 
   const renderChatRooms = ({ item, index }: ListRenderItemInfo<ChatRoomInterface>) => {
     return <ChatRoomItem
@@ -20,6 +39,7 @@ const LearningScreen = () => {
     />
   }
 
+
   return (
     <FullScreenView>
       <View style={styles.container}>
@@ -27,29 +47,31 @@ const LearningScreen = () => {
           <TextMedium fontSize='sh1'>My Chats</TextMedium>
           <PrimaryButton
             title='New'
-            onPress={() => { }}
+            onPress={() => NavigationService.nestedNavigate(STACKS_ENUM.CHAT_STACK, SCREENS_ENUM.CHAT_ROOM_SCREEN)}
             rightIcon={<ChatIcon size={2.5} />}
             buttonStyle={styles.newChatButton}
             textStyle={styles.newChatTextStyle}
+            disabled={isPending}
           />
         </View>
         <View style={styles.chatsListContainer}>
-          <FlatList
-            data={chatRooms}
-            renderItem={renderChatRooms}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-            ListFooterComponent={<View />}
-            ListFooterComponentStyle={styles.listFooterStyle}
-            onViewableItemsChanged={({ viewableItems: vItems }) => {
-              viewableItems.value = vItems;
-            }}
-            style={{
-              paddingTop: heightPercentageToDP(2),
-              paddingHorizontal: widthPercentageToDP(5),
-            }}
-
-          />
+          {!isPending ? (
+            <FlatList
+              data={data}
+              style={styles.listStyle}
+              renderItem={renderChatRooms}
+              ListFooterComponent={<View />}
+              keyExtractor={(item) => item._id}
+              ListEmptyComponent={<NoChatFound />}
+              showsVerticalScrollIndicator={false}
+              ListFooterComponentStyle={styles.listFooterStyle}
+              onViewableItemsChanged={({ viewableItems: vItems }) => {
+                viewableItems.value = vItems;
+              }}
+            />
+          )
+            : <ChatListShimmer />
+          }
 
         </View>
       </View>
@@ -85,5 +107,15 @@ const styles = StyleSheet.create({
   },
   listFooterStyle: {
     height: heightPercentageToDP(4)
-  }
+  },
+  listStyle: {
+    paddingTop: heightPercentageToDP(2),
+    paddingHorizontal: widthPercentageToDP(5),
+  },
+  noChatsFoundContainer: {
+    height: heightPercentageToDP(60),
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: heightPercentageToDP(3)
+  },
 })

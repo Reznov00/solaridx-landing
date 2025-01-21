@@ -125,13 +125,12 @@ const styles = StyleSheet.create({
   slidingTabContainer: {
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
-    // justifyContent: 'center',
   },
   slidingTab: {
     width: '80%',
     height: '10%',
     borderRadius: widthPercentageToDP(1),
-    backgroundColor: Colors.gray_600,
+    backgroundColor: Colors.primary_500,
   },
   contentContainer: {
     flex: 1,
