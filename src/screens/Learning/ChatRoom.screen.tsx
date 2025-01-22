@@ -1,5 +1,14 @@
 import React, { useState } from 'react'
-import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native'
+import {
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard
+} from 'react-native'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
 import { SendIcon } from 'src/assets'
 import { BackButton, FullScreenView, TextArea, TextMedium, Touchable } from 'src/components'
@@ -9,44 +18,48 @@ import { ChatRoomInterface, GenericRouteProps, MessageItemInterface } from 'src/
 import { Colors } from 'src/themes'
 import { MessageItem } from './components'
 
-
 const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCREEN>) => {
   const roomDetails = route?.params?.roomDetails as ChatRoomInterface;
   const [prompt, setPrompt] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
   const [chats, setChats] = useState<MessageItemInterface[]>(dummyChats)
   const isNewChat = !!roomDetails
 
   const renderChats = ({ item }: ListRenderItemInfo<MessageItemInterface>) => {
-    return <View style={styles.messageContainer}>
-      <MessageItem
-        item={item}
-        isNewChat={isNewChat}
-        type='prompt'
-      />
-      <MessageItem
-        item={item}
-        isNewChat={isNewChat}
-        type='answer'
-      />
-    </View>
+    return (
+      <View style={styles.messageContainer}>
+        <MessageItem
+          item={item}
+          isNewChat={isNewChat}
+          type='prompt'
+        />
+        <MessageItem
+          item={item}
+          isNewChat={isNewChat}
+          type='answer'
+          loading={loading}
+        />
+      </View>
+    )
   }
 
   const handleSendMessage = async () => {
     if (!prompt.trim()) return;
+    setLoading(true)
 
     const newMessage: MessageItemInterface = {
       _id: String(new Date().getTime()),
       prompt: prompt.trim(),
-      answer: '...',
+      answer: '',
       chatRoom: roomDetails,
       createdAt: new Date().toISOString(),
     };
 
     setChats((prevChats) => [newMessage, ...prevChats]);
+    setPrompt('')
 
     try {
       const apiAnswer = await fetchAnswerFromAPI(prompt);
-
       setChats((prevChats) =>
         prevChats.map((chat) =>
           chat._id === newMessage._id ? { ...chat, answer: apiAnswer } : chat
@@ -67,42 +80,51 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
   };
 
   const fetchAnswerFromAPI = async (query: string) => {
-    // Simulate delay
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    return `Answer to: ${query}`; // Replace with real API call
+    setLoading(false)
+    return `Answer to: ${query}`;
   };
 
   return (
-    <FullScreenView>
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <BackButton />
-          <TextMedium fontSize='sh2' numberOfLines={1}>{roomDetails ? roomDetails.name : 'New Chat'}</TextMedium>
-        </View>
-        <View style={styles.subContainer}>
-          <View style={styles.chatBoxContainer}>
-            <FlatList
-              data={chats}
-              renderItem={renderChats}
-              keyExtractor={(item) => item._id}
-              inverted
-              showsVerticalScrollIndicator={false}
-            />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <FullScreenView>
+          <View style={styles.container}>
+            <View style={styles.headerContainer}>
+              <BackButton />
+              <TextMedium fontSize='sh2' numberOfLines={1}>
+                {roomDetails ? roomDetails.name : 'New Chat'}
+              </TextMedium>
+            </View>
+            <View style={styles.subContainer}>
+              <View style={styles.chatBoxContainer}>
+                <FlatList
+                  data={chats}
+                  renderItem={renderChats}
+                  keyExtractor={(item) => item._id}
+                  inverted
+                  showsVerticalScrollIndicator={false}
+                />
+              </View>
+              <View style={styles.chatSenderContainer}>
+                <TextArea
+                  setTextData={setPrompt}
+                  textData={prompt}
+                  style={{ flex: 1 }}
+                  placeholder='Ask me anything....'
+                />
+                <Touchable onPress={handleSendMessage} style={styles.sendButtonStyle}>
+                  <SendIcon size={4} />
+                </Touchable>
+              </View>
+            </View>
           </View>
-          <View style={styles.chatSenderContainer}>
-            <TextArea
-              setTextData={setPrompt}
-              textData={prompt}
-              style={{ flex: 1 }}
-              placeholder='Ask me anything....'
-            />
-            <Touchable onPress={handleSendMessage} style={styles.sendButtonStyle}>
-              <SendIcon size={4} />
-            </Touchable>
-          </View>
-        </View>
-      </View>
-    </FullScreenView>
+        </FullScreenView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -112,7 +134,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: widthPercentageToDP(5),
-    paddingVertical: heightPercentageToDP(1)
   },
   subContainer: {
     flex: 1,
@@ -146,7 +167,7 @@ const styles = StyleSheet.create({
     gap: widthPercentageToDP(2),
     paddingTop: heightPercentageToDP(2),
     borderTopWidth: 2,
-    borderTopColor: Colors.gray_200
+    borderTopColor: Colors.gray_200,
   },
   sendButtonStyle: {
     backgroundColor: Colors.primary_500,
