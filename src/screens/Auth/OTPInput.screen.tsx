@@ -19,14 +19,14 @@ import {
   Touchable,
 } from 'src/components';
 import { SCREENS_ENUM } from 'src/enums';
-import { AuthStackProps } from 'src/interfaces';
+import { GenericRouteProps } from 'src/interfaces';
 import { useHandleOTPService, useResendOTPService } from 'src/services';
 import { Colors } from 'src/themes';
 import { dissmissKeyBoard } from 'src/utilities';
 
 const TIMER_LENGTH = 60;
 const OTP_LENGTH = 6;
-const OTPInputScreen = ({ route }: AuthStackProps<SCREENS_ENUM.OTP_SCREEN>) => {
+const OTPInputScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.OTP_SCREEN>) => {
   const email = route?.params?.email;
   const mode = route?.params?.mode || 'EMAIL_VERIFICATION';
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''));

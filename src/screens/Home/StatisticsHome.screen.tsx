@@ -1,24 +1,23 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
+  runOnJS,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useDerivedValue,
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  runOnJS,
+  useSharedValue
 } from 'react-native-reanimated';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { FullScreenView, HeaderBar, Touchable } from 'src/components';
-import { ChartViewComponent } from './components';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { Colors } from 'src/themes';
 import { BackArrowIcon } from 'src/assets';
-import { dummySolarData } from 'src/constants';
+import { FullScreenView, HeaderBar, Touchable } from 'src/components';
+import { ChartViewInterface } from 'src/interfaces';
+import { Colors } from 'src/themes';
+import { generateDatesArray } from 'src/utilities';
+import { ChartViewComponent } from './components';
 
 const PAGE_WIDTH = widthPercentageToDP(100);
 
@@ -38,17 +37,17 @@ const StatisticsHomeScreen = () => {
     return index;
   });
 
-  const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollRef = useAnimatedRef<Animated.FlatList<ChartViewInterface>>();
 
   const onIconPress = useCallback(() => {
     if (activeIndex.value < pages.length - 1) {
-      scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value + 1) });
+      scrollRef.current?.scrollToIndex({ index: activeIndex.value + 1 });
     }
   }, []);
 
   const onBackIconPress = useCallback(() => {
     if (activeIndex.value > 0) {
-      scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value - 1) });
+      scrollRef.current?.scrollToIndex({ index: activeIndex.value - 1 });
     }
   }, []);
 
@@ -58,33 +57,29 @@ const StatisticsHomeScreen = () => {
     },
   });
 
-  // Animated opacity for the date
-  const animatedDateStyle = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(1, { duration: 0 }),
-    };
-  });
 
   return (
     <FullScreenView>
       <HeaderBar title='Predictions' />
-      <Animated.ScrollView
+      <Animated.FlatList
         ref={scrollRef}
-        style={{ maxHeight: heightPercentageToDP(60) }}
+        data={generateDatesArray()}
+        renderItem={({ item, index }) => <ChartViewComponent key={index} date={item.date} />}
         horizontal
+        scrollEnabled={false}
+        style={{ maxHeight: heightPercentageToDP(45) }}
         pagingEnabled
+        keyExtractor={(_, index) => index.toExponential()}
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
-        scrollEventThrottle={16}>
-        {dummySolarData.map((item, index) => (
-          <ChartViewComponent key={index} data={item} />
-        ))}
-      </Animated.ScrollView>
+        scrollEventThrottle={16}
+        maxToRenderPerBatch={15}
+      />
       <View style={styles.footer}>
         <Touchable onPress={onBackIconPress} style={styles.buttonContainer}>
           <BackArrowIcon size={3} color={Colors.gray_900} />
         </Touchable>
-        <Animated.Text style={[styles.dateStyle, animatedDateStyle]}>
+        <Animated.Text style={[styles.dateStyle]}>
           {currentDate}
         </Animated.Text>
         <Touchable onPress={onIconPress} style={styles.buttonContainer}>

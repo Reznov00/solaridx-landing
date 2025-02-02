@@ -1,14 +1,12 @@
 import { RouteProp } from '@react-navigation/native';
 import { OTPScreenType } from './Others.interface';
+import { ChatRoomInterface } from './Chats.interface';
 export type GenericRouteProps<T extends keyof any> = {
   route: RouteProp<any, T>;
 };
 export type OnboardingStackParamList = {
   ONBOARDING_MAIN_SCREEN: undefined;
 };
-
-export type AuthStackProps<T extends keyof AuthStackParamList> =
-  GenericRouteProps<T>;
 export type AuthStackParamList = {
   SIGN_IN_SCREEN: undefined;
   SIGN_UP_SCREEN: undefined;
@@ -27,6 +25,9 @@ export type ProfileStackParamList = {
 };
 export type HomeStackParamList = {
   STAISTICS_SCREEN: undefined;
+};
+export type ChatStackParamList = {
+  CHAT_ROOM_SCREEN: { roomDetails: ChatRoomInterface; };
 };
 
 export type BottomTabTypes =

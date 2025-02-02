@@ -1,59 +1,60 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+// import { LineChart } from 'react-native-chart-kit';
+import { LineChart, lineDataItem } from "react-native-gifted-charts";
+
 import { RFValue } from 'react-native-responsive-fontsize';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
-import { ChartViewInterface } from 'src/interfaces';
+import { fetchGraphData } from 'src/services';
 import { Colors } from 'src/themes';
 
 
-const ChartViewComponent = ({ data }: { data: ChartViewInterface }) => {
+const ChartViewComponent = ({ date }: { date: string }) => {
 
-    const solarIrradiationData = {
-        labels: data.labels ?? Array.from({ length: 9 }, (_, i) => `${i}:00`),
-        datasets: [
-            {
-                data: data.datasets ?? Array.from({ length: 9 }, () => Math.random() * 10),
-            },
-        ]
-    };
+    useEffect(() => {
+        fetchGraphData({ date })
+    }, [])
+
+    const lineDaata: lineDataItem[] = fetchGraphData({ date }).flatMap((item) => {
+        return { value: item.clearSkyEnergy, dataPointText: item.hour.toString(), }
+    })
+
 
 
     return (
         <View style={styles.container}>
-            <LineChart
-                data={solarIrradiationData}
-                width={widthPercentageToDP(90)}
-                height={heightPercentageToDP(50)}
-                fromZero
-                // xLabelsOffset={ }
-                yLabelsOffset={22}
-                // yAxisSuffix=" kW/m²"
-                verticalLabelRotation={90}
-                // horizontalLabelRotation={45}
-                chartConfig={{
-                    // backgroundColor: Colors.gray_400,
-                    backgroundGradientFrom: Colors.primary_600,
-                    backgroundGradientTo: Colors.gray_900,
-                    decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    propsForLabels: {
-                        fontSize: RFValue(9),
-                    },
-                    propsForDots: {
-                        r: "5",
-                        strokeWidth: "4",
-                        stroke: "#ffa726",
-                    },
-
-                }}
-                bezier
-                style={{
-                    paddingTop: heightPercentageToDP(3),
-                }}
-
-            />
+            <View style={{ width: widthPercentageToDP(90), overflow: 'hidden', backgroundColor: Colors.primary_900 }}>
+                <LineChart
+                    data={lineDaata}
+                    isAnimated
+                    height={heightPercentageToDP(35)}
+                    showVerticalLines
+                    spacing={widthPercentageToDP(7)}
+                    initialSpacing={10}
+                    color1={Colors.white}
+                    textColor1={Colors.white}
+                    dataPointsColor1={Colors.white}
+                    textFontSize={RFValue(10)}
+                    noOfSections={5}
+                    showDataPointLabelOnFocus
+                    hideRules
+                    showFractionalValues
+                    verticalLinesColor={Colors.primary_600}
+                    rulesColor={Colors.primary_600}
+                    indicatorColor={'white'}
+                    xAxisLabelTextStyle={{ color: Colors.white }}
+                    yAxisLabelContainerStyle={{ color: Colors.white }}
+                    yAxisTextStyle={{ color: Colors.white }}
+                    yAxisColor={Colors.white}
+                    xAxisColor={Colors.white}
+                    endSpacing={widthPercentageToDP(1)}
+                    dataPointsHeight={6}
+                    dataPointsWidth={6}
+                    textShiftY={heightPercentageToDP(-1)}
+                    textShiftX={widthPercentageToDP(-3)}
+                // showStripOnFocus
+                />
+            </View>
         </View>
     )
 }

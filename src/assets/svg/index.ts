@@ -25,6 +25,9 @@ export * from './LogoutIcon';
 export * from './MinusIcon';
 export * from './CopyIcon';
 export * from './CoinIcon';
+export * from './ChatIcon';
+export * from './EmptyBoxIcon';
+export * from './SendIcon';
 
 export * from './SocialMediaIcons';
 export * from './FilterIcon';

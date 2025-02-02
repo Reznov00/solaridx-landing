@@ -9,63 +9,147 @@ import { ChartViewInterface } from "src/interfaces";
 
 export const dummySolarData: ChartViewInterface[] = [
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.8, 1.2, 3.5, 5.6, 8.2, 6.7, 4.5],
+    hour: 0,
+    cloudySkyEnergy: 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.1, 1.8, 4.2, 6.1, 8.8, 7.1, 5.3],
+    "hour": 1,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.3, 2.1, 3.9, 6.7, 7.9, 6.8, 5.0],
+    "hour": 2,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.2, 1.6, 4.0, 6.0, 9.0, 7.2, 5.8],
+    "hour": 3,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.5, 2.3, 4.6, 7.1, 9.2, 6.9, 5.4],
+    "hour": 4,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.4, 1.9, 4.1, 6.5, 8.5, 6.6, 4.9],
+    "hour": 5,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.6, 2.5, 5.0, 7.5, 9.5, 6.3, 5.7],
+    "hour": 6,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.7, 2.7, 4.9, 7.2, 9.3, 6.4, 5.2],
+    "hour": 7,
+    "cloudySkyEnergy": 0.0028,
+    clearSkyEnergy: 0.0028,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.8, 2.9, 5.2, 7.6, 8.8, 6.1, 5.6],
+    "hour": 8,
+    "cloudySkyEnergy": 0.0168,
+    clearSkyEnergy: 0.0181,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.9, 2.2, 4.8, 7.0, 8.9, 6.5, 5.1],
+    "hour": 9,
+    "cloudySkyEnergy": 0.0247,
+    clearSkyEnergy: 0.0344,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.2, 2.4, 5.3, 6.9, 9.1, 7.4, 4.8],
+    "hour": 10,
+    "cloudySkyEnergy": 0.0333,
+    clearSkyEnergy: 0.0464,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.3, 2.6, 4.7, 7.3, 8.7, 6.0, 5.5],
+    "hour": 11,
+    "cloudySkyEnergy": 0.0375,
+    clearSkyEnergy: 0.0523,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.4, 2.8, 4.5, 7.7, 8.3, 7.0, 5.0],
+    "hour": 12,
+    "cloudySkyEnergy": 0.0368,
+    clearSkyEnergy: 0.0512,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.5, 1.8, 4.3, 6.8, 9.4, 6.8, 5.9],
+    "hour": 13,
+    "cloudySkyEnergy": 0.0361,
+    clearSkyEnergy: 0.0434,
+    date: "2025-01-07"
   },
   {
-    labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
-    datasets: [0, 0.4, 0.6, 2.0, 5.1, 7.8, 8.1, 6.9, 4.7],
+    "hour": 14,
+    "cloudySkyEnergy": 0.0288,
+    clearSkyEnergy: 0.0297,
+    date: "2025-01-07"
   },
-];
+  {
+    "hour": 15,
+    "cloudySkyEnergy": 0.0123,
+    clearSkyEnergy: 0.0127,
+    date: "2025-01-07"
+  },
+  {
+    "hour": 16,
+    "cloudySkyEnergy": 0.0006,
+    clearSkyEnergy: 0.0007,
+    date: "2025-01-07"
+  },
+  {
+    "hour": 17,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
+  },
+  {
+    "hour": 18,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
+  },
+  {
+    "hour": 19,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
+  },
+  {
+    "hour": 20,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
+  },
+  {
+    "hour": 21,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
+  },
+  {
+    "hour": 22,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
+  },
+  {
+    "hour": 23,
+    "cloudySkyEnergy": 0,
+    clearSkyEnergy: 0,
+    date: "2025-01-07"
+  }
+]

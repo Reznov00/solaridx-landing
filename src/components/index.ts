@@ -12,3 +12,4 @@ export * from './AnimatedTickMark';
 export * from './Buttons';
 export * from './Modals';
 export * from './BottomSheets';
+export * from './Shimmers';
