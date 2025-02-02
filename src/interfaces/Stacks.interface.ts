@@ -29,6 +29,10 @@ export type HomeStackParamList = {
 export type ChatStackParamList = {
   CHAT_ROOM_SCREEN: { roomDetails: ChatRoomInterface; };
 };
+export type IntegrationsStackParamList = {
+  INTEGRATIONS_MAIN_SCREEN: undefined;
+  SPECTACLES_MANAGE_SCREEN: undefined;
+};
 
 export type BottomTabTypes =
   | 'HOME_MAIN_SCREEN'

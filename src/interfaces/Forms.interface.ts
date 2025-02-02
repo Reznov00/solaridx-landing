@@ -22,6 +22,10 @@ export interface UpdatePasswordInterface {
   oldPassword: string;
   newPassword: string;
 }
+export interface SpectaclesConnectInterface {
+  unique_code: string;
+  username: string;
+}
 export interface UpdateUserDataInterface {
   profilePicture?: string,
   name?: string,

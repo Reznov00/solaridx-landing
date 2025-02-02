@@ -71,6 +71,19 @@ export const passwordUpdateSchema = Yup.object().shape({
     .label('confirmPassword'),
 });
 
+export const spectaclesConnectSchema = Yup.object().shape({
+  username: Yup.string()
+    .trim()
+    .strict(true)
+    .required('Username is required')
+    .label('Username'),
+  unique_code: Yup.string()
+    .matches(/^\d{4}$/, 'Unique code must be exactly 4 digits')
+    .required('Unique code is required')
+    .label('Unique Code'),
+});
+
+
 
 export const latLongSchema = Yup.object({
   latitude: Yup

@@ -28,6 +28,11 @@ export * from './CoinIcon';
 export * from './ChatIcon';
 export * from './EmptyBoxIcon';
 export * from './SendIcon';
+export * from './PrivacyIcon';
+export * from './TermsConditionsIcon';
+export * from './TrashIcon';
+export * from './IntegrationsIcon';
+export * from './SpectaclesIcon';
 
 export * from './SocialMediaIcons';
 export * from './FilterIcon';

@@ -1,15 +1,14 @@
 import React from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { LogoutIcon } from 'src/assets';
+import { EditIcon, IntegrationsIcon, LogoutIcon, PrivacyIcon, TermsConditionsIcon, TrashIcon } from 'src/assets';
 import { FullScreenView, PrimaryButton, TextBold } from 'src/components';
 import { STACKS_ENUM } from 'src/enums';
 import { useDeleteAccountBottomSheetAtom, useLogoutBottomSheetAtom } from 'src/store';
-import { Colors } from 'src/themes';
+import { Colors, FontSizes } from 'src/themes';
 import { NavigationService } from 'src/utilities';
 
 const ProfileScreen = () => {
@@ -27,7 +26,6 @@ const ProfileScreen = () => {
     <FullScreenView>
       <View style={styles.container}>
         <View style={styles.logoContainer}>
-          {/* <LogoIcon size={5} /> */}
           <TextBold>User Profile</TextBold>
         </View>
         <View>
@@ -39,6 +37,18 @@ const ProfileScreen = () => {
             }
             title="Edit Profile"
             shadowEnabled={false}
+            leftIcon={<EditIcon v2 size={2.5} />}
+
+          />
+          <PrimaryButton
+            buttonStyle={styles.buttonStyle}
+            textStyle={styles.buttonTextStyle}
+            onPress={() =>
+              NavigationService.navigate(STACKS_ENUM.INTEGRATIONS_STACK)
+            }
+            title="Integrations"
+            shadowEnabled={false}
+            leftIcon={<IntegrationsIcon size={2.8} />}
           />
           <PrimaryButton
             buttonStyle={styles.buttonStyle}
@@ -46,6 +56,7 @@ const ProfileScreen = () => {
             onPress={() => handlePress(TermsnConditionsURL)}
             title="Terms & Conditions"
             shadowEnabled={false}
+            leftIcon={<TermsConditionsIcon size={2.5} />}
           />
           <PrimaryButton
             buttonStyle={styles.buttonStyle}
@@ -53,6 +64,7 @@ const ProfileScreen = () => {
             onPress={() => handlePress(PrivacyPolicyURL)}
             title="Privacy & Policy"
             shadowEnabled={false}
+            leftIcon={<PrivacyIcon size={2.5} />}
           />
           <PrimaryButton
             buttonStyle={styles.buttonStyle}
@@ -60,6 +72,7 @@ const ProfileScreen = () => {
             onPress={() => setShowDeleteAccountBotomSheet('deleteUserAccountData')}
             title="Delete User Data"
             shadowEnabled={false}
+            leftIcon={<TrashIcon size={2.2} />}
           />
           <PrimaryButton
             buttonStyle={styles.buttonStyle}
@@ -67,6 +80,7 @@ const ProfileScreen = () => {
             onPress={() => setShowDeleteAccountBotomSheet('deleteUserAccount')}
             title="Delete User Account"
             shadowEnabled={false}
+            leftIcon={<TrashIcon size={2.2} />}
           />
           <PrimaryButton
             buttonStyle={[
@@ -76,7 +90,7 @@ const ProfileScreen = () => {
             textStyle={[styles.buttonTextStyle, { color: Colors.white }]}
             onPress={() => setShowLogoutBottomSheet(true)}
             title="Log out"
-            leftIcon={<LogoutIcon size={3} />}
+            leftIcon={<LogoutIcon size={2.2} />}
             shadowEnabled={false}
           />
         </View>
@@ -107,13 +121,14 @@ const styles = StyleSheet.create({
     paddingVertical: heightPercentageToDP(1),
     marginVertical: heightPercentageToDP(1),
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    gap: widthPercentageToDP(3),
+    gap: widthPercentageToDP(5),
+    paddingHorizontal: widthPercentageToDP(5)
   },
   buttonTextStyle: {
     color: Colors.gray_900,
-    fontWeight: '400',
-    fontSize: RFValue(14),
+    fontSize: FontSizes.st,
+    flex: 1
   },
 });

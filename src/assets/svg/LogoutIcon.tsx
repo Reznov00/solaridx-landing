@@ -1,26 +1,26 @@
 import * as React from 'react';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-import Svg, {Path, SvgProps} from 'react-native-svg';
-import {Colors} from 'src/themes';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import Svg, { Path, SvgProps } from 'react-native-svg';
+import { Colors } from 'src/themes';
 
 interface SVGPropsII extends SvgProps {
   size?: number;
 }
-const LogoutIcon = ({size = 5, ...props}: SVGPropsII) => (
+const LogoutIcon = ({ size = 5, ...props }: SVGPropsII) => (
   <Svg
     onPress={props.onPress}
     width={heightPercentageToDP(size)}
     height={heightPercentageToDP(size)}
     fill="none"
     {...props}
-    viewBox="-1 0 21 21">
+    viewBox="0 0 24 24">
     <Path
       stroke={props.color ?? Colors.white}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={2}
-      d="M7 1H5.8c-1.68 0-2.52 0-3.162.327a3 3 0 0 0-1.311 1.311C1 3.28 1 4.12 1 5.8v8.4c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C3.28 19 4.12 19 5.8 19H7m5-14-5 5m0 0 5 5m-5-5h12"
+      strokeWidth={2.5}
+      d="M9.4 7.56c.31-3.6 2.16-5.07 6.21-5.07h.13c4.47 0 6.26 1.79 6.26 6.26v6.52c0 4.47-1.79 6.26-6.26 6.26h-.13c-4.02 0-5.87-1.45-6.2-4.99M15.5 12H4.12M6.35 8.65 3 12l3.35 3.35"
     />
   </Svg>
 );
-export {LogoutIcon};
+export { LogoutIcon };

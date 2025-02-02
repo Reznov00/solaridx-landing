@@ -1,9 +1,7 @@
 import { atom, useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
-import { AsyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
-import { AccountDeletionType, LatLongInterface, User } from 'src/interfaces';
-import { STORAGE_KEYS } from 'src/utilities';
-import { asyncStorage } from './storageHelpers';
+import { atomWithMutation } from 'jotai-tanstack-query';
+import { axiosInstance, linkSpectaclesURL, unlinkSpectaclesURL } from 'src/apis';
+import { AccountDeletionType, LatLongInterface, SpectaclesConnectInterface, User } from 'src/interfaces';
 
 //Atoms
 const userAtom = atom<User | null>();
@@ -35,5 +33,21 @@ export const useDeleteAccountBottomSheetAtom = () => {
     useAtom(deleteAccountBottomSheet);
   return { showDeleteAccountBotomSheet, setShowDeleteAccountBotomSheet };
 };
+
+export const spectaclesLinkAtom = atomWithMutation(() => ({
+  mutationKey: ['spectaclesLinkAtom'],
+  mutationFn: async (values: SpectaclesConnectInterface) => {
+    const { data } = await axiosInstance.post(linkSpectaclesURL, values);
+    return data;
+  },
+}));
+
+export const spectaclesUnLinkAtom = atomWithMutation(() => ({
+  mutationKey: ['spectaclesUnLinkAtom'],
+  mutationFn: async () => {
+    const { data } = await axiosInstance.patch(unlinkSpectaclesURL);
+    return data;
+  },
+}));
 
 

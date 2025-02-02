@@ -8,7 +8,6 @@ interface SVGPropsII extends SvgProps {
 }
 const ProfileIcon = ({ size = 5, ...props }: SVGPropsII) => (
   <Svg
-    onPress={props.onPress}
     width={heightPercentageToDP(size)}
     height={heightPercentageToDP(size)}
     fill="none"
