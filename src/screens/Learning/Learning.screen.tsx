@@ -8,7 +8,7 @@ import { chatRooms } from 'src/constants'
 import { SCREENS_ENUM, STACKS_ENUM } from 'src/enums'
 import { ChatRoomInterface } from 'src/interfaces'
 import { FontSizes, LineHeight } from 'src/themes'
-import { NavigationService } from 'src/utilities'
+import { isIOS, NavigationService } from 'src/utilities'
 import { ChatRoomItem } from './components'
 
 const NoChatFound = () => {
@@ -84,7 +84,7 @@ export { LearningScreen }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: heightPercentageToDP(1)
+    paddingVertical: heightPercentageToDP(isIOS ? 2 : 3)
   },
   headerContainer: {
     flexDirection: 'row',

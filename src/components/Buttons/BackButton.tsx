@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, ViewStyle } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { BackArrowIcon } from 'src/assets'
 import { Colors } from 'src/themes'
@@ -7,13 +7,18 @@ import { NavigationService } from 'src/utilities'
 import { Touchable } from './Touchable'
 
 
-const BackButton = ({ disabled = false }: { disabled?: boolean }) => {
+interface Props {
+    disabled?: boolean
+    style?: ViewStyle
+    iconSize?: number
+}
+const BackButton = ({ style, disabled = false, iconSize = 2.5 }: Props) => {
     return (
         <Touchable
             disabled={disabled}
-            style={styles.backButtonContainer}
+            style={[styles.backButtonContainer, style]}
             onPress={() => NavigationService.goBack()}>
-            <BackArrowIcon size={2.5} color={Colors.gray_600} />
+            <BackArrowIcon size={iconSize} color={Colors.gray_600} />
         </Touchable>
     )
 }

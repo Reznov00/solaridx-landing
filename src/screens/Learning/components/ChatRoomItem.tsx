@@ -37,12 +37,12 @@ const ChatRoomItem = ({ item, viewableItems }: ChatRoomProps) => {
         NavigationService.nestedNavigate(STACKS_ENUM.CHAT_STACK, SCREENS_ENUM.CHAT_ROOM_SCREEN, { roomDetails: item })
     }
     return (
-        <Animated.View style={rStyle}>
-            <Touchable onPress={handleChatPress} scaleValue={0.95} style={styles.container}>
+        <Touchable onPress={handleChatPress} scaleValue={0.95} >
+            <Animated.View style={[styles.container, rStyle]}>
                 <TextMedium numberOfLines={1} fontSize='st'>{name}</TextMedium>
                 {/* <BackArrowIcon size={2} style={{ transform: [{ rotate: '180deg' }] }} color={Colors.gray_900} /> */}
-            </Touchable>
-        </Animated.View>
+            </Animated.View>
+        </Touchable>
     )
 }
 
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         shadowOpacity: 0.2,
         shadowOffset: { width: 0, height: 0 },
-        elevation: 10,
+        elevation: 3,
         backgroundColor: Colors.white,
         flexDirection: 'row',
         justifyContent: 'space-between',

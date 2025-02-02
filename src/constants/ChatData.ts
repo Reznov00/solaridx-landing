@@ -1,5 +1,17 @@
 import { ChatRoomInterface, MessageItemInterface } from "src/interfaces";
 
+export const chatHeaderData: MessageItemInterface = {
+  _id: '',
+  prompt: '',
+  chatRoom: {
+    _id: '',
+    createdAt: '',
+    name: '',
+  },
+  createdAt: '',
+  answer: 'I am your bot ask me anything'
+}
+
 export const chatRooms: ChatRoomInterface[] = [
   {
     _id: "room_1",

@@ -12,11 +12,13 @@ import {
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
 import { SendIcon } from 'src/assets'
 import { BackButton, FullScreenView, TextArea, TextMedium, Touchable } from 'src/components'
-import { dummyChats } from 'src/constants'
+import { chatHeaderData, dummyChats } from 'src/constants'
 import { SCREENS_ENUM } from 'src/enums'
 import { ChatRoomInterface, GenericRouteProps, MessageItemInterface } from 'src/interfaces'
 import { Colors } from 'src/themes'
 import { MessageItem } from './components'
+import { RFValue } from 'react-native-responsive-fontsize'
+import { isIOS } from 'src/utilities'
 
 const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCREEN>) => {
   const roomDetails = route?.params?.roomDetails as ChatRoomInterface;
@@ -94,26 +96,36 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
         <FullScreenView>
           <View style={styles.container}>
             <View style={styles.headerContainer}>
-              <BackButton />
-              <TextMedium fontSize='sh2' numberOfLines={1}>
-                {roomDetails ? roomDetails.name : 'New Chat'}
+              <BackButton iconSize={1.5} style={{ padding: RFValue(7) }} />
+              <TextMedium fontSize='st' numberOfLines={1}>
+                {roomDetails ? `${roomDetails.name}` : 'New Chat'}
               </TextMedium>
             </View>
+            <View style={styles.lineSeperator} />
             <View style={styles.subContainer}>
               <View style={styles.chatBoxContainer}>
                 <FlatList
-                  data={chats}
+                  data={isNewChat ? chats : []}
                   renderItem={renderChats}
                   keyExtractor={(item) => item._id}
                   inverted
                   showsVerticalScrollIndicator={false}
+                  ListFooterComponent={<MessageItem
+                    item={chatHeaderData}
+                    isNewChat={isNewChat}
+                    type='answer'
+                  />}
+                  ListFooterComponentStyle={{
+                    width: widthPercentageToDP(90)
+                  }}
                 />
               </View>
+              <View style={styles.lineSeperator} />
               <View style={styles.chatSenderContainer}>
                 <TextArea
                   setTextData={setPrompt}
                   textData={prompt}
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, elevation: 5 }}
                   placeholder='Ask me anything....'
                 />
                 <Touchable onPress={handleSendMessage} style={styles.sendButtonStyle}>
@@ -139,15 +151,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: heightPercentageToDP(2)
+    paddingBottom: heightPercentageToDP(isIOS ? 1 : 2)
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: widthPercentageToDP(3),
-    paddingBottom: heightPercentageToDP(1),
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.gray_200
+    marginTop: heightPercentageToDP(isIOS ? 1 : 2)
+  },
+  lineSeperator: {
+    width: "100%",
+    height: heightPercentageToDP(0.3),
+    borderRadius: widthPercentageToDP(5),
+    marginVertical: heightPercentageToDP(1),
+    backgroundColor: Colors.gray_200,
   },
   chatBoxContainer: {
     flex: 1,
@@ -161,13 +178,13 @@ const styles = StyleSheet.create({
     shadowColor: Colors.gray_900,
     shadowOpacity: 0.3,
     shadowRadius: 10,
-    elevation: 10,
     flexDirection: 'row',
     alignItems: 'flex-end',
     gap: widthPercentageToDP(2),
-    paddingTop: heightPercentageToDP(2),
-    borderTopWidth: 2,
-    borderTopColor: Colors.gray_200,
+    // paddingTop: heightPercentageToDP(2),
+    backgroundColor: 'transparent',
+    borderRadius: widthPercentageToDP(2)
+
   },
   sendButtonStyle: {
     backgroundColor: Colors.primary_500,
@@ -176,5 +193,6 @@ const styles = StyleSheet.create({
     width: heightPercentageToDP(6.5),
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 10
   }
 })

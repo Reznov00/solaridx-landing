@@ -6,6 +6,7 @@ import {
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import { Colors } from 'src/themes';
+import { isIOS } from 'src/utilities';
 
 interface Props {
   textData: string;
@@ -22,6 +23,7 @@ const TextArea = ({ setTextData, textData, style, placeholder }: Props) => {
         numberOfLines={5}
         style={styles.inputContainer}
         placeholder={placeholder}
+        placeholderTextColor={Colors.gray_900}
         multiline
         maxLength={150}
       />
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.gray_50,
     borderRadius: widthPercentageToDP(3),
-    paddingVertical: heightPercentageToDP(2),
+    paddingVertical: heightPercentageToDP(isIOS ? 2 : 1),
     paddingHorizontal: widthPercentageToDP(5),
     maxHeight: heightPercentageToDP(15),
   },
