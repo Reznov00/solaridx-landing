@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { HistoryIcon, HomeIcon, ProfileIcon } from 'src/assets';
+import { HomeIcon, LearningIcon, ProfileIcon } from 'src/assets';
 import { BottomTabTypes } from 'src/interfaces';
 import { Colors } from 'src/themes';
 
@@ -18,7 +18,7 @@ const BottomTabIcon = ({ route, isFocused }: Props) => {
       case 'PROFILE_MAIN_SCREEN':
         return <ProfileIcon size={3} color={color} />;
       case 'LEARNING_MAIN_SCREEN':
-        return <HistoryIcon size={3} color={color} />;
+        return <LearningIcon size={3} color={color} />;
       default:
         break;
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
@@ -28,6 +28,17 @@ const IntegrationsScreen = () => {
             buttonStyle={styles.buttonStyle}
             onPress={() => { NavigationService.navigate(SCREENS_ENUM.SPECTACLES_MANAGE_SCREEN) }}
             icon={<SpectaclesIcon size={3.5} />}
+            shadowEnabled={false}
+          />
+          <IntegrationsButton
+            buttonStyle={styles.buttonStyle}
+            onPress={() => { }}
+            disabled
+            icon={
+              <View style={styles.iconContainer}>
+                <Image source={require('src/assets/pngs/D2L_Logo.png')} style={[styles.image]} resizeMode={'contain'} />
+              </View>
+            }
             shadowEnabled={false}
           />
         </View>
@@ -62,6 +73,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: widthPercentageToDP(5),
     paddingHorizontal: widthPercentageToDP(3),
+  },
+  iconContainer: {
+    alignItems: 'center',
+    width: widthPercentageToDP(30),
+    height: heightPercentageToDP(20),
+
+  },
+  image: {
+    height: '100%',
+    width: '100%',
+    opacity: 1,
   },
   buttonTextStyle: {
     color: Colors.gray_900,

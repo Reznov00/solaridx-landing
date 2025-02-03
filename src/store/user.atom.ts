@@ -1,7 +1,11 @@
 import { atom, useAtom } from 'jotai';
 import { atomWithMutation } from 'jotai-tanstack-query';
+import { atomWithStorage } from 'jotai/utils';
 import { axiosInstance, linkSpectaclesURL, unlinkSpectaclesURL } from 'src/apis';
 import { AccountDeletionType, LatLongInterface, SpectaclesConnectInterface, User } from 'src/interfaces';
+import { STORAGE_KEYS } from 'src/utilities';
+import { asyncStorage } from './storageHelpers';
+import { AsyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
 
 //Atoms
 const userAtom = atom<User | null>();

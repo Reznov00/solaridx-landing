@@ -51,7 +51,6 @@ const PrimaryButton = ({
         <ActivityIndicator size={'small'} color={Colors.white} />
       )}
       {!!rightIcon && !loading && rightIcon}
-
     </Touchable>
   );
 };

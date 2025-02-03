@@ -15,7 +15,7 @@ const ShareIcon = ({ size = 5, ...props }: SVGPropsII) => (
     {...props}
     viewBox="0 0 40 40">
     <Path
-      fill={props.color ?? Colors.borderColour}
+      fill={props.color ?? Colors.gray_900}
       d="M0 20c0 11.046 8.954 20 20 20s20-8.954 20-20S31.046 0 20 0 0 8.954 0 20Z"
     />
     <Path

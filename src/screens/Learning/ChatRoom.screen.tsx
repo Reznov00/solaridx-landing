@@ -1,27 +1,31 @@
 import React, { useState } from 'react'
 import {
   FlatList,
-  ListRenderItemInfo,
-  StyleSheet,
-  View,
+  Keyboard,
   KeyboardAvoidingView,
+  ListRenderItemInfo,
   Platform,
+  StyleSheet,
   TouchableWithoutFeedback,
-  Keyboard
+  View
 } from 'react-native'
+import { useSharedValue } from 'react-native-reanimated'
+import { RFValue } from 'react-native-responsive-fontsize'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
-import { SendIcon } from 'src/assets'
-import { BackButton, FullScreenView, TextArea, TextMedium, Touchable } from 'src/components'
+import { MicrophoneIcon, PaperClipIcon, SendIcon } from 'src/assets'
+import { BackButton, FullScreenView, ImageBottomSheet, TextArea, TextMedium, Touchable, VoiceRecorderBottomSheet } from 'src/components'
 import { chatHeaderData, dummyChats } from 'src/constants'
 import { SCREENS_ENUM } from 'src/enums'
 import { ChatRoomInterface, GenericRouteProps, MessageItemInterface } from 'src/interfaces'
 import { Colors } from 'src/themes'
-import { MessageItem } from './components'
-import { RFValue } from 'react-native-responsive-fontsize'
 import { isIOS } from 'src/utilities'
+import { MessageItem } from './components'
 
 const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCREEN>) => {
   const roomDetails = route?.params?.roomDetails as ChatRoomInterface;
+  const [uploadedImage, setUploadedImage] = useState<string | null>();
+  const isImageBottomSheetOpen = useSharedValue(false);
+  const isRecorderOpen = useSharedValue(false);
   const [prompt, setPrompt] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [chats, setChats] = useState<MessageItemInterface[]>(dummyChats)
@@ -81,6 +85,10 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
     }
   };
 
+  const handleUpload = (formData: FormData) => {
+    console.log({ formData: JSON.stringify(formData) })
+  }
+
   const fetchAnswerFromAPI = async (query: string) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setLoading(false)
@@ -127,15 +135,25 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
                   textData={prompt}
                   style={{ flex: 1, elevation: 5 }}
                   placeholder='Ask me anything....'
+                  rightIcon={
+                    <Touchable onPress={() => (isImageBottomSheetOpen.value = true)} style={{ height: '100%' }} >
+                      <PaperClipIcon size={3.5} />
+                    </Touchable>
+                  }
                 />
-                <Touchable onPress={handleSendMessage} style={styles.sendButtonStyle}>
-                  <SendIcon size={4} />
+                <Touchable onPress={() => {
+                  prompt ? handleSendMessage() : isRecorderOpen.value = true
+                }} style={styles.sendButtonStyle}>
+                  {prompt ? <SendIcon size={3.5} /> :
+                    <MicrophoneIcon size={3.5} />}
                 </Touchable>
               </View>
             </View>
           </View>
         </FullScreenView>
       </TouchableWithoutFeedback>
+      <ImageBottomSheet isOpen={isImageBottomSheetOpen} handlePress={handleUpload} />
+      <VoiceRecorderBottomSheet isOpen={isRecorderOpen} />
     </KeyboardAvoidingView>
   )
 }
@@ -181,7 +199,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     gap: widthPercentageToDP(2),
-    // paddingTop: heightPercentageToDP(2),
     backgroundColor: 'transparent',
     borderRadius: widthPercentageToDP(2)
 

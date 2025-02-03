@@ -15,14 +15,14 @@ const LibraryIcon = ({ size = 5, ...props }: SVGPropsII) => (
     {...props}
     viewBox="0.7 0.5 23 23">
     <Path
-      stroke={props.color ?? Colors.primary_600}
+      stroke={props.color ?? Colors.gray_900}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
       d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7Z"
     />
     <Path
-      stroke={props.color ?? Colors.primary_600}
+      stroke={props.color ?? Colors.gray_900}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}

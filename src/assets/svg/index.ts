@@ -33,6 +33,10 @@ export * from './TermsConditionsIcon';
 export * from './TrashIcon';
 export * from './IntegrationsIcon';
 export * from './SpectaclesIcon';
+export * from './LearningIcon';
+export * from './PaperClipIcon';
+export * from './MicrophoneIcon';
+export * from './CrossIcon';
 
 export * from './SocialMediaIcons';
 export * from './FilterIcon';

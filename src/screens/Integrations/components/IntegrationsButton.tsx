@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleProp,
   StyleSheet,
+  View,
   ViewStyle
 } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
@@ -31,8 +32,7 @@ const IntegrationsButton = ({
         buttonStyle,
         { opacity: disabled ? 0.5 : 1 },
       ]}>
-      {!!icon && icon}
-
+      {!!icon && <View pointerEvents="none">{icon}</View>}
     </Touchable>
   );
 };
@@ -51,6 +51,6 @@ const styles = StyleSheet.create({
     borderRadius: widthPercentageToDP(3),
     height: heightPercentageToDP(6),
     flexDirection: 'row',
-    gap: widthPercentageToDP(2)
+    gap: widthPercentageToDP(2),
   },
 });
