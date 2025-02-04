@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { TextMedium, TextRegular } from 'src/components';
 import { MessageItemInterface, MessageType } from 'src/interfaces';
@@ -46,6 +46,10 @@ const MessageItem = React.memo(
             }
         }, [animateAnswer, dot1, dot2, dot3]);
 
+
+        const speakChat = () => {
+        }
+
         return (
             <View
                 style={[
@@ -73,9 +77,11 @@ const MessageItem = React.memo(
                             <Animated.View style={[styles.dot, { transform: [{ translateY: dot3 }] }]} />
                         </View>
                     ) : (
-                        <TextMedium fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
-                            {isPrompt ? item.prompt : item.answer}
-                        </TextMedium>
+                        <TouchableWithoutFeedback onPress={speakChat}>
+                            <TextMedium fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
+                                {isPrompt ? item.prompt : item.answer}
+                            </TextMedium>
+                        </TouchableWithoutFeedback>
                     )}
                 </View>
             </View>

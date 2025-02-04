@@ -23,7 +23,6 @@ import { MessageItem } from './components'
 
 const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCREEN>) => {
   const roomDetails = route?.params?.roomDetails as ChatRoomInterface;
-  const [uploadedImage, setUploadedImage] = useState<string | null>();
   const isImageBottomSheetOpen = useSharedValue(false);
   const isRecorderOpen = useSharedValue(false);
   const [prompt, setPrompt] = useState<string>('')
@@ -49,7 +48,7 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
     )
   }
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (prompt: string) => {
     if (!prompt.trim()) return;
     setLoading(true)
 
@@ -87,6 +86,9 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
 
   const handleUpload = (formData: FormData) => {
     console.log({ formData: JSON.stringify(formData) })
+  }
+  const handleSpeech = (speech: string) => {
+    handleSendMessage(speech)
   }
 
   const fetchAnswerFromAPI = async (query: string) => {
@@ -142,7 +144,7 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
                   }
                 />
                 <Touchable onPress={() => {
-                  prompt ? handleSendMessage() : isRecorderOpen.value = true
+                  prompt ? handleSendMessage(prompt) : isRecorderOpen.value = true
                 }} style={styles.sendButtonStyle}>
                   {prompt ? <SendIcon size={3.5} /> :
                     <MicrophoneIcon size={3.5} />}
@@ -153,7 +155,7 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
         </FullScreenView>
       </TouchableWithoutFeedback>
       <ImageBottomSheet isOpen={isImageBottomSheetOpen} handlePress={handleUpload} />
-      <VoiceRecorderBottomSheet isOpen={isRecorderOpen} />
+      <VoiceRecorderBottomSheet isOpen={isRecorderOpen} handleSpeech={handleSpeech} />
     </KeyboardAvoidingView>
   )
 }

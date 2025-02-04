@@ -1,19 +1,19 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import Toast, {ToastShowParams} from 'react-native-toast-message';
-import {CloseIcon, ErrorIcon, InfoIcon, SuccessIcon} from 'src/assets';
-import {TextRegular} from 'src/components';
-import {Colors} from './Colors';
+import Toast, { ToastShowParams } from 'react-native-toast-message';
+import { CloseIcon, ErrorIcon, InfoIcon, SuccessIcon } from 'src/assets';
+import { TextRegular } from 'src/components';
+import { Colors } from './Colors';
+import { FontSizes, LineHeight } from './Typography';
 
 export const toastConfig = {
   success: (props: ToastShowParams) => {
     return (
-      <View style={[styles.toastContainer, {borderColor: '#59DF32'}]}>
+      <View style={[styles.toastContainer, { borderColor: '#59DF32' }]}>
         <View style={styles.subContainer}>
           <SuccessIcon size={3.5} />
           <TextRegular style={[styles.textStyle, props.text1Style]}>
@@ -29,7 +29,7 @@ export const toastConfig = {
 
   error: (props: ToastShowParams) => {
     return (
-      <View style={[styles.toastContainer, {borderColor: '#F35F5F'}]}>
+      <View style={[styles.toastContainer, { borderColor: '#F35F5F' }]}>
         <View style={styles.subContainer}>
           <ErrorIcon size={3.5} />
           <TextRegular style={[styles.textStyle, props.text1Style]}>
@@ -44,7 +44,7 @@ export const toastConfig = {
   },
   info: (props: ToastShowParams) => {
     return (
-      <View style={[styles.toastContainer, {borderColor: '#917AEB'}]}>
+      <View style={[styles.toastContainer, { borderColor: '#917AEB' }]}>
         <View style={styles.subContainer}>
           <InfoIcon size={3.5} />
           <TextRegular style={[styles.textStyle, props.text1Style]}>
@@ -86,8 +86,9 @@ const styles = StyleSheet.create({
     gap: widthPercentageToDP(3),
   },
   textStyle: {
-    fontSize: RFValue(12),
-    color: Colors.black,
+    fontSize: FontSizes.sxt,
+    lineHeight: LineHeight.sxt,
+    color: Colors.gray_900,
     width: '85%',
   },
 });

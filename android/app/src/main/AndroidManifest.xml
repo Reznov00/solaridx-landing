@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -6,6 +6,8 @@
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+<uses-feature android:name="android.hardware.microphone" android:required="false"/>
   <uses-feature android:name="android.hardware.camera" android:required="false" />
   <uses-feature android:name="android.hardware.camera.front" android:required="false" />
    
@@ -16,8 +18,9 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme"
-      android:supportsRtl="true">
-
+      android:supportsRtl="true"
+tools:replace="android:appComponentFactory"
+      android:appComponentFactory="androidx.core.app.CoreComponentFactory">
        <meta-data
      android:name="com.google.android.geo.API_KEY"
      android:value="AIzaSyCK-nWD9Qs2Yy-LGFfan69WGX-zFBKBLeI"/>
@@ -34,4 +37,9 @@
         </intent-filter>
       </activity>
     </application>
+   <queries>
+  <intent>
+      <action android:name="android.intent.action.TTS_SERVICE" />
+  </intent>
+ </queries>
 </manifest>

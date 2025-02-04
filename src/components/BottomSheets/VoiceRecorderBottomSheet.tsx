@@ -1,54 +1,108 @@
-import React, { useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import Voice from '@react-native-voice/voice';
+import React, { useLayoutEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { SharedValue } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { CameraIcon, CrossIcon, LibraryIcon, SendIcon } from 'src/assets';
 import { Colors } from 'src/themes';
-import { hasAndroidPermission } from 'src/utilities';
-import { Touchable } from '../Buttons';
-import { TextMedium, TextRegular } from '../Text';
+import { PrimaryButton } from '../Buttons';
+import { TextRegular } from '../Text';
+import { showToast } from '../Toast';
 import { BottomSheet } from './BottomSheet';
+import { hasMicrophonePermission } from 'src/utilities';
 
 interface Props {
   isOpen: SharedValue<boolean>;
+  handleSpeech: (speech: string) => void
 }
-const VoiceRecorderBottomSheet = ({ isOpen }: Props) => {
-  const [duration, setDuration] = useState("01")
+const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
+  const [, setError] = useState('');
+  const [, setEnd] = useState(false);
+  const [started, setStarted] = useState(false);
+  const [finalText, setFinalText] = useState('');
+
   const toggleSheet = () => {
     isOpen.value = !isOpen.value;
   };
 
-  const handleButtonPress = async () => {
-    if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
-      return;
+  useLayoutEffect(() => {
+    checkVoiceAvailablity()
+    Voice.onSpeechStart = () => setStarted(true);
+    Voice.onSpeechEnd = () => setEnd(true);
+    Voice.onSpeechError = (e) => showToast('error', e.error?.message || 'Speech recognition error');
+    Voice.onSpeechVolumeChanged = (e) => setError(JSON.stringify(e.value));
+    Voice.onSpeechResults = (e) => {
+      setFinalText(e.value?.[0] || '');
+    };
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
+
+  const startRecognizing = async () => {
+    setError('');
+    setStarted(false);
+    setEnd(false);
+    setFinalText('');
+
+    try {
+      await Voice.start('en-US');
+    } catch (e) {
+      console.error(e);
     }
-    toggleSheet();
   };
 
-  const handleCancel = () => {
+  const cancelRecognizing = async () => {
+    try {
+      await Voice.cancel();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const destroyRecognizer = async () => {
+    cancelRecognizing()
+    try {
+      await Voice.destroy();
+    } catch (e) {
+      console.error(e);
+    }
+    if (finalText.trim()) handleSpeech(finalText)
     toggleSheet()
+    setError('');
+    setStarted(false);
+    setEnd(false);
+    setFinalText('');
+  };
+
+  const checkVoiceAvailablity = async () => {
+    await hasMicrophonePermission()
+    const hasPermission = await Voice.isAvailable()// results in 1 if yes else 0
+    if (hasPermission === 0) {
+      showToast('info', 'Speech recognition is not available on your device')
+    }
   }
 
-
   return (
-    <BottomSheet isOpen={isOpen} toggleSheet={() => { }}>
+    <BottomSheet isOpen={isOpen} toggleSheet={() => {
+      isOpen.value = started ? true : false
+    }}>
       <View style={styles.container}>
-        <Touchable
-          style={styles.iconContainer}
-          onPress={handleCancel}>
-          <CrossIcon size={3.5} color={Colors.gray_900} />
-        </Touchable>
-        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <View>
+          <TextRegular fontSize='st'>
+            {finalText}
+          </TextRegular>
         </View>
-        <Touchable
-          style={styles.iconContainer}
-          onPress={handleButtonPress}>
-          <SendIcon size={3.5} color={Colors.gray_900} />
-        </Touchable>
+        <View style={styles.subContainer}>
+          <PrimaryButton
+            title={started ? "End Recognizing" : "Start Recognizing"}
+            onPress={started ? destroyRecognizer : startRecognizing}
+            buttonStyle={{ marginVertical: 0 }}
+          />
+        </View>
       </View>
     </BottomSheet>
   );
@@ -58,6 +112,13 @@ export { VoiceRecorderBottomSheet };
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: heightPercentageToDP(1),
+    marginBottom: heightPercentageToDP(3),
+    width: '100%',
+    alignItems: 'center',
+    gap: widthPercentageToDP(5),
+  },
+  subContainer: {
     marginTop: heightPercentageToDP(1),
     marginBottom: heightPercentageToDP(3),
     width: '100%',

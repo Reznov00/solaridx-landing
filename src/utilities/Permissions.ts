@@ -1,6 +1,10 @@
 import { PermissionsAndroid, Platform } from 'react-native';
+import { isIOS } from './DeviceInfo';
+import { showToast } from 'src/components';
 
 export const hasAndroidPermission = async () => {
+  if (isIOS) return true;
+
   const getCheckPermissionPromise = async () => {
     if ((Platform.Version as number) >= 33) {
       return Promise.all([
@@ -64,3 +68,28 @@ export const hasAndroidPermission = async () => {
 
   return await getRequestPermissionPromise();
 };
+
+
+
+export const hasMicrophonePermission = async () => {
+  if (isIOS) return true;
+
+  const hasPermission = await PermissionsAndroid.check(
+    PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
+  );
+
+  if (hasPermission) return true;
+
+  const status = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
+  );
+
+  if (status === PermissionsAndroid.RESULTS.GRANTED) {
+    return true;
+  } else {
+    showToast('info', "Microphone permission denied. Enable it in Settings.")
+    return false;
+  }
+};
+
+
