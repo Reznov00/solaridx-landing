@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {
   FlatList,
-  Keyboard,
   KeyboardAvoidingView,
   ListRenderItemInfo,
   Platform,
@@ -18,17 +17,18 @@ import { chatHeaderData, dummyChats } from 'src/constants'
 import { SCREENS_ENUM } from 'src/enums'
 import { ChatRoomInterface, GenericRouteProps, MessageItemInterface } from 'src/interfaces'
 import { Colors } from 'src/themes'
-import { isIOS } from 'src/utilities'
+import { dissmissKeyBoard, isIOS, useKeyboardVisible } from 'src/utilities'
 import { MessageItem } from './components'
 
 const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCREEN>) => {
   const roomDetails = route?.params?.roomDetails as ChatRoomInterface;
+  const isKeyboardVisible = useKeyboardVisible()
   const isImageBottomSheetOpen = useSharedValue(false);
   const isRecorderOpen = useSharedValue(false);
   const [prompt, setPrompt] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-  const [chats, setChats] = useState<MessageItemInterface[]>(dummyChats)
   const isNewChat = !!roomDetails
+  const [chats, setChats] = useState<MessageItemInterface[]>(isNewChat ? dummyChats : [])
 
   const renderChats = ({ item }: ListRenderItemInfo<MessageItemInterface>) => {
     return (
@@ -102,7 +102,7 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
         <FullScreenView>
           <View style={styles.container}>
             <View style={styles.headerContainer}>
@@ -115,7 +115,7 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
             <View style={styles.subContainer}>
               <View style={styles.chatBoxContainer}>
                 <FlatList
-                  data={isNewChat ? chats : []}
+                  data={chats}
                   renderItem={renderChats}
                   keyExtractor={(item) => item._id}
                   inverted
@@ -137,16 +137,17 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
                   textData={prompt}
                   style={{ flex: 1, elevation: 5 }}
                   placeholder='Ask me anything....'
+                  hideIconOnKeyboard
                   rightIcon={
-                    <Touchable onPress={() => (isImageBottomSheetOpen.value = true)} style={{ height: '100%' }} >
+                    <Touchable onPress={() => (isImageBottomSheetOpen.value = true)} >
                       <PaperClipIcon size={3.5} />
                     </Touchable>
                   }
                 />
                 <Touchable onPress={() => {
-                  prompt ? handleSendMessage(prompt) : isRecorderOpen.value = true
+                  isKeyboardVisible ? handleSendMessage(prompt) : isRecorderOpen.value = true
                 }} style={styles.sendButtonStyle}>
-                  {prompt ? <SendIcon size={3.5} /> :
+                  {isKeyboardVisible ? <SendIcon size={3.5} /> :
                     <MicrophoneIcon size={3.5} />}
                 </Touchable>
               </View>
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     gap: widthPercentageToDP(2),
     backgroundColor: 'transparent',
-    borderRadius: widthPercentageToDP(2)
+    borderRadius: widthPercentageToDP(2),
 
   },
   sendButtonStyle: {

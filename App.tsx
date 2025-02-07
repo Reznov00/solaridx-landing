@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { RootNavigator } from 'src/navigation';
 import { SplashScreen } from 'src/screens';
@@ -18,9 +18,9 @@ function App(): React.JSX.Element {
       {loading ? (
         <SplashScreen />
       ) : (
-        // <Suspense>
-        <RootNavigator />
-        // </Suspense>
+        <Suspense>
+          <RootNavigator />
+        </Suspense>
       )}
     </GestureHandlerRootView>
   );

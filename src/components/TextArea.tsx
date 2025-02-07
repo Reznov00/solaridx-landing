@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, ViewStyle } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import { Colors } from 'src/themes';
-import { isIOS } from 'src/utilities';
+import { Colors, FontSizes, LineHeight } from 'src/themes';
+import { isIOS, useKeyboardVisible } from 'src/utilities';
 
 interface Props {
   textData: string;
@@ -14,21 +13,30 @@ interface Props {
   style?: ViewStyle
   placeholder?: string
   rightIcon?: React.ReactElement
+  hideIconOnKeyboard?: boolean
 }
-const TextArea = ({ setTextData, textData, style, placeholder, rightIcon }: Props) => {
+const TextArea = ({ setTextData, textData, style, placeholder, rightIcon, hideIconOnKeyboard = false }: Props) => {
+  const [height, setHeight] = useState(40);
+  const isKeyboardVisible = useKeyboardVisible() && hideIconOnKeyboard
   return (
-    <View style={[styles.container, style]}>
-      <TextInput
-        onChangeText={setTextData}
-        value={textData}
-        numberOfLines={5}
-        style={styles.inputContainer}
-        placeholder={placeholder}
-        placeholderTextColor={Colors.gray_900}
-        multiline
-        maxLength={150}
-      />
-      {rightIcon && !textData && rightIcon}
+    <View style={[isIOS ? styles.container : styles.container, style]}>
+      <View style={{ flex: 1 }}>
+        <TextInput
+          onChangeText={setTextData}
+          value={textData}
+          numberOfLines={4}
+          style={[styles.inputContainer, { maxHeight: !isIOS ? Math.max(heightPercentageToDP(4.5), height) : undefined }]}
+          placeholder={placeholder}
+          placeholderTextColor={Colors.gray_900}
+          multiline
+          onContentSizeChange={(event) =>
+            setHeight(event.nativeEvent.contentSize.height)
+          }
+          maxLength={120}
+        />
+      </View>
+
+      {rightIcon && !textData && !isKeyboardVisible && rightIcon}
     </View>
   );
 };
@@ -45,12 +53,14 @@ const styles = StyleSheet.create({
     minHeight: heightPercentageToDP(6.5),
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   inputContainer: {
     fontFamily: 'FunnelDisplay-Regular',
-    fontSize: RFValue(12),
+    fontSize: FontSizes.st,
+    lineHeight: LineHeight.st,
     color: Colors.gray_900,
     textAlignVertical: 'top',
-    flex: 1
+    // flex: 1
   },
 });

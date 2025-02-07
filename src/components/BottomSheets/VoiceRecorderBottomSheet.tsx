@@ -1,5 +1,5 @@
-import Voice from '@react-native-voice/voice';
 import React, { useLayoutEffect, useState } from 'react';
+import Voice from '@react-native-voice/voice/dist/index';
 import { StyleSheet, View } from 'react-native';
 import { SharedValue } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -47,7 +47,6 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
     setStarted(false);
     setEnd(false);
     setFinalText('');
-
     try {
       await Voice.start('en-US');
     } catch (e) {
@@ -91,11 +90,11 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
       isOpen.value = started ? true : false
     }}>
       <View style={styles.container}>
-        <View>
+        {finalText && <View>
           <TextRegular fontSize='st'>
             {finalText}
           </TextRegular>
-        </View>
+        </View>}
         <View style={styles.subContainer}>
           <PrimaryButton
             title={started ? "End Recognizing" : "Start Recognizing"}
@@ -113,18 +112,15 @@ export { VoiceRecorderBottomSheet };
 const styles = StyleSheet.create({
   container: {
     marginTop: heightPercentageToDP(1),
-    marginBottom: heightPercentageToDP(3),
+    marginBottom: heightPercentageToDP(2),
     width: '100%',
     alignItems: 'center',
-    gap: widthPercentageToDP(5),
+    gap: widthPercentageToDP(3),
   },
   subContainer: {
-    marginTop: heightPercentageToDP(1),
-    marginBottom: heightPercentageToDP(3),
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: widthPercentageToDP(5),
   },
   iconContainer: {
     height: heightPercentageToDP(6),
