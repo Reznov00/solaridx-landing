@@ -40,22 +40,22 @@ const LogoutBottomSheet = () => {
   return (
     <BottomSheet isOpen={isOpen} toggleSheet={toggleSheet}>
       <View style={styles.container}>
-        <TextRegular fontSize="bt">Are you sure you want to logout?</TextRegular>
+        <TextRegular fontSize="st">Are you sure you want to logout?</TextRegular>
         <View style={styles.subContainer}>
           <PrimaryButton
             buttonStyle={styles.cancelButtonStyle}
-            textStyle={{ fontSize: RFValue(12), color: '#5B5B5B' }}
+            textStyle={{ fontSize: RFValue(12), color: Colors.white }}
             title="No, back"
             onPress={toggleSheet}
             leftIcon={
-              <View style={[styles.iconContainer, { borderColor: '#5B5B5B' }]}>
-                <CloseIcon size={1.5} color={'#5B5B5B'} />
+              <View style={[styles.iconContainer, { borderColor: Colors.white }]}>
+                <CloseIcon size={1.5} color={Colors.white} />
               </View>
             }
           />
           <PrimaryButton
             title="Yes, logout"
-            buttonStyle={styles.buttonStyle}
+            buttonStyle={styles.confirmButtonStyle}
             onPress={handleConfirmPress}
             textStyle={{ fontSize: RFValue(12) }}
             leftIcon={
@@ -75,32 +75,37 @@ export { LogoutBottomSheet };
 const styles = StyleSheet.create({
   container: {
     marginTop: heightPercentageToDP(1),
+    marginBottom: heightPercentageToDP(2),
     width: '100%',
-    alignItems: 'center',
   },
   subContainer: {
     flexDirection: 'row',
     gap: widthPercentageToDP(5),
+    marginTop: heightPercentageToDP(3)
   },
-  buttonStyle: {
-    width: widthPercentageToDP(35),
+  confirmButtonStyle: {
+    width: widthPercentageToDP(42.5),
     flexDirection: 'row',
     justifyContent: 'center',
     gap: widthPercentageToDP(2),
-    marginTop: heightPercentageToDP(2),
+    marginTop: 0,
   },
   cancelButtonStyle: {
-    width: widthPercentageToDP(35),
+    width: widthPercentageToDP(42.5),
     flexDirection: 'row',
     justifyContent: 'center',
     gap: widthPercentageToDP(2),
-    marginTop: heightPercentageToDP(2),
-    backgroundColor: Colors.gray_300,
+    backgroundColor: Colors.danger,
+    marginTop: 0,
   },
   iconContainer: {
     borderWidth: 2,
     borderRadius: 100,
     borderColor: Colors.white,
     padding: 3,
+  },
+  textStyle: {
+    fontSize: RFValue(12),
+    color: Colors.gray_900,
   },
 });

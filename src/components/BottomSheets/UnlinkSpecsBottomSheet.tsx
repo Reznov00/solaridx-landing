@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -7,72 +7,55 @@ import {
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import { CloseIcon, TickIcon } from 'src/assets';
-import {
-  useDeleteAccountBottomSheetAtom
-} from 'src/store';
+import { useSpecsUnLinkService } from 'src/services';
 import { Colors } from 'src/themes';
+import { PrimaryButton } from '../Buttons';
 import { TextRegular } from '../Text';
 import { showToast } from '../Toast';
 import { BottomSheet } from './BottomSheet';
-import { axiosInstance, deleteUserAccountDataURL, deleteUserAccountURL } from 'src/apis';
-import { PrimaryButton } from '../Buttons';
-import { useLogout } from 'src/hooks';
 
-const DeleteDataBottomSheet = () => {
-  const [loading, setLoading] = useState(false)
-  const { setShowDeleteAccountBotomSheet, showDeleteAccountBotomSheet } =
-    useDeleteAccountBottomSheetAtom();
-  const logout = useLogout()
+interface Props {
+  showBottomSheet: boolean
+  setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const UnlinkSpecsBottomSheet = ({ setShowBottomSheet, showBottomSheet }: Props) => {
   const isOpen = useSharedValue(false);
+  const { handleService, isPending } = useSpecsUnLinkService();
+
   const toggleSheet = () => {
-    if (!loading) {
+    if (!isPending) {
       isOpen.value = false;
-      if (isOpen.value) {
-        setShowDeleteAccountBotomSheet('none')
-      }
+      setShowBottomSheet(false)
     }
   };
 
   useEffect(() => {
-    if (showDeleteAccountBotomSheet !== 'none') {
+    if (showBottomSheet) {
       isOpen.value = true;
     } else {
       isOpen.value = false;
     }
-  }, [showDeleteAccountBotomSheet]);
+  }, [showBottomSheet]);
 
   const handleDelete = async () => {
-    setLoading(true);
     try {
-      if (showDeleteAccountBotomSheet === 'deleteUserAccount') {
-        showToast('success', 'Account Deleted');
-        await axiosInstance.delete(deleteUserAccountURL);
-
-      }
-      if (showDeleteAccountBotomSheet === 'deleteUserAccountData') {
-        await axiosInstance.delete(deleteUserAccountDataURL);
-      }
+      handleService()
     } catch (error) {
-      console.error('Error occurred during deletion:', error);
-      showToast('error', 'An error occurred while deleting');
+      showToast('error', 'An error occurred while unlinking');
     } finally {
-      setLoading(false);
+      showToast('success', 'Specacles unlinked successfully');
       toggleSheet()
-      showToast('success', 'Deletion Successful');
-      logout()
     }
   };
 
-  const getTitle = () => {
-    return showDeleteAccountBotomSheet === 'deleteUserAccount' ? 'user account' : showDeleteAccountBotomSheet === 'deleteUserAccountData' ? `user's account data` : ''
-  }
 
   return (
     <BottomSheet isOpen={isOpen} toggleSheet={toggleSheet}>
       <Fragment>
         <View style={styles.container}>
           <TextRegular fontSize="st">
-            {`Are you sure you want to delete this ${getTitle()} ?`}
+            {`Are you sure you want to unlink this spectacles account?`}
           </TextRegular>
         </View>
         <View style={styles.subContainer}>
@@ -81,7 +64,7 @@ const DeleteDataBottomSheet = () => {
             textStyle={{ fontSize: RFValue(12), color: Colors.white }}
             title="No, cancel"
             onPress={toggleSheet}
-            disabled={loading}
+            disabled={isPending}
             leftIcon={
               <View style={[styles.iconContainer, { borderColor: Colors.white }]}>
                 <CloseIcon size={1.5} color={Colors.white} />
@@ -89,7 +72,7 @@ const DeleteDataBottomSheet = () => {
             }
           />
           <PrimaryButton
-            title="Yes, delete"
+            title="Yes, unlink"
             buttonStyle={styles.confirmButtonStyle}
             onPress={handleDelete}
             textStyle={{ fontSize: RFValue(12) }}
@@ -98,8 +81,8 @@ const DeleteDataBottomSheet = () => {
                 <TickIcon size={1.5} />
               </View>
             }
-            loading={loading}
-            disabled={loading}
+            loading={isPending}
+            disabled={isPending}
           />
         </View>
       </Fragment>
@@ -107,7 +90,7 @@ const DeleteDataBottomSheet = () => {
   );
 };
 
-export { DeleteDataBottomSheet };
+export { UnlinkSpecsBottomSheet };
 
 const styles = StyleSheet.create({
   container: {

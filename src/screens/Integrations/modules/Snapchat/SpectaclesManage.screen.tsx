@@ -1,23 +1,25 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
-import { BackButton, FullScreenView, PrimaryButton, TextInput, TextMedium, TextRegular } from 'src/components'
+import { BackButton, FullScreenView, PrimaryButton, TextInput, TextMedium, TextRegular, UnlinkSpecsBottomSheet } from 'src/components'
 import { spectaclesConnectSchema } from 'src/constants'
-import { useSpecsLinkService, useSpecsUnLinkService } from 'src/services'
+import { useSpecsLinkService } from 'src/services'
 import { useUserAtom } from 'src/store'
 import { Colors, FontSizes, LineHeight } from 'src/themes'
 import { dissmissKeyBoard, isIOS } from 'src/utilities'
 import { AgreementForm } from './AgreementForm'
+import { HeaderTabs, SpecsDataComponent } from './components'
 
 const SpectaclesManageScreen = () => {
     const { user } = useUserAtom()
-    const [agreementView, setAgreementView] = useState(!user?.specsId)
-    const { handleService: linkService, isPending: isLinking } = useSpecsLinkService();
-    const { handleService: unlinkService, isPending: isUnlinking } = useSpecsUnLinkService();
-    const isPending = isLinking || isUnlinking
+    const isSpecsConnected = !!user?.specsId
+    const [agreementView, setAgreementView] = useState(!isSpecsConnected)
+    const { handleService, isPending } = useSpecsLinkService();
+    const [viewMode, setViewMode] = useState<'data' | 'settings'>(isSpecsConnected ? 'data' : 'settings')
+    const [unlinkSpecsView, setUnlinkSpecsView] = useState<boolean>(false)
     const {
         control,
         formState: { errors },
@@ -29,7 +31,7 @@ const SpectaclesManageScreen = () => {
 
 
     const handleConnect = data => {
-        linkService({
+        handleService({
             username: data.username,
             unique_code: data.unique_code,
         })
@@ -39,65 +41,81 @@ const SpectaclesManageScreen = () => {
 
 
     return (
-        <FullScreenView>
-            {(!agreementView || user?.specsId) ?
-                <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
-                    <View style={styles.container}>
-                        <View style={styles.headerContainer}>
-                            <BackButton iconSize={2} style={{ padding: RFValue(7) }} />
-                            <TextMedium fontSize='sh2' numberOfLines={1}>
-                                {'Connect with Spectacles'}
-                            </TextMedium>
+        <Fragment>
+            <FullScreenView>
+                {(!agreementView) ?
+                    <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
+                        <View style={styles.container}>
+                            <View style={styles.headerContainer}>
+                                <BackButton iconSize={2} style={{ padding: RFValue(7) }} />
+                                <TextMedium fontSize='sh2' numberOfLines={1}>
+                                    {'Spectacles'}
+                                </TextMedium>
+                            </View>
+                            {isSpecsConnected && <HeaderTabs selectedTab={viewMode} setSelectedTab={setViewMode} />}
+                            {viewMode === 'settings' ? <View style={styles.subContainer}>
+                                {!isSpecsConnected ?
+                                    <Fragment>
+                                        <TextInput
+                                            control={control}
+                                            name="username"
+                                            label={'Spectacles username'}
+                                            placeholder='johndoe'
+                                            editable={!isPending && !isSpecsConnected}
+                                            maxLength={30}
+                                            touched={!!errors?.username?.message}
+                                            error={errors?.username?.message}
+                                            autoCapitalize='none'
+                                        />
+                                        <TextInput
+                                            control={control}
+                                            name="unique_code"
+                                            label={'Unqiue Code'}
+                                            placeholder='XXXX'
+                                            editable={!isPending && !isSpecsConnected}
+                                            keyboardType='number-pad'
+                                            maxLength={4}
+                                            touched={!!errors.unique_code?.message}
+                                            error={errors?.unique_code?.message}
+                                        />
+                                        <PrimaryButton
+                                            title="Connect"
+                                            buttonStyle={{ marginVertical: 0 }}
+                                            onPress={handleSubmit(handleConnect)}
+                                            disabled={isPending || !!isSpecsConnected}
+                                            loading={isPending && !isSpecsConnected}
+                                        />
+                                    </Fragment>
+                                    :
+                                    <View style={styles.unlinkContainer}>
+                                        <View style={styles.profileContainer}>
+                                            <View style={styles.avatarContainer}>
+                                                <TextRegular style={styles.subTextStyle}>
+                                                    {`spectacles`.charAt(0).toUpperCase()}
+                                                </TextRegular>
+                                            </View>
+                                            <TextRegular color='gray_900' fontSize='bt'>
+                                                {`@${'snapuser'}`}
+                                            </TextRegular>
+                                        </View>
+                                        <PrimaryButton
+                                            buttonStyle={{ backgroundColor: Colors.danger, borderWidth: 0, marginVertical: 0 }}
+                                            textStyle={{ color: Colors.white }}
+                                            onPress={() => setUnlinkSpecsView(true)}
+                                            title="Unlink"
+                                            shadowEnabled={false}
+                                            loading={isPending}
+                                        />
+                                    </View>}
+                            </View>
+                                : <SpecsDataComponent />}
                         </View>
-                        <View style={styles.subContainer}>
-                            <TextInput
-                                control={control}
-                                name="username"
-                                label={'Spectacles username'}
-                                placeholder='johndoe'
-                                editable={!isPending && !user?.specsId}
-                                maxLength={30}
-                                touched={!!errors?.username?.message}
-                                error={errors?.username?.message}
-                                autoCapitalize='none'
-                            />
-                            <TextInput
-                                control={control}
-                                name="unique_code"
-                                label={'Unqiue Code'}
-                                placeholder='XXXX'
-                                editable={!isPending && !user?.specsId}
-                                keyboardType='number-pad'
-                                maxLength={4}
-                                touched={!!errors.unique_code?.message}
-                                error={errors?.unique_code?.message}
-                            />
-                            <PrimaryButton
-                                title="Connect"
-                                buttonStyle={{ marginVertical: 0 }}
-                                onPress={handleSubmit(handleConnect)}
-                                disabled={isPending || !!user?.specsId}
-                                loading={isPending && !user?.specsId}
-                            />
-                            {user?.specsId &&
-                                <View style={styles.unlinkContainer}>
-                                    <TextRegular style={styles.subTextStyle}>
-                                        You already have a spectacles account linked. Unlink first to link a new account.
-                                    </TextRegular>
-                                    <PrimaryButton
-                                        buttonStyle={{ backgroundColor: Colors.danger, borderWidth: 0, marginVertical: 0 }}
-                                        textStyle={{ color: Colors.white }}
-                                        onPress={unlinkService}
-                                        title="Unlink"
-                                        shadowEnabled={false}
-                                        loading={isPending}
-                                    /></View>}
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
-                : <AgreementForm handlePress={() => setAgreementView(false)} />
-            }
-        </FullScreenView>
+                    </TouchableWithoutFeedback>
+                    : <AgreementForm handlePress={() => setAgreementView(false)} />
+                }
+            </FullScreenView>
+            <UnlinkSpecsBottomSheet showBottomSheet={unlinkSpecsView} setShowBottomSheet={setUnlinkSpecsView} />
+        </Fragment>
     )
 }
 
@@ -113,7 +131,6 @@ const styles = StyleSheet.create({
         marginVertical: heightPercentageToDP(3)
     },
     unlinkContainer: {
-        marginVertical: heightPercentageToDP(3),
         gap: heightPercentageToDP(1)
     },
     headerContainer: {
@@ -123,8 +140,24 @@ const styles = StyleSheet.create({
         marginTop: heightPercentageToDP(isIOS ? 1 : 2)
     },
     subTextStyle: {
-        fontSize: FontSizes.sxt,
-        lineHeight: LineHeight.sxt,
-        marginVertical: heightPercentageToDP(0.5)
+        fontSize: FontSizes.h1,
+        lineHeight: LineHeight.h1,
+        marginVertical: heightPercentageToDP(0.5),
+        color: Colors.white
     },
+    profileContainer: {
+        alignItems: 'center',
+        gap: heightPercentageToDP(1),
+        marginBottom: heightPercentageToDP(2)
+    },
+    avatarContainer: {
+        width: widthPercentageToDP(30),
+        height: widthPercentageToDP(30),
+        borderRadius: widthPercentageToDP(30),
+        backgroundColor: Colors.primary_500,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center'
+
+    }
 })

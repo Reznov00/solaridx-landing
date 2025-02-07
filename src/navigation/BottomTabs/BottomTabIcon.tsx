@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { HomeIcon, LearningIcon, ProfileIcon } from 'src/assets';
+import { HomeIcon, LearningIcon, ProfileIcon, QuantiniumLogo } from 'src/assets';
 import { BottomTabTypes } from 'src/interfaces';
 import { Colors } from 'src/themes';
 
@@ -19,6 +19,8 @@ const BottomTabIcon = ({ route, isFocused }: Props) => {
         return <ProfileIcon size={3} color={color} />;
       case 'LEARNING_MAIN_SCREEN':
         return <LearningIcon size={3} color={color} />;
+      case 'QUANTINIUM_MAIN_SCREEN':
+        return <QuantiniumLogo size={3} color={color} />;
       default:
         break;
     }

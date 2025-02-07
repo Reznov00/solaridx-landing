@@ -28,7 +28,7 @@ const LearningScreen = () => {
     setTimeout(() => {
       setData(chatRooms)
       setIsPending(false)
-    }, 3000);
+    }, 500);
   }, [])
 
   const renderChatRooms = ({ item, index }: ListRenderItemInfo<ChatRoomInterface>) => {

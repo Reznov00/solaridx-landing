@@ -37,10 +37,12 @@ export type IntegrationsStackParamList = {
 export type BottomTabTypes =
   | 'HOME_MAIN_SCREEN'
   | 'LEARNING_MAIN_SCREEN'
-  | 'PROFILE_MAIN_SCREEN';
+  | 'PROFILE_MAIN_SCREEN'
+  | 'QUANTINIUM_MAIN_SCREEN';
 
 export type BottomTabParamList = {
   HOME_MAIN_SCREEN: undefined;
   LEARNING_MAIN_SCREEN: undefined;
   PROFILE_MAIN_SCREEN: undefined;
+  QUANTINIUM_MAIN_SCREEN: undefined;
 };

@@ -1,6 +1,6 @@
-import {RFValue} from 'react-native-responsive-fontsize';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-import {FontSizeType} from 'src/interfaces';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { FontSizeType } from 'src/interfaces';
 
 export const FontSizes: Record<FontSizeType, number> = {
   h1: RFValue(28),
@@ -12,11 +12,11 @@ export const FontSizes: Record<FontSizeType, number> = {
   sxt: RFValue(10),
 };
 export const LineHeight: Record<FontSizeType, number> = {
-  h1: heightPercentageToDP(4),
+  h1: heightPercentageToDP(5),
   h2: heightPercentageToDP(5),
   sh1: heightPercentageToDP(4),
   sh2: heightPercentageToDP(3),
-  bt: heightPercentageToDP(3.5),
+  bt: heightPercentageToDP(3),
   st: heightPercentageToDP(2),
   sxt: heightPercentageToDP(2),
 };

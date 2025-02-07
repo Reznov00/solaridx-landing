@@ -50,6 +50,7 @@
     "react-native-screens": "^4.3.0",
     "react-native-svg": "^15.10.1",
     "react-native-toast-message": "^2.2.1",
+    "react-native-tts": "^4.1.1",
     "use-debounce": "^10.0.4",
     "yarn": "^1.22.22",
     "yup": "^1.5.0"

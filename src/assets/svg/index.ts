@@ -37,6 +37,7 @@ export * from './LearningIcon';
 export * from './PaperClipIcon';
 export * from './MicrophoneIcon';
 export * from './CrossIcon';
+export * from './QuantiniumLogo';
 
 export * from './SocialMediaIcons';
 export * from './FilterIcon';

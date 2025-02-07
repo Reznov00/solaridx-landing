@@ -5,3 +5,4 @@ export * from './Learning';
 export * from './Profile';
 export * from './SplashScreens';
 export * from './Integrations';
+export * from './Quantinium';

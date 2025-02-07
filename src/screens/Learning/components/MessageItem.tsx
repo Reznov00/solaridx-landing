@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+import Tts from 'react-native-tts';
 import { TextMedium, TextRegular } from 'src/components';
 import { MessageItemInterface, MessageType } from 'src/interfaces';
 import { Colors } from 'src/themes';
@@ -20,6 +21,20 @@ const MessageItem = React.memo(
         const isPrompt = type === 'prompt';
         const animateAnswer = loading && !isPrompt
         const dangerMessage = !isPrompt && item.answer.startsWith('Failed to')
+
+        useEffect(() => {
+            Tts.addEventListener('tts-start', (e) => { console.log("tts-start", e) })
+            Tts.addEventListener('tts-cancel', (e) => { console.log("tts-cancel", e) })
+            Tts.addEventListener('tts-progress', (e) => { console.log("tts-progress", e) })
+            Tts.addEventListener('tts-finish', (e) => { console.log("tts-finish", e) })
+            return () => {
+                Tts.removeAllListeners('tts-finish')
+                Tts.removeAllListeners('tts-cancel')
+                Tts.removeAllListeners('tts-start')
+                Tts.removeAllListeners('tts-progress')
+            }
+        }, [])
+
 
 
         useEffect(() => {
@@ -48,6 +63,22 @@ const MessageItem = React.memo(
 
 
         const speakChat = () => {
+            !isPrompt && Tts.getInitStatus().then(() => {
+                Tts.speak(item.answer, {
+                    androidParams: {
+                        KEY_PARAM_PAN: -1,
+                        KEY_PARAM_VOLUME: 0.5,
+                        KEY_PARAM_STREAM: 'STREAM_MUSIC',
+                    },
+                    iosVoiceId:
+                        // "com.apple.voice.compact.en-AU.Karen"
+                        // "com.apple.voice.compact.en-IE.Moira"
+                        "com.apple.voice.compact.en-US.Samantha"
+                    ,
+                    rate: 0.5,
+                })
+            });
+
         }
 
         return (
@@ -78,9 +109,11 @@ const MessageItem = React.memo(
                         </View>
                     ) : (
                         <TouchableWithoutFeedback onPress={speakChat}>
-                            <TextMedium fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
-                                {isPrompt ? item.prompt : item.answer}
-                            </TextMedium>
+                            <View>
+                                <TextMedium fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
+                                    {isPrompt ? item.prompt : item.answer}
+                                </TextMedium>
+                            </View>
                         </TouchableWithoutFeedback>
                     )}
                 </View>

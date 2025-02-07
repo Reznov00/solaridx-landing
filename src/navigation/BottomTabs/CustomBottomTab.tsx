@@ -17,7 +17,7 @@ const CustomBottomTab = ({
   navigation,
 }: BottomTabBarProps) => {
   const TAB_BAR_WIDTH = widthPercentageToDP(100);
-  const SelectTabWidth = widthPercentageToDP(33.3);
+  const SelectTabWidth = widthPercentageToDP(25);
   const HitSlop = widthPercentageToDP(5);
 
   const translateAnimation = useAnimatedStyle(() => {
@@ -37,6 +37,8 @@ const CustomBottomTab = ({
         return 'Profile';
       case 'LEARNING_MAIN_SCREEN':
         return 'Learning';
+      case 'QUANTINIUM_MAIN_SCREEN':
+        return 'QSteam';
       default:
         return 'Home';
     }
@@ -83,7 +85,7 @@ const CustomBottomTab = ({
                   left: HitSlop,
                   right: HitSlop,
                 }}
-                style={{ flex: 1 }}
+                style={{ flex: 1, width: widthPercentageToDP(25) }}
               >
                 <Animated.View style={[styles.contentContainer]}>
                   <BottomTabIcon route={routeName} isFocused={false} />
@@ -119,7 +121,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     overflow: 'hidden',
     elevation: 10,
-    paddingHorizontal: widthPercentageToDP(10),
     paddingTop: heightPercentageToDP(2)
   },
   slidingTabContainer: {
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
   },
   barTextStyle: {
     color: Colors.gray_900,
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     fontFamily: 'FunnelDisplay-Bold',
   },
 });
