@@ -1,13 +1,12 @@
 export interface ChatRoomInterface {
-    _id: string;
-    name: string
-    createdAt: string
+    chatRoomId: string,
+    header: string
 }
 export interface MessageItemInterface {
     _id: string;
     prompt: string
     answer: string
-    chatRoom: ChatRoomInterface
     createdAt: string
+    image?: string
 }
 export type MessageType = 'prompt' | 'answer';

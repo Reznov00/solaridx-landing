@@ -18,7 +18,7 @@ const MediaPicker = async ({
     cropperChooseText: 'Upload',
     enableRotationGesture: false,
     cropperRotateButtonsHidden: true,
-    hideBottomControls: true
+    hideBottomControls: true,
   };
   return useCamera
     ? await ImagePicker.openCamera(options)

@@ -1,3 +1,4 @@
 export * from './Auth.service'
 export * from './Weather.service'
 export * from './User.service'
+export * from './Chat.service'

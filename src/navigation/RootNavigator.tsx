@@ -14,8 +14,9 @@ const Stack = createStackNavigator();
 const RootNavigator = () => {
   const { authToken } = useAuthTokenAtom();
   const initialRoute =
-    authToken === null ? STACKS_ENUM.ONBOARDING_STACK : STACKS_ENUM.AUTH_STACK;
+    authToken === null ? STACKS_ENUM.ONBOARDING_STACK : STACKS_ENUM.MAIN_STACK;
 
+  console.log({ authToken })
 
 
   useEffect(() => {
@@ -47,14 +48,14 @@ const RootNavigator = () => {
           headerShown: false,
           ...TransitionPresets.ModalFadeTransition
         }}
-        // initialRouteName={initialRoute}
+          initialRouteName={initialRoute}
         >
 
-          {/* <Stack.Screen
+          <Stack.Screen
             name={STACKS_ENUM.ONBOARDING_STACK}
             component={OnboardingStack}
           />
-          <Stack.Screen name={STACKS_ENUM.AUTH_STACK} component={AuthStack} /> */}
+          <Stack.Screen name={STACKS_ENUM.AUTH_STACK} component={AuthStack} />
           <Stack.Screen name={STACKS_ENUM.MAIN_STACK} component={MainStack} />
         </Stack.Navigator>
       </NavigationContainer>

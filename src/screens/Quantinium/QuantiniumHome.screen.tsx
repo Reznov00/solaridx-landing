@@ -7,7 +7,7 @@ const QuantiniumHomeScreen = () => {
   return (
     <FullScreenView>
       <View style={styles.container}>
-        <TextMedium style={{ textAlign: 'center' }} fontSize='sh2'>Unlocking the future: Quantum-powered energy predictions are coming soon! ⚡🔮</TextMedium>
+        <TextMedium style={{ textAlign: 'center' }} fontSize='sh2'>Unlocking the future: Quantum Computing powered energy predictions are coming soon as Quantinuum. ⚡🔮</TextMedium>
       </View>
     </FullScreenView>
   )

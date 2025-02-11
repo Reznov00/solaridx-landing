@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { FlatList, ListRenderItemInfo, StyleSheet, View, ViewToken } from 'react-native'
+import React from 'react'
+import { FlatList, ListRenderItemInfo, RefreshControl, StyleSheet, View, ViewToken } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
 import { ChatIcon, EmptyBoxIcon } from 'src/assets'
 import { ChatListShimmer, FullScreenView, PrimaryButton, TextMedium, TextRegular } from 'src/components'
-import { chatRooms } from 'src/constants'
 import { SCREENS_ENUM, STACKS_ENUM } from 'src/enums'
 import { ChatRoomInterface } from 'src/interfaces'
+import { useGetChatRoomsService } from 'src/services'
 import { FontSizes, LineHeight } from 'src/themes'
 import { isIOS, NavigationService } from 'src/utilities'
 import { ChatRoomItem } from './components'
@@ -20,16 +20,7 @@ const NoChatFound = () => {
 
 const LearningScreen = () => {
   const viewableItems = useSharedValue<ViewToken<ChatRoomInterface>[]>([]);
-  const [data, setData] = useState<ChatRoomInterface[]>()
-  const [isPending, setIsPending] = useState(true)
-
-
-  useEffect(() => {
-    setTimeout(() => {
-      setData(chatRooms)
-      setIsPending(false)
-    }, 500);
-  }, [])
+  const { data, isPending, refetch } = useGetChatRoomsService()
 
   const renderChatRooms = ({ item, index }: ListRenderItemInfo<ChatRoomInterface>) => {
     return <ChatRoomItem
@@ -61,7 +52,10 @@ const LearningScreen = () => {
               style={styles.listStyle}
               renderItem={renderChatRooms}
               ListFooterComponent={<View />}
-              keyExtractor={(item) => item._id}
+              refreshControl={
+                <RefreshControl refreshing={isPending} onRefresh={refetch} />
+              }
+              keyExtractor={(item) => item.chatRoomId}
               ListEmptyComponent={<NoChatFound />}
               showsVerticalScrollIndicator={false}
               ListFooterComponentStyle={styles.listFooterStyle}

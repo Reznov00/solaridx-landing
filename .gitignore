@@ -33,6 +33,15 @@ local.properties
 .cxx/
 *.keystore
 !debug.keystore
+# APK files
+*.apk
+*.aab
+
+# Build artifacts
+/android/app/build
+/android/app/release
+/android/build
+/ios/build
 
 # node.js
 #

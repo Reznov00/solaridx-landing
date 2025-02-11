@@ -1,4 +1,4 @@
-import {Image} from 'react-native-compressor';
+import { Image } from 'react-native-compressor';
 
 interface Props {
   filePath: string;
@@ -16,4 +16,4 @@ const MediaCompressor = async ({
     quality: quality,
   });
 };
-export {MediaCompressor};
+export { MediaCompressor };

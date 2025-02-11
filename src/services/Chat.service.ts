@@ -1,16 +1,15 @@
 import { Atom, useAtom } from 'jotai';
 import { AtomWithMutationResult } from 'jotai-tanstack-query';
+import { useMemo } from 'react';
 import { showToast } from 'src/components';
 import { MutationErrorInterface } from 'src/interfaces';
 import {
-  spectaclesLinkAtom,
-  spectaclesUnLinkAtom,
-  useSpecsBottomSheetAtom,
-  useUserAtom
+  getChatRoomsAtom,
+  getChatsHistoryAtom,
+  useChatRoomIDAtom,
+  useChatsAtom
 } from 'src/store';
-import { NavigationService } from 'src/utilities';
 
-// Helper function to reduce redundancy in mutate
 const useMutationService = <TData, TError, TVariables>(
   atom: Atom<AtomWithMutationResult<TData, TError, TVariables, unknown>>,
   onSuccess: (val: TData, formData: TVariables) => void,
@@ -31,23 +30,22 @@ const useMutationService = <TData, TError, TVariables>(
   return { handleService, isPending };
 };
 
-export const useSpecsLinkService = () => {
-  const { setUser } = useUserAtom()
-  return useMutationService(spectaclesLinkAtom, (data, _) => {
-    showToast('success', 'Spectacles linked sucessfully');
-    NavigationService.goBack()
-    setUser(data)
-  });
+export const useGetChatRoomsService = () => {
+  const [{ data, isPending, isError, isLoading, refetch }] =
+    useAtom(getChatRoomsAtom);
+  return { data, isPending, isLoading, isError, refetch };
 };
 
-export const useSpecsUnLinkService = () => {
-  const { setUser } = useUserAtom()
-  const { setBottomSheetVisible } = useSpecsBottomSheetAtom()
 
-  return useMutationService(spectaclesUnLinkAtom, (data, _) => {
-    showToast('success', 'Spectacles unlinked sucessfully');
-    NavigationService.goBack()
-    setUser(data)
-    setBottomSheetVisible(false)
-  });
+export const useGetChatHistoryService = () => {
+  const { roomId } = useChatRoomIDAtom();
+  const { setChats } = useChatsAtom();
+
+  const chatsHistoryAtom = useMemo(() => {
+    return getChatsHistoryAtom(roomId as string);
+  }, [roomId]);
+
+  const [{ data, isPending, isError, isLoading, refetch }] = useAtom(chatsHistoryAtom);
+  setChats(data)
+  return { data, isPending, isLoading, isError, refetch };
 };

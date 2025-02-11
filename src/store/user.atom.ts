@@ -8,18 +8,18 @@ import { asyncStorage } from './storageHelpers';
 import { AsyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
 
 //Atoms
-const userAtom = atom<User | null>();
-const recentCoordsAtom = atom<LatLongInterface | null>();
-// export const userAtom = atomWithStorage<null | User>(
-//   STORAGE_KEYS.USER,
-//   null,
-//   asyncStorage as AsyncStorage<null | User>,
-// );
-// const recentCoordsAtom = atomWithStorage<null | LatLongInterface>(
-//   STORAGE_KEYS.RECENT_COORDS,
-//   null,
-//   asyncStorage as AsyncStorage<null | LatLongInterface>,
-// );
+// const userAtom = atom<User | null>();
+// const recentCoordsAtom = atom<LatLongInterface | null>();
+export const userAtom = atomWithStorage<User | null>(
+  STORAGE_KEYS.USER,
+  null,
+  asyncStorage as AsyncStorage<User | null>,
+);
+const recentCoordsAtom = atomWithStorage<LatLongInterface | null>(
+  STORAGE_KEYS.RECENT_COORDS,
+  null,
+  asyncStorage as AsyncStorage<LatLongInterface | null>,
+);
 const deleteAccountBottomSheet = atom<AccountDeletionType>('none');
 
 // Atom Hooks

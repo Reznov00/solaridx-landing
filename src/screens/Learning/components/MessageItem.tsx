@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { Animated, Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import Tts from 'react-native-tts';
 import { TextMedium, TextRegular } from 'src/components';
@@ -109,7 +109,10 @@ const MessageItem = React.memo(
                         </View>
                     ) : (
                         <TouchableWithoutFeedback onPress={speakChat}>
-                            <View>
+                            <View style={styles.messageDetailsContainer}>
+                                {item.image && <View style={styles.imageContainerStyle}>
+                                    <Image resizeMode='contain' source={{ uri: item.image }} style={{ width: '100%', height: '100%' }} />
+                                </View>}
                                 <TextMedium fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
                                     {isPrompt ? item.prompt : item.answer}
                                 </TextMedium>
@@ -171,4 +174,15 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.gray_900,
         borderRadius: widthPercentageToDP(2),
     },
+    imageContainerStyle: {
+        borderRadius: widthPercentageToDP(3),
+        height: heightPercentageToDP(20),
+        width: heightPercentageToDP(20),
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 10
+    },
+    messageDetailsContainer: {
+        gap: heightPercentageToDP(1)
+    }
 });

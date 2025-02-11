@@ -15,7 +15,7 @@ import { hasAndroidPermission, MediaCompressor, MediaPicker } from 'src/utilitie
 
 interface Props {
   isOpen: SharedValue<boolean>;
-  handlePress: (formData: FormData) => void;
+  handlePress: (formData: FormData, imageURI: string) => void;
 }
 const ImageBottomSheet = ({ isOpen, handlePress }: Props) => {
   const toggleSheet = () => {
@@ -44,7 +44,7 @@ const ImageBottomSheet = ({ isOpen, handlePress }: Props) => {
         type: res.mime || 'image/jpeg',
         name: res.filename || 'image.jpg',
       } as any);
-      handlePress(formData)
+      handlePress(formData, compressedImage)
     }
   };
 

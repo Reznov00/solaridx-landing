@@ -7,7 +7,7 @@ import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsi
 import { BackButton, FullScreenView, PrimaryButton, TextInput, TextMedium, TextRegular, UnlinkSpecsBottomSheet } from 'src/components'
 import { spectaclesConnectSchema } from 'src/constants'
 import { useSpecsLinkService } from 'src/services'
-import { useUserAtom } from 'src/store'
+import { useSpecsBottomSheetAtom, useUserAtom } from 'src/store'
 import { Colors, FontSizes, LineHeight } from 'src/themes'
 import { dissmissKeyBoard, isIOS } from 'src/utilities'
 import { AgreementForm } from './AgreementForm'
@@ -19,7 +19,8 @@ const SpectaclesManageScreen = () => {
     const [agreementView, setAgreementView] = useState(!isSpecsConnected)
     const { handleService, isPending } = useSpecsLinkService();
     const [viewMode, setViewMode] = useState<'data' | 'settings'>(isSpecsConnected ? 'data' : 'settings')
-    const [unlinkSpecsView, setUnlinkSpecsView] = useState<boolean>(false)
+    const { setBottomSheetVisible } = useSpecsBottomSheetAtom()
+
     const {
         control,
         formState: { errors },
@@ -44,77 +45,78 @@ const SpectaclesManageScreen = () => {
         <Fragment>
             <FullScreenView>
                 {(!agreementView) ?
-                    <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
-                        <View style={styles.container}>
-                            <View style={styles.headerContainer}>
-                                <BackButton iconSize={2} style={{ padding: RFValue(7) }} />
-                                <TextMedium fontSize='sh2' numberOfLines={1}>
-                                    {'Spectacles'}
-                                </TextMedium>
-                            </View>
-                            {isSpecsConnected && <HeaderTabs selectedTab={viewMode} setSelectedTab={setViewMode} />}
-                            {viewMode === 'settings' ? <View style={styles.subContainer}>
-                                {!isSpecsConnected ?
-                                    <Fragment>
-                                        <TextInput
-                                            control={control}
-                                            name="username"
-                                            label={'Spectacles username'}
-                                            placeholder='johndoe'
-                                            editable={!isPending && !isSpecsConnected}
-                                            maxLength={30}
-                                            touched={!!errors?.username?.message}
-                                            error={errors?.username?.message}
-                                            autoCapitalize='none'
-                                        />
-                                        <TextInput
-                                            control={control}
-                                            name="unique_code"
-                                            label={'Unqiue Code'}
-                                            placeholder='XXXX'
-                                            editable={!isPending && !isSpecsConnected}
-                                            keyboardType='number-pad'
-                                            maxLength={4}
-                                            touched={!!errors.unique_code?.message}
-                                            error={errors?.unique_code?.message}
-                                        />
-                                        <PrimaryButton
-                                            title="Connect"
-                                            buttonStyle={{ marginVertical: 0 }}
-                                            onPress={handleSubmit(handleConnect)}
-                                            disabled={isPending || !!isSpecsConnected}
-                                            loading={isPending && !isSpecsConnected}
-                                        />
-                                    </Fragment>
-                                    :
-                                    <View style={styles.unlinkContainer}>
-                                        <View style={styles.profileContainer}>
-                                            <View style={styles.avatarContainer}>
-                                                <TextRegular style={styles.subTextStyle}>
-                                                    {`spectacles`.charAt(0).toUpperCase()}
+                    <View style={styles.container}>
+                        <View style={styles.headerContainer}>
+                            <BackButton iconSize={2} style={{ padding: RFValue(7) }} />
+                            <TextMedium fontSize='sh2' numberOfLines={1}>
+                                {'Spectacles'}
+                            </TextMedium>
+                        </View>
+                        {isSpecsConnected && <HeaderTabs selectedTab={viewMode} setSelectedTab={setViewMode} />}
+                        {viewMode === 'settings' ?
+                            <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
+                                <View style={styles.subContainer}>
+                                    {!isSpecsConnected ?
+                                        <Fragment>
+                                            <TextInput
+                                                control={control}
+                                                name="username"
+                                                label={'Spectacles username'}
+                                                placeholder='johndoe'
+                                                editable={!isPending && !isSpecsConnected}
+                                                maxLength={30}
+                                                touched={!!errors?.username?.message}
+                                                error={errors?.username?.message}
+                                                autoCapitalize='none'
+                                            />
+                                            <TextInput
+                                                control={control}
+                                                name="unique_code"
+                                                label={'Unqiue Code'}
+                                                placeholder='XXXX'
+                                                editable={!isPending && !isSpecsConnected}
+                                                keyboardType='number-pad'
+                                                maxLength={4}
+                                                touched={!!errors.unique_code?.message}
+                                                error={errors?.unique_code?.message}
+                                            />
+                                            <PrimaryButton
+                                                title="Connect"
+                                                buttonStyle={{ marginVertical: 0 }}
+                                                onPress={handleSubmit(handleConnect)}
+                                                disabled={isPending || !!isSpecsConnected}
+                                                loading={isPending && !isSpecsConnected}
+                                            />
+                                        </Fragment>
+                                        :
+                                        <View style={styles.unlinkContainer}>
+                                            <View style={styles.profileContainer}>
+                                                <View style={styles.avatarContainer}>
+                                                    <TextRegular style={styles.subTextStyle}>
+                                                        {`spectacles`.charAt(0).toUpperCase()}
+                                                    </TextRegular>
+                                                </View>
+                                                <TextRegular color='gray_900' fontSize='bt'>
+                                                    {`@${user?.specsUsername ?? ''}`}
                                                 </TextRegular>
                                             </View>
-                                            <TextRegular color='gray_900' fontSize='bt'>
-                                                {`@${'snapuser'}`}
-                                            </TextRegular>
-                                        </View>
-                                        <PrimaryButton
-                                            buttonStyle={{ backgroundColor: Colors.danger, borderWidth: 0, marginVertical: 0 }}
-                                            textStyle={{ color: Colors.white }}
-                                            onPress={() => setUnlinkSpecsView(true)}
-                                            title="Unlink"
-                                            shadowEnabled={false}
-                                            loading={isPending}
-                                        />
-                                    </View>}
-                            </View>
-                                : <SpecsDataComponent />}
-                        </View>
-                    </TouchableWithoutFeedback>
+                                            <PrimaryButton
+                                                buttonStyle={{ backgroundColor: Colors.danger, borderWidth: 0, marginVertical: 0 }}
+                                                textStyle={{ color: Colors.white }}
+                                                onPress={() => setBottomSheetVisible(true)}
+                                                title="Unlink"
+                                                shadowEnabled={false}
+                                                loading={isPending}
+                                            />
+                                        </View>}
+                                </View>
+                            </TouchableWithoutFeedback>
+                            : <SpecsDataComponent />}
+                    </View>
                     : <AgreementForm handlePress={() => setAgreementView(false)} />
                 }
             </FullScreenView>
-            <UnlinkSpecsBottomSheet showBottomSheet={unlinkSpecsView} setShowBottomSheet={setUnlinkSpecsView} />
+            <UnlinkSpecsBottomSheet />
         </Fragment>
     )
 }
@@ -125,10 +127,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: heightPercentageToDP(2),
-        paddingHorizontal: widthPercentageToDP(5),
     },
     subContainer: {
-        marginVertical: heightPercentageToDP(3)
+        marginVertical: heightPercentageToDP(3),
+        paddingHorizontal: widthPercentageToDP(5),
     },
     unlinkContainer: {
         gap: heightPercentageToDP(1)
@@ -137,7 +139,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: widthPercentageToDP(3),
-        marginTop: heightPercentageToDP(isIOS ? 1 : 2)
+        marginTop: heightPercentageToDP(isIOS ? 1 : 2),
+        paddingHorizontal: widthPercentageToDP(5),
     },
     subTextStyle: {
         fontSize: FontSizes.h1,

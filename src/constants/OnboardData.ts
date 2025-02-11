@@ -6,18 +6,18 @@ export interface PageInterface extends Pick<ImageProps, 'source'> {
 }
 export const PAGES: PageInterface[] = [
   {
-    title: 'The Most Accessible Digital Fashion Experience',
-    description: "For anyone who wants direct interaction with their favorite brand.",
+    title: 'Empower Your Solar Knowledge',
+    description: "Access expert insights and essential solar data in one place.",
     source: require('src/assets/pngs/OnBoarding1.png'),
   },
   {
-    title: 'Find What You Want & Try It On',
-    description: 'Get a discount and ask your network how it looks.',
+    title: 'Analyze & Optimize Energy Usage',
+    description: "Track solar performance with interactive charts and real-time insights.",
     source: require('src/assets/pngs/OnBoarding2.png'),
   },
   {
-    title: 'FashX: The Ultimate Digital Try-On Experience',
-    description: 'See and share how you look in your favorite brands.',
+    title: 'Smart Solar Solutions at Your Fingertips',
+    description: "Discover the latest in solar technology and make informed decisions.",
     source: require('src/assets/pngs/OnBoarding3.png'),
   },
 ];

@@ -34,6 +34,10 @@ const SignInScreen = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(signInValidationSchema),
+    // defaultValues: {
+    //   email: 'test2q2@yopmail.com',
+    //   password: 'Test123!'
+    // }
   });
 
   const handleSignIn = async (data: { email: string; password: string }) => {

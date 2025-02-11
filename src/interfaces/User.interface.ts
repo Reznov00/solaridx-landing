@@ -8,6 +8,7 @@ export interface User {
   updatedAt?: string;
   authCode?: string;
   specsId: string | null;
+  specsUsername: string | null;
   isEmailVerified: boolean;
   provider?: AccountProviders;
 }

@@ -8,43 +8,39 @@ import {
 } from 'react-native-responsive-screen';
 import { CloseIcon, TickIcon } from 'src/assets';
 import { useSpecsUnLinkService } from 'src/services';
+import { useSpecsBottomSheetAtom } from 'src/store';
 import { Colors } from 'src/themes';
 import { PrimaryButton } from '../Buttons';
 import { TextRegular } from '../Text';
 import { showToast } from '../Toast';
 import { BottomSheet } from './BottomSheet';
 
-interface Props {
-  showBottomSheet: boolean
-  setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
-const UnlinkSpecsBottomSheet = ({ setShowBottomSheet, showBottomSheet }: Props) => {
+const UnlinkSpecsBottomSheet = () => {
+  const { bottomSheetVisible, setBottomSheetVisible } = useSpecsBottomSheetAtom()
   const isOpen = useSharedValue(false);
   const { handleService, isPending } = useSpecsUnLinkService();
 
   const toggleSheet = () => {
     if (!isPending) {
       isOpen.value = false;
-      setShowBottomSheet(false)
+      setBottomSheetVisible(false)
     }
   };
 
   useEffect(() => {
-    if (showBottomSheet) {
+    if (bottomSheetVisible) {
       isOpen.value = true;
     } else {
       isOpen.value = false;
     }
-  }, [showBottomSheet]);
+  }, [bottomSheetVisible]);
 
   const handleDelete = async () => {
     try {
       handleService()
     } catch (error) {
       showToast('error', 'An error occurred while unlinking');
-    } finally {
-      showToast('success', 'Specacles unlinked successfully');
       toggleSheet()
     }
   };

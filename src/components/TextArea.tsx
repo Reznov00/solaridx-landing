@@ -5,7 +5,7 @@ import {
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import { Colors, FontSizes, LineHeight } from 'src/themes';
-import { isIOS, useKeyboardVisible } from 'src/utilities';
+import { isIOS } from 'src/utilities';
 
 interface Props {
   textData: string;
@@ -13,11 +13,9 @@ interface Props {
   style?: ViewStyle
   placeholder?: string
   rightIcon?: React.ReactElement
-  hideIconOnKeyboard?: boolean
 }
-const TextArea = ({ setTextData, textData, style, placeholder, rightIcon, hideIconOnKeyboard = false }: Props) => {
+const TextArea = ({ setTextData, textData, style, placeholder, rightIcon, }: Props) => {
   const [height, setHeight] = useState(40);
-  const isKeyboardVisible = useKeyboardVisible() && hideIconOnKeyboard
   return (
     <View style={[isIOS ? styles.container : styles.container, style]}>
       <View style={{ flex: 1 }}>
@@ -36,7 +34,7 @@ const TextArea = ({ setTextData, textData, style, placeholder, rightIcon, hideIc
         />
       </View>
 
-      {rightIcon && !textData && !isKeyboardVisible && rightIcon}
+      {rightIcon && !textData && rightIcon}
     </View>
   );
 };
