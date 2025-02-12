@@ -9,4 +9,10 @@ export interface MessageItemInterface {
     createdAt: string
     image?: string
 }
+
+export interface MessagePostRequestInterface {
+    chatRoomId?: string;
+    prompt: string
+    image?: FormData
+}
 export type MessageType = 'prompt' | 'answer';

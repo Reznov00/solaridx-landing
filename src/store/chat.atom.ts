@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai';
-import { atomWithQuery } from 'jotai-tanstack-query';
-import { axiosInstance, getAllChatRoomsURL, getChatHistoryURL } from 'src/apis';
-import { MessageItemInterface } from 'src/interfaces';
+import { atomWithMutation, atomWithQuery } from 'jotai-tanstack-query';
+import { axiosInstance, getAllChatRoomsURL, getChatHistoryURL, postChatURL, postNewChatURL } from 'src/apis';
+import { MessageItemInterface, MessagePostRequestInterface } from 'src/interfaces';
 
 //Atoms
 const chatRoomAtom = atom<string | null>();
@@ -24,24 +24,23 @@ export const getChatRoomsAtom = atomWithQuery(() => ({
     return data.chatRooms;
   },
 }));
-// export const getChatsHistoryAtom = atomWithQuery(() => ({
-//   queryKey: ['getChatsHistoryAtom'],
-//   queryFn: async () => {
-//     // const [roomId,] = useAtom(chatRoomAtom)
-//     // console.log({ roomId })
-//     const api = `${getChatHistoryURL}/${'roomId'}`
-//     const { data } = await axiosInstance.get(api);
-//     return data.chats;
-//   },
-// }));
-
 export const getChatsHistoryAtom = (roomId: string) =>
   atomWithQuery(() => ({
     queryKey: ['getChatsHistoryAtom', roomId],
     queryFn: async () => {
+      if (roomId === 'newchat') return []
       const api = `${getChatHistoryURL}/${roomId}`;
       const { data } = await axiosInstance.get(api);
       return data.chats;
     },
   }));
+export const postChatMutationAtom = atomWithMutation(() => ({
+  mutationKey: ['postChatMutationAtom'],
+  mutationFn: async (values: { userInfo: MessagePostRequestInterface, newChat: boolean }
+  ) => {
+    const ApiUrl = values.newChat ? postNewChatURL : postChatURL
+    const { data } = await axiosInstance.post(ApiUrl, values.userInfo);
+    return data;
+  },
+}));
 

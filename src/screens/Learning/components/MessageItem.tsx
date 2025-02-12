@@ -20,13 +20,13 @@ const MessageItem = React.memo(
         const dot3 = useRef(new Animated.Value(0)).current;
         const isPrompt = type === 'prompt';
         const animateAnswer = loading && !isPrompt
-        const dangerMessage = !isPrompt && item.answer.startsWith('Failed to')
+        const dangerMessage = !isPrompt && item?.answer?.startsWith('Failed to')
 
         useEffect(() => {
-            Tts.addEventListener('tts-start', (e) => { console.log("tts-start", e) })
-            Tts.addEventListener('tts-cancel', (e) => { console.log("tts-cancel", e) })
-            Tts.addEventListener('tts-progress', (e) => { console.log("tts-progress", e) })
-            Tts.addEventListener('tts-finish', (e) => { console.log("tts-finish", e) })
+            Tts.addEventListener('tts-start', () => { })
+            Tts.addEventListener('tts-cancel', () => { })
+            Tts.addEventListener('tts-progress', () => { })
+            Tts.addEventListener('tts-finish', () => { })
             return () => {
                 Tts.removeAllListeners('tts-finish')
                 Tts.removeAllListeners('tts-cancel')
@@ -110,7 +110,7 @@ const MessageItem = React.memo(
                     ) : (
                         <TouchableWithoutFeedback onPress={speakChat}>
                             <View style={styles.messageDetailsContainer}>
-                                {item.image && <View style={styles.imageContainerStyle}>
+                                {item.image && isPrompt && <View style={styles.imageContainerStyle}>
                                     <Image resizeMode='contain' source={{ uri: item.image }} style={{ width: '100%', height: '100%' }} />
                                 </View>}
                                 <TextMedium fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>

@@ -10,6 +10,7 @@ import { useGetChatRoomsService } from 'src/services'
 import { FontSizes, LineHeight } from 'src/themes'
 import { isIOS, NavigationService } from 'src/utilities'
 import { ChatRoomItem } from './components'
+import { useChatRoomIDAtom } from 'src/store'
 
 const NoChatFound = () => {
   return <View style={styles.noChatsFoundContainer}>
@@ -21,6 +22,7 @@ const NoChatFound = () => {
 const LearningScreen = () => {
   const viewableItems = useSharedValue<ViewToken<ChatRoomInterface>[]>([]);
   const { data, isPending, refetch } = useGetChatRoomsService()
+  const { setRoomId } = useChatRoomIDAtom()
 
   const renderChatRooms = ({ item, index }: ListRenderItemInfo<ChatRoomInterface>) => {
     return <ChatRoomItem
@@ -38,7 +40,10 @@ const LearningScreen = () => {
           <TextMedium fontSize='sh1'>My Chats</TextMedium>
           <PrimaryButton
             title='New'
-            onPress={() => NavigationService.nestedNavigate(STACKS_ENUM.CHAT_STACK, SCREENS_ENUM.CHAT_ROOM_SCREEN)}
+            onPress={() => {
+              setRoomId('newchat')
+              NavigationService.nestedNavigate(STACKS_ENUM.CHAT_STACK, SCREENS_ENUM.CHAT_ROOM_SCREEN)
+            }}
             rightIcon={<ChatIcon size={2.5} />}
             buttonStyle={styles.newChatButton}
             textStyle={styles.newChatTextStyle}
@@ -97,7 +102,8 @@ const styles = StyleSheet.create({
     lineHeight: LineHeight.st
   },
   chatsListContainer: {
-    paddingVertical: heightPercentageToDP(2),
+    paddingTop: heightPercentageToDP(2),
+    flex: 1
   },
   listFooterStyle: {
     height: heightPercentageToDP(4)

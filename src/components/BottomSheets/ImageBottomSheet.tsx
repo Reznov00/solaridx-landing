@@ -36,7 +36,7 @@ const ImageBottomSheet = ({ isOpen, handlePress }: Props) => {
     if (res) {
       const compressedImage = await MediaCompressor({ filePath: res.path });
       const formData = new FormData();
-      formData.append('file', {
+      formData.append('image', {
         uri:
           Platform.OS === 'ios'
             ? compressedImage.replace('file://', '')

@@ -27,13 +27,8 @@ export const unlinkSpectaclesURL = '/user/unlink-specs';
 //Chats
 export const getAllChatRoomsURL = '/chat-model/chat-rooms';
 export const getChatHistoryURL = '/chat-model/chat-history';
-// export const getChatHistoryURL = () => {
-//   const { roomId } = useChatRoomIDAtom()
-//   console.log({ roomId })
-//   // return `/chat-model/chat-history/${roomId}`
-//   return '/chat-model/chat-history/67aa638f35f20ae5272d7107'
-// };
-
+export const postChatURL = '/chat-model/message';
+export const postNewChatURL = '/chat-model/chat-room';
 
 
 
