@@ -34,13 +34,33 @@ export const getChatsHistoryAtom = (roomId: string) =>
       return data.chats;
     },
   }));
+// export const postChatMutationAtom = atomWithMutation(() => ({
+//   mutationKey: ['postChatMutationAtom'],
+//   mutationFn: async (values: { userInfo: MessagePostRequestInterface, newChat: boolean }
+//   ) => {
+//     const ApiUrl = values.newChat ? postNewChatURL : postChatURL
+//     const { data } = await axiosInstance.post(ApiUrl, values.userInfo);
+//     return data;
+//   },
+// }));
+
 export const postChatMutationAtom = atomWithMutation(() => ({
   mutationKey: ['postChatMutationAtom'],
-  mutationFn: async (values: { userInfo: MessagePostRequestInterface, newChat: boolean }
-  ) => {
-    const ApiUrl = values.newChat ? postNewChatURL : postChatURL
-    const { data } = await axiosInstance.post(ApiUrl, values.userInfo);
+  mutationFn: async ({ userInfo, newChat }: { userInfo: MessagePostRequestInterface; newChat: boolean }) => {
+    const ApiUrl = newChat ? postNewChatURL : postChatURL;
+    const formData = userInfo.image || new FormData();
+
+    formData.append('prompt', userInfo.prompt);
+    formData.append('chatRoomId', userInfo.chatRoomId as string);
+
+    const { data } = await axiosInstance.post(ApiUrl, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
     return data;
   },
 }));
+
 
