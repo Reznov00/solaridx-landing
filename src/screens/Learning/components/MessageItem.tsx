@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import Tts from 'react-native-tts';
+import { BrokenImageIcon } from 'src/assets';
 import { TextMedium, TextRegular } from 'src/components';
 import { MessageItemInterface, MessageType } from 'src/interfaces';
 import { Colors } from 'src/themes';
@@ -15,6 +16,7 @@ type ChatRoomProps = {
 
 const MessageItem = React.memo(
     ({ item, type, loading }: ChatRoomProps) => {
+        const [brokenImage, setBrokenImage] = useState(false)
         const dot1 = useRef(new Animated.Value(0)).current;
         const dot2 = useRef(new Animated.Value(0)).current;
         const dot3 = useRef(new Animated.Value(0)).current;
@@ -34,7 +36,6 @@ const MessageItem = React.memo(
                 Tts.removeAllListeners('tts-progress')
             }
         }, [])
-
 
 
         useEffect(() => {
@@ -111,7 +112,11 @@ const MessageItem = React.memo(
                         <TouchableWithoutFeedback onPress={speakChat}>
                             <View style={styles.messageDetailsContainer}>
                                 {item.image && isPrompt && <View style={styles.imageContainerStyle}>
-                                    <Image resizeMode='contain' source={{ uri: item.image }} style={{ width: '100%', height: '100%' }} />
+                                    <Image onError={() => setBrokenImage(true)} resizeMode='contain' source={{ uri: item.image }} style={{ width: '100%', height: '100%' }} />
+                                    {brokenImage && <View style={styles.brokenImage}>
+                                        <BrokenImageIcon size={8} />
+                                        <TextMedium fontSize='st'>Image expired</TextMedium>
+                                    </View>}
                                 </View>}
                                 <TextMedium fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
                                     {isPrompt ? item.prompt : item.answer}
@@ -181,6 +186,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 10
+    },
+    brokenImage: {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: heightPercentageToDP(2)
     },
     messageDetailsContainer: {
         gap: heightPercentageToDP(1)
