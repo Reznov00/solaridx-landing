@@ -41,8 +41,6 @@ const MessageItem = React.memo(
             };
         }, []);
 
-        console.log({ dataaaaa: loading })
-
         useEffect(() => {
             if (animateAnswer) {
                 const animationSequence = Animated.loop(

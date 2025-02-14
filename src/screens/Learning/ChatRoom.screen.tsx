@@ -60,10 +60,6 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
     isRecorderOpen.value = true;
   };
 
-  useEffect(() => {
-    console.log('Chats updated:', chats);
-  }, [chats]);
-
   const handleSendMessage = async (prompt: string) => {
     if (!prompt.trim()) return;
     setLoading(true);
@@ -94,7 +90,6 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
           chat._id === newMessage._id ? { ...chat, answer: response.response, image: response?.image ?? chat.image } : chat
         )
       );
-      console.log({ chats })
       setLoading(false);
       if (isNewChat) refetch()
     } catch (error) {
