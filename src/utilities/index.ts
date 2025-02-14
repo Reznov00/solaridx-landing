@@ -5,3 +5,4 @@ export * from './Permissions';
 export * from './Date';
 export * from './MediaCompressor';
 export * from './MediaPicker';
+export * from './OtherUtils';

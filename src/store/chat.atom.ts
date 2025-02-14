@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai';
 import { atomWithMutation, atomWithQuery } from 'jotai-tanstack-query';
-import { axiosInstance, getAllChatRoomsURL, getChatHistoryURL, postChatURL, postNewChatURL } from 'src/apis';
-import { MessageItemInterface, MessagePostRequestInterface } from 'src/interfaces';
+import { axiosInstance, deleteChatURL, getAllChatRoomsURL, getChatHistoryURL, postChatURL, postNewChatURL } from 'src/apis';
+import { MessageDeleteRequestInterface, MessageItemInterface, MessagePostRequestInterface } from 'src/interfaces';
 
 //Atoms
 const chatRoomAtom = atom<string | null>();
@@ -34,15 +34,6 @@ export const getChatsHistoryAtom = (roomId: string) =>
       return data.chats;
     },
   }));
-// export const postChatMutationAtom = atomWithMutation(() => ({
-//   mutationKey: ['postChatMutationAtom'],
-//   mutationFn: async (values: { userInfo: MessagePostRequestInterface, newChat: boolean }
-//   ) => {
-//     const ApiUrl = values.newChat ? postNewChatURL : postChatURL
-//     const { data } = await axiosInstance.post(ApiUrl, values.userInfo);
-//     return data;
-//   },
-// }));
 
 export const postChatMutationAtom = atomWithMutation(() => ({
   mutationKey: ['postChatMutationAtom'],
@@ -51,7 +42,7 @@ export const postChatMutationAtom = atomWithMutation(() => ({
     const formData = userInfo.image || new FormData();
 
     formData.append('prompt', userInfo.prompt);
-    formData.append('chatRoomId', userInfo.chatRoomId as string);
+    !newChat && formData.append('chatRoomId', userInfo.chatRoomId as string);
 
     const { data } = await axiosInstance.post(ApiUrl, formData, {
       headers: {
@@ -59,6 +50,14 @@ export const postChatMutationAtom = atomWithMutation(() => ({
       },
     });
 
+    return data;
+  },
+}));
+
+export const deleteChatMutationAtom = atomWithMutation(() => ({
+  mutationKey: ['deleteChatMutationAtom'],
+  mutationFn: async ({ chatRoomId }: MessageDeleteRequestInterface) => {
+    const { data } = await axiosInstance.delete(deleteChatURL(chatRoomId));
     return data;
   },
 }));

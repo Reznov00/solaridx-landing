@@ -16,7 +16,7 @@ const TrashIcon = ({ size = 5, ...props }: SVGPropsII) => (
     viewBox="-1 0 26 26">
 
     <Path
-      stroke={props.stroke ?? Colors.gray_900}
+      stroke={props.color ?? Colors.gray_900}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={props.strokeWidth ?? 2.8}

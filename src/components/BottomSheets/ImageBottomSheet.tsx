@@ -77,7 +77,7 @@ export { ImageBottomSheet };
 const styles = StyleSheet.create({
   container: {
     marginTop: heightPercentageToDP(1),
-    marginBottom: heightPercentageToDP(3),
+    marginBottom: heightPercentageToDP(2),
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',

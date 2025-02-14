@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import Tts from 'react-native-tts';
-import { BrokenImageIcon } from 'src/assets';
+import { BrokenImageIcon, ChatBotIcon } from 'src/assets';
 import { TextMedium, TextRegular } from 'src/components';
 import { MessageItemInterface, MessageType } from 'src/interfaces';
+import { useUserAtom } from 'src/store';
 import { Colors } from 'src/themes';
+import { getInitials } from 'src/utilities';
 
 type ChatRoomProps = {
     item: MessageItemInterface;
@@ -17,6 +19,7 @@ type ChatRoomProps = {
 const MessageItem = React.memo(
     ({ item, type, loading }: ChatRoomProps) => {
         const [brokenImage, setBrokenImage] = useState(false)
+        const { user } = useUserAtom()
         const dot1 = useRef(new Animated.Value(0)).current;
         const dot2 = useRef(new Animated.Value(0)).current;
         const dot3 = useRef(new Animated.Value(0)).current;
@@ -89,8 +92,13 @@ const MessageItem = React.memo(
                     { flexDirection: isPrompt ? 'row-reverse' : 'row' },
                 ]}
             >
-                <View style={styles.avatarContainer}>
-                    <TextRegular>{isPrompt ? 'R' : 'B'}</TextRegular>
+                <View style={[styles.avatarContainer, { backgroundColor: !isPrompt ? Colors.primary_100 : Colors.primary_400 }]}>
+                    {isPrompt ? <TextRegular
+                        color={'white'}
+                        fontSize='bt'>
+                        {getInitials(user?.name as string)}
+                    </TextRegular> :
+                        <ChatBotIcon size={3.5} />}
                 </View>
                 <View
                     style={[
@@ -118,9 +126,9 @@ const MessageItem = React.memo(
                                         <TextMedium fontSize='st'>Image expired</TextMedium>
                                     </View>}
                                 </View>}
-                                <TextMedium fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
+                                <TextRegular fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
                                     {isPrompt ? item.prompt : item.answer}
-                                </TextMedium>
+                                </TextRegular>
                             </View>
                         </TouchableWithoutFeedback>
                     )}
@@ -153,7 +161,7 @@ const styles = StyleSheet.create({
         width: widthPercentageToDP(10),
         height: widthPercentageToDP(10),
         borderRadius: widthPercentageToDP(10),
-        backgroundColor: Colors.primary_500,
+        backgroundColor: Colors.success,
         justifyContent: 'center',
         alignItems: 'center',
     },

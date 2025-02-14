@@ -11,32 +11,33 @@ import {
   View,
 } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
-import { RFValue } from 'react-native-responsive-fontsize';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { CrossIcon, MicrophoneIcon, PaperClipIcon, SendIcon } from 'src/assets';
-import { BackButton, FullScreenView, ImageBottomSheet, TextArea, TextMedium, Touchable, VoiceRecorderBottomSheet } from 'src/components';
+import { DeleteChatBottomSheet, FullScreenView, ImageBottomSheet, TextArea, Touchable, VoiceRecorderBottomSheet } from 'src/components';
 import { chatHeaderData } from 'src/constants';
 import { SCREENS_ENUM } from 'src/enums';
 import { ChatRoomInterface, GenericRouteProps, MessageItemInterface } from 'src/interfaces';
 import { useGetChatHistoryService, useGetChatRoomsService, usePostChatService } from 'src/services';
 import { Colors } from 'src/themes';
 import { dissmissKeyBoard, isIOS } from 'src/utilities';
-import { MessageItem } from './components';
+import { ChatHeader, ChatMenu, MessageItem } from './components';
 
 const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCREEN>) => {
   const roomDetails = route?.params?.roomDetails as ChatRoomInterface;
+  const [showMenu, setShowMenu] = useState(false)
   const isImageBottomSheetOpen = useSharedValue(false);
+  const ischatBottomsheetOpen = useSharedValue(false);
   const isRecorderOpen = useSharedValue(false);
   const { data: chatHistory, isPending } = useGetChatHistoryService();
   const [isNewChat, setIsNewChat] = useState(!roomDetails)
   const { refetch } = useGetChatRoomsService()
-
   const { handleService } = usePostChatService();
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [imageData, setImageData] = useState<{ formData: FormData; imageUri: string } | null>(null);
   const [chats, setChats] = useState<MessageItemInterface[]>([]);
   const [roomID, setRoomId] = useState<string>();
+
   useEffect(() => {
     if (!isPending && chatHistory && !isNewChat) {
       setChats(chatHistory);
@@ -71,12 +72,13 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
     setPrompt('');
     setImageData(null);
     try {
+      const data = {
+        prompt: prompt.trim(),
+        ...(imageData?.formData && { image: imageData.formData }),
+        ...(!isNewChat && { chatRoomId: roomDetails?.chatRoomId ?? roomID }),
+      }
       const response = await handleService({
-        userInfo: {
-          prompt: prompt.trim(),
-          ...(imageData?.formData && { image: imageData.formData }),
-          ...(!isNewChat && { chatRoomId: roomDetails?.chatRoomId ?? roomID }),
-        },
+        userInfo: data,
         newChat: isNewChat
       });
       setIsNewChat(false)
@@ -112,17 +114,26 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
-        <FullScreenView>
-          <View style={styles.container}>
-            <View style={styles.headerContainer}>
-              <BackButton iconSize={1.5} style={{ padding: RFValue(7) }} />
-              <TextMedium fontSize="st" numberOfLines={1}>
-                {roomDetails ? `${roomDetails.header}` : 'New Chat'}
-              </TextMedium>
-            </View>
-            <View style={styles.lineSeperator} />
-            {!isPending ? (
+      <FullScreenView>
+        <View style={styles.container}>
+          <ChatHeader
+            setShowMenu={setShowMenu}
+            roomDetails={roomDetails}
+          />
+          {showMenu && <ChatMenu
+            disableDeletion={isNewChat || !roomDetails?.chatRoomId}
+            handleExit={() => setShowMenu(false)}
+            handleDelete={() => {
+              setShowMenu(false)
+              ischatBottomsheetOpen.value = true
+            }}
+          />}
+          <View style={styles.lineSeperator} />
+          {!isPending ? (
+            <TouchableWithoutFeedback style={{ zIndex: 1 }} onPress={() => {
+              setShowMenu(showMenu && !showMenu)
+              dissmissKeyBoard()
+            }}>
               <View style={styles.subContainer}>
                 <View style={styles.chatBoxContainer}>
                   <FlatList
@@ -179,16 +190,17 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
                   </Touchable>
                 </View>
               </View>
-            ) : (
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size={'large'} color={Colors.gray_900} />
-              </View>
-            )}
-          </View>
-        </FullScreenView>
-      </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+          ) : (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator size={'large'} color={Colors.gray_900} />
+            </View>
+          )}
+        </View>
+      </FullScreenView>
       <ImageBottomSheet isOpen={isImageBottomSheetOpen} handlePress={handleUpload} />
       <VoiceRecorderBottomSheet isOpen={isRecorderOpen} handleSpeech={handleSpeech} />
+      <DeleteChatBottomSheet isOpen={ischatBottomsheetOpen} roomID={roomDetails?.chatRoomId} />
     </KeyboardAvoidingView>
   );
 };
@@ -205,12 +217,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: heightPercentageToDP(isIOS ? 1 : 2),
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: widthPercentageToDP(3),
-    marginTop: heightPercentageToDP(isIOS ? 1 : 2),
   },
   lineSeperator: {
     width: '100%',

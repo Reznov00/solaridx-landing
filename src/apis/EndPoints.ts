@@ -2,8 +2,8 @@ import { getItem, STORAGE_KEYS } from 'src/utilities';
 // import Config from 'react-native-config';
 
 // export const baseUrl = Config.DOMAIN;
-export const baseUrl = 'https://6806-103-169-64-122.ngrok-free.app';
-// export const baseUrl = 'https://api.solaridx.com';
+// export const baseUrl = 'https://6806-103-169-64-122.ngrok-free.app';
+export const baseUrl = 'https://api.solaridx.com';
 
 // Auth
 export const signUpURL = '/auth/signup';
@@ -29,6 +29,7 @@ export const getAllChatRoomsURL = '/chat-model/chat-rooms';
 export const getChatHistoryURL = '/chat-model/chat-history';
 export const postChatURL = '/chat-model/message';
 export const postNewChatURL = '/chat-model/chat-room';
+export const deleteChatURL = (roomId: string) => `/chat-model/chat-history/${roomId}`;
 
 
 

@@ -39,6 +39,8 @@ export * from './MicrophoneIcon';
 export * from './CrossIcon';
 export * from './QuantiniumLogo';
 export * from './BrokenImageIcon';
+export * from './OptionsIcon';
+export * from './ChatBotIcon';
 
 export * from './SocialMediaIcons';
 export * from './FilterIcon';

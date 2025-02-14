@@ -4,33 +4,14 @@ import { useMemo } from 'react';
 import { showToast } from 'src/components';
 import { MutationErrorInterface } from 'src/interfaces';
 import {
+  deleteChatMutationAtom,
   getChatRoomsAtom,
   getChatsHistoryAtom,
   postChatMutationAtom,
   useChatRoomIDAtom,
   useChatsAtom
 } from 'src/store';
-
-// const useMutationService = <TData, TError, TVariables>(
-//   atom: Atom<AtomWithMutationResult<TData, TError, TVariables, unknown>>,
-//   onSuccess: (val: TData, formData: TVariables) => void,
-// ) => {
-//   const [{ mutate, isPending, data }] = useAtom(atom);
-
-//   const handleService = async (formData: TVariables) => {
-
-//    return mutate(formData, {
-//       onSuccess: val => onSuccess(val, formData),
-//       onError: (error: TError) => {
-//         const err = error as MutationErrorInterface;
-//         showToast('error', err?.message ?? 'Error Encountered');
-//       },
-//     });
-//   };
-
-
-//   return { handleService, isPending, data };
-// };
+import { NavigationService } from 'src/utilities';
 
 
 const useMutationService = <TData, TError, TVariables>(
@@ -81,6 +62,16 @@ export const useGetChatHistoryService = () => {
 
 export const usePostChatService = () => {
   return useMutationService(postChatMutationAtom, (val, _) => {
+    return val
+  });
+};
+
+export const useDeleteChatService = () => {
+  const { refetch } = useGetChatRoomsService()
+  return useMutationService(deleteChatMutationAtom, (val, _) => {
+    showToast('success', val?.message)
+    refetch()
+    NavigationService.goBack()
     return val
   });
 };

@@ -15,4 +15,7 @@ export interface MessagePostRequestInterface {
     prompt: string
     image?: FormData
 }
+export interface MessageDeleteRequestInterface {
+    chatRoomId: string;
+}
 export type MessageType = 'prompt' | 'answer';
