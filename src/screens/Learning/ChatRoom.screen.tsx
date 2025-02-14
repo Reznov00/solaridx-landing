@@ -31,7 +31,7 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
   const { data: chatHistory, isPending } = useGetChatHistoryService();
   const [isNewChat, setIsNewChat] = useState(!roomDetails)
   const { refetch } = useGetChatRoomsService()
-  const { handleService } = usePostChatService();
+  const { handleService, } = usePostChatService();
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [imageData, setImageData] = useState<{ formData: FormData; imageUri: string } | null>(null);
@@ -42,13 +42,15 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
     if (!isPending && chatHistory && !isNewChat) {
       setChats(chatHistory);
     }
-  }, [isPending, chatHistory]);
+  }, [isPending, chatHistory,]);
 
   const renderChats = ({ item }: ListRenderItemInfo<MessageItemInterface>) => {
+    const isCurrentMessageLoading = loading && item._id === chats[0]?._id;
+
     return (
       <View style={styles.messageContainer}>
         <MessageItem item={item} isNewChat={isNewChat} type="prompt" />
-        <MessageItem item={item} isNewChat={isNewChat} type="answer" loading={loading} />
+        <MessageItem item={item} isNewChat={isNewChat} type="answer" loading={isCurrentMessageLoading} />
       </View>
     );
   };
@@ -57,6 +59,10 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
     dissmissKeyBoard();
     isRecorderOpen.value = true;
   };
+
+  useEffect(() => {
+    console.log('Chats updated:', chats);
+  }, [chats]);
 
   const handleSendMessage = async (prompt: string) => {
     if (!prompt.trim()) return;
@@ -88,6 +94,8 @@ const ChatRoomScreen = ({ route }: GenericRouteProps<SCREENS_ENUM.CHAT_ROOM_SCRE
           chat._id === newMessage._id ? { ...chat, answer: response.response, image: response?.image ?? chat.image } : chat
         )
       );
+      console.log({ chats })
+      setLoading(false);
       if (isNewChat) refetch()
     } catch (error) {
       console.error('Error sending message:', error);

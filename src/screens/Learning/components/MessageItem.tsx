@@ -18,28 +18,30 @@ type ChatRoomProps = {
 
 const MessageItem = React.memo(
     ({ item, type, loading }: ChatRoomProps) => {
-        const [brokenImage, setBrokenImage] = useState(false)
-        const { user } = useUserAtom()
+        const [brokenImage, setBrokenImage] = useState(false);
+        const { user } = useUserAtom();
         const dot1 = useRef(new Animated.Value(0)).current;
         const dot2 = useRef(new Animated.Value(0)).current;
         const dot3 = useRef(new Animated.Value(0)).current;
+        const animationRef = useRef<Animated.CompositeAnimation | null>(null);
         const isPrompt = type === 'prompt';
-        const animateAnswer = loading && !isPrompt
-        const dangerMessage = !isPrompt && item?.answer?.startsWith('Failed to')
+        const animateAnswer = !!loading && !isPrompt;
+        const dangerMessage = !isPrompt && item?.answer?.startsWith('Failed to');
 
         useEffect(() => {
-            Tts.addEventListener('tts-start', () => { })
-            Tts.addEventListener('tts-cancel', () => { })
-            Tts.addEventListener('tts-progress', () => { })
-            Tts.addEventListener('tts-finish', () => { })
+            Tts.addEventListener('tts-start', () => { });
+            Tts.addEventListener('tts-cancel', () => { });
+            Tts.addEventListener('tts-progress', () => { });
+            Tts.addEventListener('tts-finish', () => { });
             return () => {
-                Tts.removeAllListeners('tts-finish')
-                Tts.removeAllListeners('tts-cancel')
-                Tts.removeAllListeners('tts-start')
-                Tts.removeAllListeners('tts-progress')
-            }
-        }, [])
+                Tts.removeAllListeners('tts-finish');
+                Tts.removeAllListeners('tts-cancel');
+                Tts.removeAllListeners('tts-start');
+                Tts.removeAllListeners('tts-progress');
+            };
+        }, []);
 
+        console.log({ dataaaaa: loading })
 
         useEffect(() => {
             if (animateAnswer) {
@@ -60,45 +62,53 @@ const MessageItem = React.memo(
                     ])
                 );
 
+                animationRef.current = animationSequence;
                 animationSequence.start();
-                return () => animationSequence.stop();
+
+                return () => {
+                    if (animationRef.current) {
+                        animationRef.current.stop();
+                        animationRef.current = null;
+                    }
+                };
             }
         }, [animateAnswer, dot1, dot2, dot3]);
 
+        useEffect(() => {
+            if (!animateAnswer && animationRef.current) {
+                animationRef.current.stop();
+                animationRef.current = null;
+                dot1.setValue(0);
+                dot2.setValue(0);
+                dot3.setValue(0);
+            }
+        }, [animateAnswer, dot1, dot2, dot3]);
 
         const speakChat = () => {
-            !isPrompt && Tts.getInitStatus().then(() => {
-                Tts.speak(item.answer, {
-                    androidParams: {
-                        KEY_PARAM_PAN: -1,
-                        KEY_PARAM_VOLUME: 0.5,
-                        KEY_PARAM_STREAM: 'STREAM_MUSIC',
-                    },
-                    iosVoiceId:
-                        // "com.apple.voice.compact.en-AU.Karen"
-                        // "com.apple.voice.compact.en-IE.Moira"
-                        "com.apple.voice.compact.en-US.Samantha"
-                    ,
-                    rate: 0.5,
-                })
-            });
-
-        }
+            !isPrompt &&
+                Tts.getInitStatus().then(() => {
+                    Tts.speak(item.answer, {
+                        androidParams: {
+                            KEY_PARAM_PAN: -1,
+                            KEY_PARAM_VOLUME: 0.5,
+                            KEY_PARAM_STREAM: 'STREAM_MUSIC',
+                        },
+                        iosVoiceId: 'com.apple.voice.compact.en-US.Samantha',
+                        rate: 0.5,
+                    });
+                });
+        };
 
         return (
-            <View
-                style={[
-                    styles.container,
-                    { flexDirection: isPrompt ? 'row-reverse' : 'row' },
-                ]}
-            >
+            <View style={[styles.container, { flexDirection: isPrompt ? 'row-reverse' : 'row' }]}>
                 <View style={[styles.avatarContainer, { backgroundColor: !isPrompt ? Colors.primary_100 : Colors.primary_400 }]}>
-                    {isPrompt ? <TextRegular
-                        color={'white'}
-                        fontSize='bt'>
-                        {getInitials(user?.name as string)}
-                    </TextRegular> :
-                        <ChatBotIcon size={3.5} />}
+                    {isPrompt ? (
+                        <TextRegular color={'white'} fontSize="bt">
+                            {getInitials(user?.name as string)}
+                        </TextRegular>
+                    ) : (
+                        <ChatBotIcon size={3.5} />
+                    )}
                 </View>
                 <View
                     style={[
@@ -119,14 +129,24 @@ const MessageItem = React.memo(
                     ) : (
                         <TouchableWithoutFeedback onPress={speakChat}>
                             <View style={styles.messageDetailsContainer}>
-                                {item.image && isPrompt && <View style={styles.imageContainerStyle}>
-                                    <Image onError={() => setBrokenImage(true)} resizeMode='contain' source={{ uri: item.image }} style={{ width: '100%', height: '100%' }} />
-                                    {brokenImage && <View style={styles.brokenImage}>
-                                        <BrokenImageIcon size={8} />
-                                        <TextMedium fontSize='st'>Image expired</TextMedium>
-                                    </View>}
-                                </View>}
-                                <TextRegular fontSize="st" color={dangerMessage ? "danger" : "gray_900"}>
+                                {item.image && isPrompt && (
+                                    <View style={styles.imageContainerStyle}>
+                                        <Image
+                                            onError={() => setBrokenImage(true)}
+                                            resizeMode="contain"
+                                            source={{ uri: item.image }}
+                                            fadeDuration={500}
+                                            style={{ width: '100%', height: '100%' }}
+                                        />
+                                        {brokenImage && (
+                                            <View style={styles.brokenImage}>
+                                                <BrokenImageIcon size={8} />
+                                                <TextMedium fontSize="st">Image expired</TextMedium>
+                                            </View>
+                                        )}
+                                    </View>
+                                )}
+                                <TextRegular fontSize="st" color={dangerMessage ? 'danger' : 'gray_900'}>
                                     {isPrompt ? item.prompt : item.answer}
                                 </TextRegular>
                             </View>
@@ -142,7 +162,8 @@ const MessageItem = React.memo(
             prevProps.isNewChat === nextProps.isNewChat &&
             prevProps.item._id === nextProps.item._id &&
             prevProps.item.prompt === nextProps.item.prompt &&
-            prevProps.item.answer === nextProps.item.answer
+            prevProps.item.answer === nextProps.item.answer &&
+            prevProps.loading === nextProps.loading
         );
     }
 );
@@ -193,15 +214,16 @@ const styles = StyleSheet.create({
         width: heightPercentageToDP(20),
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 10
+        backgroundColor: Colors.gray_200,
+
     },
     brokenImage: {
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: heightPercentageToDP(2)
+        gap: heightPercentageToDP(2),
     },
     messageDetailsContainer: {
-        gap: heightPercentageToDP(1)
-    }
+        gap: heightPercentageToDP(1),
+    },
 });

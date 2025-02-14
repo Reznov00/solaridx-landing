@@ -7,7 +7,7 @@ interface Props {
 const MediaPicker = async ({
   useCamera = false,
   height = 6400,
-  width = 4800,
+  width = 6400,
 }: Props): Promise<Image> => {
   const options: Options = {
     width: width,
