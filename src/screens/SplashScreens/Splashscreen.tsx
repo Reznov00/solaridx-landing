@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
   },
   ripple: {
     position: 'absolute',
-    backgroundColor: Colors.white,
+    backgroundColor: "#011325",
   },
 });
