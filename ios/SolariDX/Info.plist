@@ -35,10 +35,8 @@
 	<string>SolariDX requires permission to your location to show you good predictions at your location.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>SolariDX requires access to your camera to allow you to upload and try on outfits virtually.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>SolariDX requires permission to save your virtual try-on images to your photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>SolariDX requires access to your photo library to upload images for virtual try-ons.</string>
+	<string>SolariDX requires access to your photo library to upload images for chatbot.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>SolariDX requires access to the microphone for speech recognition.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>

@@ -15,9 +15,9 @@ const SplashScreen = () => {
   const mainViewOpacity = useSharedValue(1);
 
   useEffect(() => {
-    rippleSize.value = withTiming(heightPercentageToDP(150), { duration: 500 });
-    logoOpacity.value = withDelay(500, withTiming(1, { duration: 500 }));
-    mainViewOpacity.value = withDelay(1600, withTiming(0, { duration: 400 }));
+    rippleSize.value = withTiming(heightPercentageToDP(150), { duration: 800 });
+    logoOpacity.value = withDelay(500, withTiming(1, { duration: 800 }));
+    mainViewOpacity.value = withDelay(1600, withTiming(0, { duration: 900 }));
   }, []);
 
   const rippleStyle = useAnimatedStyle(() => {

@@ -6,13 +6,6 @@ PODS:
   - FBLazyVector (0.76.5)
   - fmt (9.1.0)
   - glog (0.3.5)
-  - Google-Maps-iOS-Utils (5.0.0):
-    - GoogleMaps (~> 8.0)
-  - GoogleMaps (8.4.0):
-    - GoogleMaps/Maps (= 8.4.0)
-  - GoogleMaps/Base (8.4.0)
-  - GoogleMaps/Maps (8.4.0):
-    - GoogleMaps/Base
   - hermes-engine (0.76.5):
     - hermes-engine/Pre-built (= 0.76.5)
   - hermes-engine/Pre-built (0.76.5)
@@ -1293,12 +1286,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-google-maps (1.20.1):
-    - Google-Maps-iOS-Utils (= 5.0.0)
-    - GoogleMaps (= 8.4.0)
-    - React-Core
-  - react-native-maps (1.20.1):
-    - React-Core
   - react-native-safe-area-context (5.2.0):
     - DoubleConversion
     - glog
@@ -1634,7 +1621,9 @@ PODS:
     - React-logger (= 0.76.5)
     - React-perflogger (= 0.76.5)
     - React-utils (= 0.76.5)
-  - RNCAsyncStorage (2.0.0):
+  - ReactNativeGetLocation (5.0.0):
+    - React-Core
+  - RNCAsyncStorage (2.1.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1951,8 +1940,6 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-compressor (from `../node_modules/react-native-compressor`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
-  - react-native-google-maps (from `../node_modules/react-native-maps`)
-  - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-voice (from `../node_modules/@react-native-voice/voice`)"
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
@@ -1982,6 +1969,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - ReactNativeGetLocation (from `../node_modules/react-native-get-location`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
@@ -1996,8 +1984,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Google-Maps-iOS-Utils
-    - GoogleMaps
     - SocketRocket
     - TOCropViewController
 
@@ -2079,10 +2065,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-compressor"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
-  react-native-google-maps:
-    :path: "../node_modules/react-native-maps"
-  react-native-maps:
-    :path: "../node_modules/react-native-maps"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-voice:
@@ -2141,6 +2123,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeGetLocation:
+    :path: "../node_modules/react-native-get-location"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
@@ -2171,8 +2155,6 @@ SPEC CHECKSUMS:
   FBLazyVector: 1bf99bb46c6af9a2712592e707347315f23947aa
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
-  Google-Maps-iOS-Utils: 66d6de12be1ce6d3742a54661e7a79cb317a9321
-  GoogleMaps: 8939898920281c649150e0af74aa291c60f2e77d
   hermes-engine: 06a9c6900587420b90accc394199527c64259db4
   RCT-Folly: bf5c0376ffe4dd2cf438dcf86db385df9fdce648
   RCTDeprecation: fb7d408617e25d7f537940000d766d60149c5fea
@@ -2205,8 +2187,6 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 8a80099ad7391f4e13a48b12796d96680f120dc6
   react-native-compressor: fca3e41e7c77aab95011b5987bcee9016c96407a
   react-native-geolocation: 830fca20f962efbfcd670066c58a94e5d41eb8e1
-  react-native-google-maps: 7cc1184afe41fbd15a3dffd53c924819f6587b69
-  react-native-maps: ee1e65647460c3d41e778071be5eda10e3da6225
   react-native-safe-area-context: a95e75ab816db4438a319aa4b43dfe6def22026f
   react-native-voice: f5e8eec2278451d0017eb6a30a6ccc726aca34e0
   React-nativeconfig: f7ab6c152e780b99a8c17448f2d99cf5f69a2311
@@ -2236,7 +2216,8 @@ SPEC CHECKSUMS:
   React-utils: 541c6cca08f32597d4183f00e83eef2ed20d4c54
   ReactCodegen: daa13d9e48c9bdb1daac4bd694b9dd54e06681df
   ReactCommon: a6b87a7591591f7a52d9c0fec3aa05e0620d5dd3
-  RNCAsyncStorage: 597673c6086d359029afefef8fd5859f1f35ab87
+  ReactNativeGetLocation: 7e019e0a10ccc3fe082cd9b02b28899512c1b2a5
+  RNCAsyncStorage: 0ad93525a3a72652e88e14ad109c6dac856cb693
   RNCClipboard: c1dd9a853d56764a04ba278f61cd2cb58a138396
   RNCMaskedView: c22a01dd2d0744c16b56e06eb8720512b900988c
   RNDeviceInfo: feea80a690d2bde1fe51461cf548039258bd03f2
@@ -2250,6 +2231,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: c7ea4c36c1d78ebbf45529b6e78283e4e0fe4956
 
-PODFILE CHECKSUM: 05ab93bd3087603ad8b0b88de3c20001bf53c09b
+PODFILE CHECKSUM: f6f887168af1cc51d5949dbdd44395a2f56396d0
 
 COCOAPODS: 1.13.0
