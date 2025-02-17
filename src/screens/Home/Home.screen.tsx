@@ -1,8 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import MapView, { MapMarker, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { FullScreenView, PrimaryButton, TextInput, TextRegular, Touchable, VirtualizedView } from 'src/components';
@@ -16,20 +15,12 @@ import { dissmissKeyBoard, NavigationService } from 'src/utilities';
 
 const HomeScreen = () => {
   const { recentCoords, setRecentCoords } = useRecentCoordsAtom()
-  const [initalCoordinates, setInitalCoordinates] = useState({
-    latitude: 33.565471,
-    longitude: 73.024163,
-  });
-  const mapRef = useRef<MapView | null>(null);
 
   const { control, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(latLongSchema)
   });
 
   const handleForm = (data: LatLongInterface) => {
-    const newLatitude = data.latitude;
-    const newLongitude = data.longitude;
-    moveToRegion(newLatitude, newLongitude)
     setTimeout(() => {
       NavigationService.navigate(STACKS_ENUM.HOME_STACK)
       setRecentCoords({
@@ -40,57 +31,9 @@ const HomeScreen = () => {
     }, 5000);
   };
 
-
-  const moveToRegion = (latitude: number, longitude: number) => {
-    if (mapRef.current) {
-      mapRef.current.animateToRegion(
-        {
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        },
-        2000
-      );
-    }
-    setInitalCoordinates({
-      latitude: latitude,
-      longitude: longitude
-    })
-  }
   return (
     <FullScreenView>
       <View style={styles.container}>
-        <View style={styles.mapContainer}>
-          <MapView
-            provider={PROVIDER_GOOGLE}
-            ref={mapRef}
-            style={styles.map}
-            showsUserLocation
-            followsUserLocation
-            initialRegion={{
-              ...initalCoordinates,
-              latitudeDelta: 0.025,
-              longitudeDelta: 0.025,
-            }}
-
-            showsIndoors={true}
-            showsMyLocationButton={true}
-            zoomControlEnabled={true}
-            zoomEnabled={true}
-            zoomTapEnabled={true}
-            showsScale={true}
-            showsBuildings={true}
-            showsCompass={true}
-
-          >
-            <Marker
-              coordinate={initalCoordinates}
-              title="Hello"
-              description="I am a marker."
-            />
-          </MapView>
-        </View>
         <VirtualizedView style={styles.mapInputs}>
           <TouchableWithoutFeedback onPress={dissmissKeyBoard}>
             <View style={styles.inputContainer}>
@@ -136,7 +79,7 @@ const HomeScreen = () => {
                 Recent Coordinates
               </TextRegular>
             </View>
-            <Touchable onPress={() => moveToRegion(recentCoords.latitude, recentCoords.longitude)} style={styles.recentCoordinates}>
+            <Touchable onPress={() => { }} style={styles.recentCoordinates}>
               <TextRegular fontSize='bt' >{`>  ${recentCoords?.latitude} , ${recentCoords?.longitude}`}</TextRegular>
             </Touchable>
           </View>}
