@@ -3,6 +3,7 @@ import { AtomWithMutationResult } from 'jotai-tanstack-query';
 import { showToast } from 'src/components';
 import { MutationErrorInterface } from 'src/interfaces';
 import {
+  getQuizesDataAtom,
   spectaclesLinkAtom,
   spectaclesUnLinkAtom,
   useSpecsBottomSheetAtom,
@@ -50,4 +51,10 @@ export const useSpecsUnLinkService = () => {
     setUser(data)
     setBottomSheetVisible(false)
   });
+};
+
+export const useGetQuizDataService = () => {
+  const [{ data, isPending, isError, isLoading, refetch }] =
+    useAtom(getQuizesDataAtom);
+  return { data, isPending, isLoading, isError, refetch };
 };

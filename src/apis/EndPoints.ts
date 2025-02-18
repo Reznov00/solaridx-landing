@@ -2,8 +2,8 @@ import { getItem, STORAGE_KEYS } from 'src/utilities';
 // import Config from 'react-native-config';
 
 // export const baseUrl = Config.DOMAIN;
-// export const baseUrl = 'https://6806-103-169-64-122.ngrok-free.app';
-export const baseUrl = 'https://api.solaridx.com';
+export const baseUrl = 'https://f786-103-169-64-122.ngrok-free.app';
+// export const baseUrl = 'https://api.solaridx.com';
 
 // Auth
 export const signUpURL = '/auth/signup';
@@ -22,6 +22,7 @@ export const deleteUserAccountURL = '/user';
 export const deleteUserAccountDataURL = '/user/data';
 export const linkSpectaclesURL = '/user/connect-specs';
 export const unlinkSpectaclesURL = '/user/unlink-specs';
+export const getQuizDataURL = '/user/specs-quizdata';
 
 
 //Chats

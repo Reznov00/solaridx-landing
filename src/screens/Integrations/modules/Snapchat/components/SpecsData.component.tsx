@@ -1,38 +1,26 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { Fragment } from 'react';
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
+import { RefreshControl } from 'react-native-gesture-handler';
 import { PieChart } from "react-native-gifted-charts";
 import { RFValue } from 'react-native-responsive-fontsize';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
-import { SpecsDataShimmer, TextMedium, VirtualizedView } from 'src/components';
+import { EmptyBoxIcon } from 'src/assets';
+import { SpecsDataShimmer, TextMedium } from 'src/components';
+import { QuizDataInterface } from 'src/interfaces';
+import { useGetQuizDataService } from 'src/services';
 import { Colors } from 'src/themes';
+import { QuizPieChart } from './QuizPieChart.component';
 
-
-const PieChartComp = () => {
-    const pieData = [
-        { value: 9, color: Colors.gray_300, text: '9' },
-        { value: 9, color: Colors.gray_400, text: '9' },
-        { value: 9, color: Colors.gray_500, text: '9' },
-    ];
-
-    return (
-        <PieChart
-            showText
-            textColor="black"
-            radius={widthPercentageToDP(20)}
-            textSize={RFValue(16)}
-            data={pieData}
-        />
-    )
-}
-
-const QuizComp = ({ marks, title }: { marks: string, title: string }) => {
+const QuizComp = ({ item }: {
+    item: QuizDataInterface;
+}) => {
     return (
         <View style={[styles.charComponent]}>
             <View style={styles.quizContainer}>
-                <TextMedium fontSize='bt'>{title}</TextMedium>
+                <TextMedium fontSize='bt'>{`Unit # ${item.unitNo} - Lesson # ${item.lessonNo}`}</TextMedium>
                 <View style={styles.quizMapOuterContainer}>
                     <View style={styles.quizMapInnerContainer}>
-                        <TextMedium >{`${parseInt(marks)}/10`}</TextMedium>
+                        <TextMedium >{`${item.score}/10`}</TextMedium>
                     </View>
                 </View>
             </View>
@@ -40,31 +28,44 @@ const QuizComp = ({ marks, title }: { marks: string, title: string }) => {
     )
 }
 
-const SpecsDataComponent = () => {
-    const [isPending, setIsPending] = useState(true)
+const renderChatRooms = ({ item }: ListRenderItemInfo<QuizDataInterface>) => {
+    return <QuizComp
+        key={item._id}
+        item={item}
+    />
+}
 
-    const getData = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        setIsPending(false)
+const SpecsDataComponent = () => {
+    const { data, isPending, refetch } = useGetQuizDataService()
+
+    const renderHeaderComponent = () => {
+        return data.length > 0 ? <View style={styles.charComponent}>
+            <QuizPieChart quizData={data} />
+        </View> : <View />
     }
 
-    useEffect(() => {
-        getData()
-    }, [])
 
     return (
         <Fragment>
-            {!isPending ? <VirtualizedView style={styles.container}>
-                <View style={styles.charComponent}>
-                    <PieChartComp />
-                    <TextMedium fontSize='bt' >Collective Score</TextMedium>
-                </View>
-                <View style={{ marginBottom: heightPercentageToDP(4) }}>
-                    <QuizComp marks='9' title='Unit # 1 - Lesson # 1' />
-                    <QuizComp marks='9' title='Unit # 1 - Lesson # 2' />
-                    <QuizComp marks='9' title='Unit # 2 - Lesson # 1' />
-                </View>
-            </VirtualizedView >
+            {!isPending ? (
+                <FlatList
+                    data={data}
+                    style={styles.listStyle}
+                    renderItem={renderChatRooms}
+                    ListHeaderComponent={renderHeaderComponent}
+                    ListFooterComponent={<View />}
+                    refreshControl={
+                        <RefreshControl refreshing={isPending} onRefresh={refetch} />
+                    }
+                    keyExtractor={(item) => item._id}
+                    ListEmptyComponent={<View style={styles.emptyListContainer}>
+                        <EmptyBoxIcon size={10} />
+                        <TextMedium>No data Found</TextMedium>
+                    </View>}
+                    showsVerticalScrollIndicator={false}
+                    ListFooterComponentStyle={styles.listFooterStyle}
+                />
+            )
                 : <SpecsDataShimmer />
             }
         </Fragment>
@@ -108,6 +109,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center'
     },
+    emptyListContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     quizMapInnerContainer: {
         width: widthPercentageToDP(33),
         height: widthPercentageToDP(33),
@@ -115,5 +121,11 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    listFooterStyle: {
+        height: heightPercentageToDP(4)
+    },
+    listStyle: {
+        paddingTop: heightPercentageToDP(2),
     },
 })

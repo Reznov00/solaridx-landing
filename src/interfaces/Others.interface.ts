@@ -10,8 +10,15 @@ export interface LatLongInterface {
     longitude: number
 }
 export interface ChartViewInterface {
-    hour: number,
-    cloudySkyEnergy: number,
-    clearSkyEnergy: number,
+    hour: number
+    cloudySkyEnergy: number
+    clearSkyEnergy: number
     date: string
+}
+
+export interface QuizDataInterface {
+    _id: string
+    unitNo: number
+    lessonNo: number
+    score: number
 }

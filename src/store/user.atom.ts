@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai';
-import { atomWithMutation } from 'jotai-tanstack-query';
+import { atomWithMutation, atomWithQuery } from 'jotai-tanstack-query';
 import { atomWithStorage } from 'jotai/utils';
-import { axiosInstance, linkSpectaclesURL, unlinkSpectaclesURL } from 'src/apis';
+import { axiosInstance, getQuizDataURL, linkSpectaclesURL, unlinkSpectaclesURL } from 'src/apis';
 import { AccountDeletionType, LatLongInterface, SpectaclesConnectInterface, User } from 'src/interfaces';
 import { STORAGE_KEYS } from 'src/utilities';
 import { asyncStorage } from './storageHelpers';
@@ -51,6 +51,14 @@ export const spectaclesUnLinkAtom = atomWithMutation(() => ({
   mutationFn: async () => {
     const { data } = await axiosInstance.patch(unlinkSpectaclesURL);
     return data;
+  },
+}));
+
+export const getQuizesDataAtom = atomWithQuery(() => ({
+  queryKey: ['getQuizesDataAtom'],
+  queryFn: async () => {
+    const { data } = await axiosInstance.get(getQuizDataURL);
+    return data.quizzes;
   },
 }));
 
