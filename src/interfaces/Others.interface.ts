@@ -22,3 +22,10 @@ export interface QuizDataInterface {
     lessonNo: number
     score: number
 }
+
+export interface WeatherDataRequestInterface {
+    date: Date;
+    lat: number;
+    long: number
+    systemSize?: number
+}

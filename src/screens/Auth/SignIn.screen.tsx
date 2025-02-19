@@ -62,12 +62,12 @@ const SignInScreen = () => {
               <WaveIcon size={10} />
               <TextBold color='primary_600' fontSize="h2">Sign In</TextBold>
             </View>
-            <SocialContainer />
+            {/* <SocialContainer />
             <View style={styles.seperator}>
               <View style={styles.orText} >
                 <TextRegular color='gray_900' fontSize='sh2'>Or</TextRegular>
               </View>
-            </View>
+            </View> */}
             <View >
               <TextInput
                 control={control}

@@ -33,6 +33,11 @@ export const postNewChatURL = '/chat-model/chat-room';
 export const deleteChatURL = (roomId: string) => `/chat-model/chat-history/${roomId}`;
 
 
+//Weather
+export const getWeatherDataURL = (lat: number, long: number, date: string, systemSize = 1) => `/get-weather-data?latitude=${lat}&longitude=${long}&date=${date}&systemSize=${systemSize}`;
+
+
+
 
 
 export const getAccessToken = async () => {

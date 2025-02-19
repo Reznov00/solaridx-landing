@@ -1,39 +1,36 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
-// import { LineChart } from 'react-native-chart-kit';
-import { LineChart, lineDataItem } from "react-native-gifted-charts";
-
+import { LineChart, lineDataItem } from 'react-native-gifted-charts';
 import { RFValue } from 'react-native-responsive-fontsize';
+
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
-import { fetchGraphData } from 'src/services';
+import { TextMedium } from 'src/components';
 import { Colors } from 'src/themes';
 
+interface Props {
+    clearSkyData: lineDataItem[]
+    cloudySkyData: lineDataItem[]
 
-const ChartViewComponent = ({ date }: { date: string }) => {
+}
 
-    useEffect(() => {
-        fetchGraphData({ date })
-    }, [])
-
-    const lineDaata: lineDataItem[] = fetchGraphData({ date }).flatMap((item) => {
-        return { value: item.clearSkyEnergy, dataPointText: item.hour.toString(), }
-    })
-
-
-
+const ChartViewComponent = ({ clearSkyData, cloudySkyData }: Props) => {
     return (
         <View style={styles.container}>
             <View style={{ width: widthPercentageToDP(90), overflow: 'hidden', backgroundColor: Colors.primary_900 }}>
                 <LineChart
-                    data={lineDaata}
+                    data={clearSkyData ?? []}
+                    data2={cloudySkyData ?? []}
                     isAnimated
                     height={heightPercentageToDP(35)}
                     showVerticalLines
                     spacing={widthPercentageToDP(7)}
                     initialSpacing={10}
-                    color1={Colors.white}
-                    textColor1={Colors.white}
-                    dataPointsColor1={Colors.white}
+                    color1={Colors.gray_100}
+                    textColor1={Colors.gray_100}
+                    dataPointsColor1={Colors.gray_300}
+                    color2={Colors.gray_600}
+                    textColor2={Colors.gray_600}
+                    dataPointsColor2={Colors.gray_600}
                     textFontSize={RFValue(10)}
                     noOfSections={5}
                     showDataPointLabelOnFocus
@@ -52,8 +49,21 @@ const ChartViewComponent = ({ date }: { date: string }) => {
                     dataPointsWidth={6}
                     textShiftY={heightPercentageToDP(-1)}
                     textShiftX={widthPercentageToDP(-3)}
-                // showStripOnFocus
                 />
+            </View>
+            <View style={styles.indicatorContainer}>
+                <View style={styles.indicatorStyle}>
+                    <View style={[styles.iconStyle, { backgroundColor: Colors.gray_300, }]} />
+                    <TextMedium fontSize='st'>
+                        {`Clear Sky Energy`}
+                    </TextMedium>
+                </View>
+                <View style={styles.indicatorStyle}>
+                    <View style={[styles.iconStyle, { backgroundColor: Colors.gray_600, }]} />
+                    <TextMedium fontSize='st'>
+                        {`Cloudy Sky Energy`}
+                    </TextMedium>
+                </View>
             </View>
         </View>
     )
@@ -66,5 +76,20 @@ const styles = StyleSheet.create({
         width: widthPercentageToDP(100),
         alignItems: 'center',
         justifyContent: 'center',
+        marginVertical: heightPercentageToDP(3)
+    },
+    indicatorContainer: {
+        flexDirection: 'row',
+        marginVertical: heightPercentageToDP(2),
+        gap: widthPercentageToDP(4)
+    },
+    indicatorStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    iconStyle: {
+        width: widthPercentageToDP(4),
+        height: widthPercentageToDP(4),
+        marginRight: widthPercentageToDP(2),
     },
 });
