@@ -10,12 +10,15 @@ import {
 import { BottomTabTypes } from 'src/interfaces';
 import { Colors } from 'src/themes';
 import { BottomTabIcon } from './BottomTabIcon';
+import { useKeyboardVisible } from 'src/utilities';
 
 const CustomBottomTab = ({
   state,
   descriptors,
   navigation,
 }: BottomTabBarProps) => {
+  const isVisible = useKeyboardVisible()
+
   const TAB_BAR_WIDTH = widthPercentageToDP(100);
   const SelectTabWidth = widthPercentageToDP(25);
   const HitSlop = widthPercentageToDP(5);
@@ -44,7 +47,7 @@ const CustomBottomTab = ({
     }
   };
 
-  return (
+  return !isVisible ? (
     <View style={styles.shadowContainer}>
       <View style={[styles.tabBarContainer, { width: TAB_BAR_WIDTH }]}>
         <Animated.View
@@ -99,7 +102,7 @@ const CustomBottomTab = ({
         })}
       </View>
     </View>
-  );
+  ) : <></>
 };
 
 export { CustomBottomTab };

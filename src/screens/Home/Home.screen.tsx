@@ -12,7 +12,7 @@ import { STACKS_ENUM } from 'src/enums';
 import { LatLongInterface } from 'src/interfaces';
 import { useRecentCoordsAtom } from 'src/store';
 import { Colors } from 'src/themes';
-import { dissmissKeyBoard, NavigationService } from 'src/utilities';
+import { dissmissKeyBoard, isIOS, NavigationService } from 'src/utilities';
 
 
 const HomeScreen = () => {
@@ -49,10 +49,6 @@ const HomeScreen = () => {
   }
 
   return (
-    // <KeyboardAvoidingView
-    //   style={{ flex: 1 }}
-    //   behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    // >
     <FullScreenView>
       <KeyboardAwareScrollView>
         <View style={styles.container}>
@@ -143,7 +139,6 @@ const HomeScreen = () => {
         </View>
       </KeyboardAwareScrollView>
     </FullScreenView >
-    //  </KeyboardAvoidingView>
   );
 };
 
@@ -157,7 +152,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: widthPercentageToDP(5)
+    paddingHorizontal: widthPercentageToDP(5),
+    marginTop: heightPercentageToDP(isIOS ? 1 : 2)
   },
   descContainer: {
     marginHorizontal: widthPercentageToDP(5),
