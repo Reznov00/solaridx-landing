@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import Voice from '@react-native-voice/voice/dist/index';
 import { StyleSheet, View } from 'react-native';
-import { SharedValue } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withSequence, withTiming, SharedValue } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
@@ -16,7 +16,7 @@ import { hasMicrophonePermission } from 'src/utilities';
 
 interface Props {
   isOpen: SharedValue<boolean>;
-  handleSpeech: (speech: string) => void
+  handleSpeech: (speech: string) => void;
 }
 const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
   const [, setError] = useState('');
@@ -24,12 +24,10 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
   const [started, setStarted] = useState(false);
   const [finalText, setFinalText] = useState('');
 
-  const toggleSheet = () => {
-    isOpen.value = !isOpen.value;
-  };
+  const scale = useSharedValue(1);
 
   useLayoutEffect(() => {
-    checkVoiceAvailablity()
+    checkVoiceAvailability();
     Voice.onSpeechStart = () => setStarted(true);
     Voice.onSpeechEnd = () => setEnd(true);
     Voice.onSpeechError = (e) => showToast('error', e.error?.message || 'Speech recognition error');
@@ -41,6 +39,17 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
+
+  useLayoutEffect(() => {
+    if (started) {
+      scale.value = withRepeat(withSequence(
+        withTiming(1, { duration: 500 }),
+        withTiming(0.97, { duration: 500 })
+      ), -1, true);
+    } else {
+      scale.value = withTiming(1, { duration: 200 });
+    }
+  }, [started]);
 
   const startRecognizing = async () => {
     setError('');
@@ -63,44 +72,56 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
   };
 
   const destroyRecognizer = async () => {
-    cancelRecognizing()
+    cancelRecognizing();
     try {
       await Voice.destroy();
     } catch (e) {
       console.error(e);
     }
-    if (finalText.trim()) handleSpeech(finalText)
-    toggleSheet()
+    if (finalText.trim()) handleSpeech(finalText);
+    toggleSheet();
     setError('');
     setStarted(false);
     setEnd(false);
     setFinalText('');
   };
 
-  const checkVoiceAvailablity = async () => {
-    await hasMicrophonePermission()
-    const hasPermission = await Voice.isAvailable()// results in 1 if yes else 0
+  const checkVoiceAvailability = async () => {
+    await hasMicrophonePermission();
+    const hasPermission = await Voice.isAvailable();
     if (hasPermission === 0) {
-      showToast('info', 'Speech recognition is not available on your device')
+      showToast('info', 'Speech recognition is not available on your device');
     }
-  }
+  };
+
+  const toggleSheet = () => {
+    isOpen.value = !isOpen.value;
+  };
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  console.log({ finalTessxt: finalText.length > 0 ? 'ssss' : 'll' })
 
   return (
     <BottomSheet isOpen={isOpen} toggleSheet={() => {
-      isOpen.value = started ? true : false
+      isOpen.value = started ? true : false;
     }}>
       <View style={styles.container}>
-        {finalText && <View>
+        {started && <View>
           <TextRegular fontSize='st'>
-            {finalText}
+            {finalText.length > 0 ? finalText : 'listening.....'}
           </TextRegular>
         </View>}
         <View style={styles.subContainer}>
-          <PrimaryButton
-            title={started ? "End Recognizing" : "Start Recognizing"}
-            onPress={started ? destroyRecognizer : startRecognizing}
-            buttonStyle={{ marginVertical: 0 }}
-          />
+          <Animated.View style={[{ width: '100%' }, animatedStyle]}>
+            <PrimaryButton
+              title={started ? "End Recognizing" : "Start Recognizing"}
+              onPress={started ? destroyRecognizer : startRecognizing}
+              buttonStyle={{ marginVertical: 0, backgroundColor: started ? Colors.danger : Colors.primary_500 }}
+            />
+          </Animated.View>
         </View>
       </View>
     </BottomSheet>

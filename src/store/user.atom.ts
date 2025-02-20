@@ -8,8 +8,6 @@ import { asyncStorage } from './storageHelpers';
 import { AsyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
 
 //Atoms
-// const userAtom = atom<User | null>();
-// const recentCoordsAtom = atom<LatLongInterface | null>();
 export const userAtom = atomWithStorage<User | null>(
   STORAGE_KEYS.USER,
   null,

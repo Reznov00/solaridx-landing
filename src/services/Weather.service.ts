@@ -3,6 +3,7 @@ import { atomWithMutation, AtomWithMutationResult } from "jotai-tanstack-query";
 import { axiosInstance, getWeatherDataURL } from "src/apis";
 import { showToast } from "src/components";
 import { MutationErrorInterface, WeatherDataRequestInterface } from "src/interfaces";
+import { NavigationService } from "src/utilities";
 
 
 const useMutationService = <TData, TError, TVariables>(
@@ -18,6 +19,7 @@ const useMutationService = <TData, TError, TVariables>(
                 onError: (error: TError) => {
                     const err = error as MutationErrorInterface;
                     showToast('error', err?.message ?? 'Error Encountered');
+                    NavigationService.goBack()
                 },
             });
             return result;
@@ -46,7 +48,7 @@ const getWeatherDataMutation = atomWithMutation(() => ({
     },
 }));
 
-export const usePostChatSesrvice = () => {
+export const useWeatherDataService = () => {
 
     return useMutationService(getWeatherDataMutation, (val, _) => {
         return val

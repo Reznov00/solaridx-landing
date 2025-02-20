@@ -8,19 +8,17 @@ import {
 } from 'react-native-responsive-screen';
 import { BackArrowIcon } from 'src/assets';
 import { FullScreenView, HeaderBar, Loader, Touchable } from 'src/components';
-import { usePostChatSesrvice } from 'src/services';
+import { useWeatherDataService } from 'src/services';
 import { useRecentCoordsAtom } from 'src/store';
 import { Colors } from 'src/themes';
 import { ChartViewComponent } from './components';
 
 const StatisticsHomeScreen = () => {
-  const { handleService, isPending } = usePostChatSesrvice();
+  const { handleService, isPending } = useWeatherDataService();
   const { recentCoords } = useRecentCoordsAtom();
 
-  // Cache to store data for each date
   const [dataCache, setDataCache] = useState<Record<string, any>>({});
 
-  // Generate dates for the next 15 days
   const dates = useMemo(() => Array(15).fill(null).map((_, i) => {
     const date = new Date();
     date.setDate(date.getDate() + i);
@@ -30,16 +28,14 @@ const StatisticsHomeScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentDate = dates[currentIndex];
 
-  // Fetch data for the current date if not already in cache
   useEffect(() => {
     if (!dataCache[currentDate]) {
       handleService({
         date: new Date(currentDate),
         lat: recentCoords?.latitude as number,
         long: recentCoords?.longitude as number,
-        systemSize: 1,
+        systemSize: recentCoords?.systemSize as number,
       }).then((response) => {
-        // Update the cache with the new data
         setDataCache((prev) => ({
           ...prev,
           [currentDate]: response,

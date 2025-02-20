@@ -8,6 +8,7 @@ export type AccountDeletionType = 'none' | 'deleteUserAccount' | 'deleteUserAcco
 export interface LatLongInterface {
     latitude: number
     longitude: number
+    systemSize?: number
 }
 export interface ChartViewInterface {
     hour: number

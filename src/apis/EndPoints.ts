@@ -2,7 +2,7 @@ import { getItem, STORAGE_KEYS } from 'src/utilities';
 // import Config from 'react-native-config';
 
 // export const baseUrl = Config.DOMAIN;
-// export const baseUrl = 'https://f786-103-169-64-122.ngrok-free.app';
+// export const baseUrl = 'https://351f-103-169-64-122.ngrok-free.app';
 export const baseUrl = 'https://api.solaridx.com';
 
 // Auth

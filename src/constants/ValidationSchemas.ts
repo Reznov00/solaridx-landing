@@ -98,4 +98,11 @@ export const latLongSchema = Yup.object({
     .required("Longitude is required")
     .min(-180, "Longitude must be at least -180")
     .max(180, "Longitude must be at most 180"),
+  systemSize: Yup
+    .number()
+    .transform((value, originalValue) =>
+      originalValue === undefined || originalValue === null || originalValue === "" ? 1 : value
+    )
+    .typeError("System size must be a number")
+    .max(100, "System size must be at most 100"),
 });
