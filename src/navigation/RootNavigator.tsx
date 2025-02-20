@@ -16,7 +16,7 @@ const RootNavigator = () => {
   const initialRoute =
     authToken === null ? STACKS_ENUM.ONBOARDING_STACK : STACKS_ENUM.MAIN_STACK;
 
-  console.log({ authToken })
+  if (__DEV__) console.log({ authToken })
 
 
   useEffect(() => {
@@ -26,9 +26,9 @@ const RootNavigator = () => {
   const checkPermissions = async () => {
     const hasPermission = await hasAndroidPermission();
     if (hasPermission) {
-      console.log('All required permissions granted!');
+      if (__DEV__) console.log('All required permissions granted!');
     } else {
-      console.log('Permissions denied!');
+      if (__DEV__) console.log('Permissions denied!');
     }
   };
 

@@ -24,13 +24,13 @@ const MediaPicker = async ({
     ? await ImagePicker.openCamera(options)
       .then(image => image)
       .catch(error => {
-        console.log('Media Picker Error :', error);
+        if (__DEV__) console.log('Media Picker Error :', error);
         return error;
       })
     : await ImagePicker.openPicker(options)
       .then(image => image)
       .catch(error => {
-        console.log('Media Picker Error :', error);
+        if (__DEV__) console.log('Media Picker Error :', error);
         return error;
       });
 };

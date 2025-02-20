@@ -102,8 +102,6 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
     transform: [{ scale: scale.value }],
   }));
 
-  console.log({ finalTessxt: finalText.length > 0 ? 'ssss' : 'll' })
-
   return (
     <BottomSheet isOpen={isOpen} toggleSheet={() => {
       isOpen.value = started ? true : false;

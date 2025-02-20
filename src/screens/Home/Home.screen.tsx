@@ -45,7 +45,7 @@ const HomeScreen = () => {
       })
       .catch(error => {
         const { code, message } = error;
-        console.log({ code, message })
+        if (__DEV__) console.log({ code, message })
         showToast('error', 'Error fetching current location')
       })
   }

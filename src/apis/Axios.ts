@@ -12,7 +12,7 @@ const ResponseInterceptor = (response: AxiosResponse) => {
 
 const RequestInterceptor = async (config: AxiosRequestConfig | any) => {
   config.headers.Authorization = 'Bearer ' + (await getAccessToken());
-  console.log({ requestURL: config.url, baseURL: config.baseURL })
+  if (__DEV__) console.log({ requestURL: config.url, baseURL: config.baseURL })
   return config;
 };
 

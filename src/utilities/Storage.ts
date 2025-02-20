@@ -43,7 +43,7 @@ async function getItem(key: string) {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    if (__DEV__) console.log(error);
     return false;
   }
 }
