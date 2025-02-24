@@ -121,7 +121,7 @@ export default function PrivacyPolicy() {
         <h2 className="text-xl font-semibold text-gray-700 mt-6">Contact Us</h2>
         <p className="text-gray-600">
           If you have any questions about this Privacy Policy, You can contact
-          us at <span className="font-medium">support@solaridx.com</span>.
+          us at <span className="font-medium">help@sagax.ai</span>.
         </p>
       </div>
     </div>

@@ -71,7 +71,7 @@ export default function TermsAndConditions() {
         </h2>
         <p className="text-gray-600">
           If you have any questions about these terms, please contact us at{" "}
-          <span className="font-medium">support@solaridx.com</span>.
+          <span className="font-medium">help@sagax.ai</span>.
         </p>
       </div>
     </div>

@@ -22,8 +22,8 @@ export default function GetApp() {
           </div>
           <div className="flex flex-col space-y-5 w-full max-w-sm">
             <a
-              href="https://play.google.com/store/apps/details?id=solaridx"
-              target="_blank"
+              href=""
+              // target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 ring-offset-2 ring-indigo-600 focus:ring py-3 rounded-lg"
             >
@@ -31,8 +31,8 @@ export default function GetApp() {
               <span>Get it on Google Play</span>
             </a>
             <a
-              href="https://apps.apple.com/app/solaridx/id123456789"
-              target="_blank"
+              href=""
+              // target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full text-white bg-gray-800 hover:bg-gray-700 active:bg-gray-900 ring-offset-2 ring-gray-700 focus:ring py-3 rounded-lg"
             >
