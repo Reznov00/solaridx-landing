@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started with SolariDX Website
 
-First, run the development server:
+First, run the development server like this:
 
 ```bash
 npm run dev
