@@ -3,13 +3,13 @@ import Image from "next/image";
 import googlePlayLogo from "../public/icons/google-play.svg";
 import appStoreLogo from "../public/icons/app-store.svg";
 
-export default function GetStarted() {
+export default function GetApp() {
   return (
     <>
       <Head>
         <title>Download SolariDX App</title>
       </Head>
-      <div className="flex items-center justify-center py-20 bg-slate-200">
+      <div className="flex items-center justify-center py-20 ">
         <div className="custom-screen flex flex-col lg:flex-col mt-8 items-center text-gray-600 w-full max-w-6xl gap-12">
           <div className="max-w-lg text-center lg:text-left">
             <h1 className="text-gray-800 text-center text-3xl font-semibold sm:text-4xl">
@@ -27,7 +27,7 @@ export default function GetStarted() {
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 ring-offset-2 ring-indigo-600 focus:ring py-3 rounded-lg"
             >
-              <Image src={googlePlayLogo} alt="Google Play" width={24} height={24} />
+              <Image src={googlePlayLogo} alt="Google Play" width={30} height={30} />
               <span>Get it on Google Play</span>
             </a>
             <a
@@ -36,7 +36,7 @@ export default function GetStarted() {
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full text-white bg-gray-800 hover:bg-gray-700 active:bg-gray-900 ring-offset-2 ring-gray-700 focus:ring py-3 rounded-lg"
             >
-              <Image src={appStoreLogo} alt="App Store" width={24} height={24} />
+              <Image src={appStoreLogo} alt="App Store" width={35} height={35} />
               <span>Download on the App Store</span>
             </a>
           </div>
