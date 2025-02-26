@@ -51,7 +51,7 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
     }
   }, [started]);
 
-  const startRecognizing = async () => {
+  const startVoiceListener = async () => {
     setError('');
     setStarted(false);
     setEnd(false);
@@ -63,7 +63,7 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
     }
   };
 
-  const cancelRecognizing = async () => {
+  const cancelVoiceListener = async () => {
     try {
       await Voice.cancel();
     } catch (e) {
@@ -71,8 +71,8 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
     }
   };
 
-  const destroyRecognizer = async () => {
-    cancelRecognizing();
+  const destroyVoiceListener = async () => {
+    cancelVoiceListener();
     try {
       await Voice.destroy();
     } catch (e) {
@@ -115,8 +115,8 @@ const VoiceRecorderBottomSheet = ({ isOpen, handleSpeech }: Props) => {
         <View style={styles.subContainer}>
           <Animated.View style={[{ width: '100%' }, animatedStyle]}>
             <PrimaryButton
-              title={started ? "End Recognizing" : "Start Recognizing"}
-              onPress={started ? destroyRecognizer : startRecognizing}
+              title={started ? "End Listening" : "Start Listening"}
+              onPress={started ? destroyVoiceListener : startVoiceListener}
               buttonStyle={{ marginVertical: 0, backgroundColor: started ? Colors.danger : Colors.primary_500 }}
             />
           </Animated.View>

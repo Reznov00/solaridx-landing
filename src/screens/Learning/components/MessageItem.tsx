@@ -112,7 +112,7 @@ const MessageItem = React.memo(
                     style={[
                         styles.messageContainer,
                         {
-                            backgroundColor: isPrompt ? Colors.gray_200 : Colors.gray_300,
+                            backgroundColor: isPrompt ? Colors.gray_200 : Colors.primary_500,
                             borderTopLeftRadius: widthPercentageToDP(isPrompt ? 3 : 0),
                             borderTopRightRadius: widthPercentageToDP(isPrompt ? 0 : 3),
                         },
@@ -144,7 +144,7 @@ const MessageItem = React.memo(
                                         )}
                                     </View>
                                 )}
-                                <TextRegular fontSize="st" color={dangerMessage ? 'danger' : 'gray_900'}>
+                                <TextRegular fontSize="st" color={dangerMessage ? 'danger' : isPrompt ? 'gray_900' : 'white'}>
                                     {isPrompt ? item.prompt : item.answer}
                                 </TextRegular>
                             </View>
