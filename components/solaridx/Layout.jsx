@@ -1,7 +1,6 @@
 import Head from "next/head";
-// import Footer from "./ui/Footer";
-import Navbar from "./scanar/Navbar";
-import Footer from "./scanar/Footer";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 const Layout = ({ children }) => {
     return (
@@ -21,4 +20,4 @@ const Layout = ({ children }) => {
     );
 };
 
-export default Layout;
+export default Layout; 
