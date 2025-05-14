@@ -1,5 +1,5 @@
 import SectionWrapper from "../../../components/SectionWrapper";
-import NavLink from "../NavLink";
+import NavLink from "../../../components/NavLink";
 import ctaImage from "../../../public/cta-image.webp";
 import Image from "next/image";
 

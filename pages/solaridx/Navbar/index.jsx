@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Brand from '../Brand'
-import NavLink from '../NavLink'
+import NavLink from '../../../components/NavLink'
 
 const Navbar = () => {
     const [state, setState] = useState(false)
