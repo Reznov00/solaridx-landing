@@ -1,5 +1,5 @@
-import SolariDXLayout from "../components/solaridx/Layout";
-import ScanARLayout from "../components/scanar/Layout";
+import SolariDXLayout from "./solaridx/Layout";
+import ScanARLayout from "./scanar/Layout";
 import "../styles/globals.css";
 import { useRouter } from "next/router";
 
@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
   
   // Use a different layout for the ScanAR page
-  if (router.pathname === "/scanar") {
+  if (router.pathname.includes('/scanar')) {
     return (
       <ScanARLayout>
         <Component {...pageProps} />

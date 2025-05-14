@@ -1,10 +1,10 @@
 import Head from "next/head";
 import GradientWrapper from "../components/GradientWrapper";
-import CTA from "../components/solaridx/CTA";
-import FooterCTA from "../components/solaridx/FooterCTA";
-import Hero from "../components/solaridx/Hero";
-import VideoSection from "../components/solaridx/VideoSection";
-import Features from "../components/solaridx/Features";
+import CTA from "./solaridx/CTA";
+import FooterCTA from "./solaridx/FooterCTA";
+import Hero from "./solaridx/Hero";
+import VideoSection from "./solaridx/VideoSection";
+import Features from "./solaridx/Features";
 
 export default function Home() {
   return (

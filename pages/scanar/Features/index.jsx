@@ -1,4 +1,4 @@
-import SectionWrapper from "../../SectionWrapper";
+import SectionWrapper from "../../../components/SectionWrapper";
 import Image from "next/image";
 import featureIcon from "../../../public/icons/featureIcon.svg";
 
@@ -6,57 +6,52 @@ const Features = () => {
     const features = [
         {
             icon: featureIcon,
-            title: "Real-Time Energy Predictions",
-            desc: "Get accurate energy production forecasts up to 15 days in advance using and physics-informed models."
+            title: "AR Visualization",
+            desc: "See solar potential in real-time through your device's camera with advanced augmented reality."
         },
         {
             icon: featureIcon,
-            title: "Customized System Size Solution",
-            desc: "Tailor your ideal solar system size based on your unique energy usage patterns."
+            title: "Shading Analysis",
+            desc: "Instantly identify shading issues that could impact your solar panel performance."
         },
         {
             icon: featureIcon,
-            title: "AI-Powered Chatbot",
-            desc: "Ask anything solar-related — our intelligent chatbot is always ready to assist."
+            title: "Optimal Placement",
+            desc: "Get AI-powered recommendations for the best panel placement on any surface."
         },
         {
             icon: featureIcon,
-            title: "Social Media Integration",
-            desc: "Connect seamlessly with platforms like the Snapchat app to share AR-powered solar experiences."
+            title: "Energy Production Estimates",
+            desc: "Calculate expected energy production based on your specific installation and location."
         },
         {
             icon: featureIcon,
-            title: "D2L Brightspace",
-            desc: "Deliver interactive solar education with built-in support for Brightspace D2L."
+            title: "ROI Calculator",
+            desc: "Understand your investment return timeline with our comprehensive financial analysis tools."
         },
         {
             icon: featureIcon,
-            title: "Instructure Canvas",
-            desc: "Integrate effortlessly with Canvas LMS to bring solar learning modules to educators and students."
-        },
-        {
-            icon: featureIcon,
-            title: "Quantum Computing",
-            desc: "Experience the future of energy predictions with quantum computing, coming soon via Quantinuum."
+            title: "Installation Guide",
+            desc: "Follow step-by-step AR-guided installation instructions for perfect panel placement."
         }
     ];
 
     return (
         <SectionWrapper>
-            <div id="toolkit" className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
+            <div id="features" className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
                 <div className="max-w-2xl mx-auto space-y-3 sm:text-center">
                     <h2 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
-                        SolarIDX - The Ultimate Solar Energy Application
+                        ScanAR Features
                     </h2>
                     <p>
-                        Explore the features that make SolarIDX your go-to solar companion.
+                        Discover how ScanAR will revolutionize your solar experience.
                     </p>
                 </div>
                 <div className="mt-12">
                     <ul className="grid gap-y-8 gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
                         {features.map((item, idx) => (
                             <li key={idx} className="flex gap-x-4">
-                                <div className="flex-none w-12 h-12 gradient-border rounded-full flex items-center justify-center">
+                                <div className="flex-none w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center">
                                     <Image src={item.icon} alt={item.title} />
                                 </div>
                                 <div>

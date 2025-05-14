@@ -1,22 +1,23 @@
 import Head from "next/head";
-import Navbar from "../components/scanar/Navbar";
-import Hero from "../components/scanar/Hero";
-import Features from "../components/scanar/Features";
-import NotifyForm from "../components/scanar/NotifyForm";
-import Footer from "../components/scanar/Footer";
-
+import GradientWrapper from "../components/GradientWrapper";
+import CTA from "./scanar/CTA";
+import Features from "./scanar/Features";
+import Hero from "./scanar/Hero";
+import Layout from "./scanar/Layout";
+import VideoSection from "./scanar/VideoSection";
 export default function ScanAR() {
   return (
     <>
       <Head>
         <meta name='robots' content='index' />
-        <title>ScanAR - Coming Soon | SolariDX</title>
+        <title>ScanAR - Augmented Reality Solar Analysis | SolariDX</title>
       </Head>
-      <Navbar />
       <Hero />
+      <VideoSection />
       <Features />
-      <NotifyForm />
-      <Footer />
+      <GradientWrapper>
+        <CTA />
+      </GradientWrapper>
     </>
   );
 } 

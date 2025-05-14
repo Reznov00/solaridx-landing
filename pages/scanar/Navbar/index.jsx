@@ -67,15 +67,6 @@ const Navbar = () => {
                     </div>
                     <div className={`flex-1 pb-3 mt-8 md:pb-0 md:mt-0 md:block ${state ? "" : "hidden"}`}>
                         <ul className="text-white justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0 md:font-medium">
-                            {
-                                navigation.map((item, idx) => (
-                                    <li key={idx}>
-                                        <Link href={item.path} className="hover:text-gray-400">
-                                            {item.title}
-                                        </Link>
-                                    </li>
-                                ))
-                            }
                             <li>
                                 <button
                                     onClick={redirectToGetApp}
@@ -83,14 +74,6 @@ const Navbar = () => {
                                 >
                                     Get the App
                                 </button>
-                            </li>
-                            <li>
-                                <NavLink
-                                    href="/"
-                                    className="block font-medium text-sm text-black bg-white hover:bg-gray-200 active:bg-gray-300 md:inline px-4 py-2 rounded-md"
-                                >
-                                    Back to Main
-                                </NavLink>
                             </li>
                         </ul>
                     </div>

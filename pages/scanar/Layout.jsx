@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const Layout = ({ children }) => {
     return (
@@ -10,7 +12,9 @@ const Layout = ({ children }) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="flex flex-col min-h-screen">
+                <Navbar />
                 <main className="flex-1">{children}</main>
+                <Footer />
             </div>
         </>
     );

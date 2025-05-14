@@ -10,9 +10,7 @@ const GetApp = () => {
                 <meta name='robots' content='index' />
                 <title>Get the ScanAR App | SolariDX</title>
             </Head>
-            <Navbar />
             <GetAppForm />
-            <Footer />
         </>
     );
 };
