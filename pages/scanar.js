@@ -1,9 +1,9 @@
 import Head from "next/head";
-import Navbar from "../components/scanar/Navbar";
-import Hero from "../components/scanar/Hero";
-import Features from "../components/scanar/Features";
-import NotifyForm from "../components/scanar/NotifyForm";
-import Footer from "../components/scanar/Footer";
+import Navbar from "./scanar/Navbar";
+import Hero from "./scanar/Hero";
+import Features from "./scanar/Features";
+import NotifyForm from "./scanar/NotifyForm";
+import Footer from "./scanar/Footer";
 
 export default function ScanAR() {
   return (

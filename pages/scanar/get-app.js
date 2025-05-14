@@ -1,4 +1,4 @@
-import GetApp from "../../components/scanar/GetApp";
+import GetApp from "./GetApp";
 
 export default function GetAppPage() {
   return <GetApp />;

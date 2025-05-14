@@ -1,5 +1,5 @@
-import SolariDXLayout from "../components/solaridx/Layout";
-import ScanARLayout from "../components/scanar/Layout";
+import SolariDXLayout from "./solaridx/Layout";
+import ScanARLayout from "./scanar/Layout";
 import "../styles/globals.css";
 import { useRouter } from "next/router";
 

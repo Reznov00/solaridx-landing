@@ -1,4 +1,5 @@
-import SectionWrapper from "../../SectionWrapper";
+
+import SectionWrapper from "../../../components/SectionWrapper";
 import NavLink from "../NavLink";
 
 const Footer = () => (
