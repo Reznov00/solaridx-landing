@@ -11,4 +11,4 @@ const Brand = () => (
         />
     </Link>
 )
-export default Brand
+export default Brand 

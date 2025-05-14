@@ -1,10 +1,24 @@
-import Layout from "../components/Layout";
+import SolariDXLayout from "../components/solaridx/Layout";
+import ScanARLayout from "../components/scanar/Layout";
 import "../styles/globals.css";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+  
+  // Use a different layout for the ScanAR page
+  if (router.pathname === "/scanar") {
+    return (
+      <ScanARLayout>
+        <Component {...pageProps} />
+      </ScanARLayout>
+    );
+  }
+
+  // Use the SolariDX layout for all other pages
   return (
-    <Layout>
+    <SolariDXLayout>
       <Component {...pageProps} />
-    </Layout>
+    </SolariDXLayout>
   );
 }

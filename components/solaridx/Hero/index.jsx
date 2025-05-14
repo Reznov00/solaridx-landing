@@ -8,7 +8,7 @@ const Hero = () => (
                     The Future of Solar Energy at Your Fingertips
                 </h1>
                 <p className="max-w-xl mx-auto">
-                    SolariDX empowers you with real-time energy insights, AI-driven recommendations, and seamless integrations to optimize your solar experience.
+                    SolariDX provides state of the art AR education powered by machine learning, offering physics-informed, machine learning driven recommendations along with seamless LMS integration.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6 text-gray-800 font-semibold ">
                     <div>
@@ -16,12 +16,12 @@ const Hero = () => (
                         <p className="text-sm">Days of Predictions</p>
                     </div>
                     <div>
-                        <span className="text-3xl font-bold">AI-Powered</span>
-                        <p className="text-sm">Smart Recommendations</p>
+                        <span className="text-3xl font-bold">Energy Insights</span>
+                        <p className="text-sm">Powered by  Machine Learning.</p>
                     </div>
                     <div>
                         <span className="text-3xl font-bold">Seamless</span>
-                        <p className="text-sm">3rd-Party Integrations</p>
+                        <p className="text-sm">LMS Integrations</p>
                     </div>
                 </div>
                 <div className="flex items-center justify-center gap-x-3 font-medium text-sm mt-8">
@@ -37,4 +37,4 @@ const Hero = () => (
     </section>
 );
 
-export default Hero;
+export default Hero; 

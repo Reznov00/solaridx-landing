@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import googlePlayLogo from "../public/icons/google-play.svg";
-import appStoreLogo from "../public/icons/app-store.svg";
 
 export default function GetApp() {
   return (
@@ -22,22 +21,13 @@ export default function GetApp() {
           </div>
           <div className="flex flex-col space-y-5 w-full max-w-sm">
             <a
-              href=""
-              // target="_blank"
+              href="https://play.google.com/store/apps/details?id=com.solaridx"
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 ring-offset-2 ring-indigo-600 focus:ring py-3 rounded-lg"
             >
               <Image src={googlePlayLogo} alt="Google Play" width={30} height={30} />
               <span>Get it on Google Play</span>
-            </a>
-            <a
-              href=""
-              // target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full text-white bg-gray-800 hover:bg-gray-700 active:bg-gray-900 ring-offset-2 ring-gray-700 focus:ring py-3 rounded-lg"
-            >
-              <Image src={appStoreLogo} alt="App Store" width={35} height={35} />
-              <span>Download on the App Store</span>
             </a>
           </div>
         </div>

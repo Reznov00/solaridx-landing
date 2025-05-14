@@ -22,4 +22,4 @@ const FooterCTA = () => (
     </SectionWrapper>
 )
 
-export default FooterCTA
+export default FooterCTA 

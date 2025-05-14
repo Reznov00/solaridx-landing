@@ -5,7 +5,6 @@ import Brand from '../Brand'
 import NavLink from '../NavLink'
 
 const Navbar = () => {
-
     const [state, setState] = useState(false)
     const { events } = useRouter();
 
@@ -72,4 +71,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Navbar 
