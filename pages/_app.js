@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
   
   // Use a different layout for the ScanAR page
-  if (router.pathname === "/scanar") {
+  if (router.pathname.includes('/scanar')) {
     return (
       <ScanARLayout>
         <Component {...pageProps} />
