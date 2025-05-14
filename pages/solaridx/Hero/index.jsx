@@ -1,4 +1,4 @@
-import NavLink from "../NavLink";
+import NavLink from "../../../components/NavLink";
 
 const Hero = () => (
     <section>

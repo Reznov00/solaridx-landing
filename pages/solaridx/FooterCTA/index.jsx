@@ -1,5 +1,5 @@
 import SectionWrapper from "../../../components/SectionWrapper"
-import NavLink from "../NavLink"
+import NavLink from "../../../components/NavLink"
 
 const FooterCTA = () => (
     <SectionWrapper>

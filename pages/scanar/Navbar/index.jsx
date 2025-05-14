@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import NavLink from '../NavLink'
+import NavLink from '../../../components/NavLink'
 import Image from 'next/image'
 
 const Navbar = () => {
