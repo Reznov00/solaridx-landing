@@ -12,6 +12,7 @@ const Navbar = () => {
     const navigation = [
         { title: "Home", path: "/" },
         { title: "About ScanAR", path: "#about" },
+        { title: "Warehouse Management", path: "#features" },
     ]
 
     useEffect(() => {
@@ -44,7 +45,7 @@ const Navbar = () => {
                                 width={200}
                                 height={200}
                                 className="mx-3"
-                                alt="ScanAR logo"
+                                alt="ScanAR Warehouse Management logo"
                             />
                         </Link>
                         <div className="md:hidden">
@@ -72,7 +73,7 @@ const Navbar = () => {
                                     onClick={redirectToGetApp}
                                     className="block font-medium text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 md:inline px-4 py-2 rounded-md"
                                 >
-                                    Get the App
+                                    Get the Warehouse App
                                 </button>
                             </li>
                         </ul>

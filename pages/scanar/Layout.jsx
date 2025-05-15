@@ -6,8 +6,8 @@ const Layout = ({ children }) => {
     return (
         <>
             <Head>
-                <title>ScanAR - SolariDX</title>
-                <meta name="description" content="ScanAR - Augmented Reality Solar Analysis by SolariDX" />
+                <title>ScanAR - AR-Powered Warehouse Management</title>
+                <meta name="description" content="ScanAR - Augmented Reality Warehouse Management System for efficient inventory tracking and management" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
