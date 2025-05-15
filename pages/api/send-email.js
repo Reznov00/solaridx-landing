@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, email, description } = req.body;
+    const { name, email, description, company, role } = req.body;
 
     // Get environment variables
     const emailUser = process.env.EMAIL_USER;
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     const mailOptions = {
       from: emailUser,
       to: emailRecipient,
-      subject: '🎉 New ScanAR App Waitlist Registration',
+      subject: 'New ScanAR Warehouse Management System Inquiry',
       html: `
         <!DOCTYPE html>
         <html>
@@ -88,10 +88,10 @@ export default async function handler(req, res) {
         <body>
           <div class="container">
             <div class="header">
-              <h2>📱 New App Waitlist Registration</h2>
+              <h2>📦 New Warehouse Management System Inquiry</h2>
             </div>
             
-            <p>Someone has joined the waitlist for the ScanAR application. Here are their details:</p>
+            <p>Someone has inquired about the ScanAR Warehouse Management System. Here are their details:</p>
             
             <div class="info-row">
               <div class="label">Name:</div>
@@ -104,12 +104,22 @@ export default async function handler(req, res) {
             </div>
             
             <div class="info-row">
-              <div class="label">Description / Use Case:</div>
+              <div class="label">Company:</div>
+              <div class="value">${company || 'Not provided'}</div>
+            </div>
+            
+            <div class="info-row">
+              <div class="label">Role:</div>
+              <div class="value">${role || 'Not provided'}</div>
+            </div>
+            
+            <div class="info-row">
+              <div class="label">Description / Warehouse Management Needs:</div>
               <div class="value">${description || 'No description provided'}</div>
             </div>
             
             <div class="footer">
-              <p>This is an automated message from your ScanAR website.</p>
+              <p>This is an automated message from your ScanAR Warehouse Management website.</p>
               <p>© ${new Date().getFullYear()} ScanAR. All rights reserved.</p>
             </div>
           </div>

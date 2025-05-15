@@ -6,33 +6,33 @@ const Features = () => {
     const features = [
         {
             icon: featureIcon,
-            title: "AR Visualization",
-            desc: "See solar potential in real-time through your device's camera with advanced augmented reality."
+            title: "AR-Based Scanning",
+            desc: "Scan barcodes, QR codes, and visual markers through AR to fetch real-time product information."
         },
         {
             icon: featureIcon,
-            title: "Shading Analysis",
-            desc: "Instantly identify shading issues that could impact your solar panel performance."
+            title: "Inventory Tracking",
+            desc: "Track products with detailed metadata including location, status, and ownership information."
         },
         {
             icon: featureIcon,
-            title: "Optimal Placement",
-            desc: "Get AI-powered recommendations for the best panel placement on any surface."
+            title: "Spectacles Integration",
+            desc: "Seamlessly integrate with Snapchat Spectacles for hands-free warehouse operations."
         },
         {
             icon: featureIcon,
-            title: "Energy Production Estimates",
-            desc: "Calculate expected energy production based on your specific installation and location."
+            title: "Mobile Companion App",
+            desc: "Control and manage inventory through our React Native mobile application."
         },
         {
             icon: featureIcon,
-            title: "ROI Calculator",
-            desc: "Understand your investment return timeline with our comprehensive financial analysis tools."
+            title: "Real-time Notifications",
+            desc: "Receive alerts about inventory changes, status updates, and system messages."
         },
         {
             icon: featureIcon,
-            title: "Installation Guide",
-            desc: "Follow step-by-step AR-guided installation instructions for perfect panel placement."
+            title: "Workflow Optimization",
+            desc: "Improve warehouse efficiency with AR-guided directions and real-time product information."
         }
     ];
 
@@ -44,7 +44,7 @@ const Features = () => {
                         ScanAR Features
                     </h2>
                     <p>
-                        Discover how ScanAR will revolutionize your solar experience.
+                        Discover how ScanAR will revolutionize your warehouse management.
                     </p>
                 </div>
                 <div className="mt-12">

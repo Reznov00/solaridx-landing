@@ -6,10 +6,10 @@ const FooterCTA = () => (
         <div className="custom-screen">
             <div className="max-w-2xl mx-auto text-center">
                 <h2 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
-                    Experience Augmented Reality Solar Analysis
+                    Experience Augmented Reality Warehouse Management
                 </h2>
                 <p className="mt-3 text-gray-600">
-                    Get real-time solar installation visualization, AR-powered placement recommendations, and accurate energy production estimates with ScanAR technology.
+                    Get real-time product scanning, AR-powered inventory tracking, and seamless Snapchat Spectacles integration with ScanAR technology.
                 </p>
                 <NavLink
                     href="/scanar/get-app"

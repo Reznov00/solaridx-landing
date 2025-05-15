@@ -10,7 +10,7 @@ export default function ScanAR() {
     <>
       <Head>
         <meta name='robots' content='index' />
-        <title>ScanAR - Augmented Reality Solar Analysis | SolariDX</title>
+        <title>ScanAR - Augmented Reality Warehouse Management System</title>
       </Head>
       <Hero />
       <VideoSection />

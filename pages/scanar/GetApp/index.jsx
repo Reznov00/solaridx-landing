@@ -8,7 +8,7 @@ const GetApp = () => {
         <>
             <Head>
                 <meta name='robots' content='index' />
-                <title>Get the ScanAR App | SolariDX</title>
+                <title>Get the ScanAR Warehouse Management App</title>
             </Head>
             <GetAppForm />
         </>

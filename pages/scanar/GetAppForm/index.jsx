@@ -4,7 +4,9 @@ const GetAppForm = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        description: ''
+        description: '',
+        company: '',
+        role: ''
     });
     const [isLoading, setIsLoading] = useState(false);
     const [submitStatus, setSubmitStatus] = useState({ success: false, message: '' });
@@ -33,12 +35,14 @@ const GetAppForm = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setSubmitStatus({ success: true, message: 'Thank you for your interest! We will contact you soon.' });
+                setSubmitStatus({ success: true, message: 'Thank you for your interest! We will contact you soon about the ScanAR warehouse management system.' });
                 // Reset form after submission
                 setFormData({
                     name: '',
                     email: '',
-                    description: ''
+                    description: '',
+                    company: '',
+                    role: ''
                 });
             } else {
                 setSubmitStatus({ success: false, message: data.message || 'Something went wrong. Please try again.' });
@@ -54,7 +58,7 @@ const GetAppForm = () => {
         <div className="bg-gray-900 min-h-screen">
             <div className="custom-screen py-16">
                 <div className="max-w-lg mx-auto bg-white rounded-xl shadow-lg overflow-hidden p-6">
-                    <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Get the App Now</h1>
+                    <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Get the Warehouse Management App</h1>
 
                     {submitStatus.message && (
                         <div className={`mb-6 p-4 rounded-md ${submitStatus.success ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
@@ -90,6 +94,31 @@ const GetAppForm = () => {
                         </div>
 
                         <div>
+                            <label htmlFor="company" className="block text-sm font-medium text-gray-700">Company</label>
+                            <input
+                                type="text"
+                                id="company"
+                                name="company"
+                                value={formData.company}
+                                onChange={handleChange}
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
+                            <input
+                                type="text"
+                                id="role"
+                                name="role"
+                                value={formData.role}
+                                onChange={handleChange}
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="e.g., Warehouse Manager, Logistics Coordinator"
+                            />
+                        </div>
+
+                        <div>
                             <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
                             <textarea
                                 id="description"
@@ -98,7 +127,7 @@ const GetAppForm = () => {
                                 onChange={handleChange}
                                 rows="4"
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="Tell us about your use case..."
+                                placeholder="Tell us about your warehouse management needs..."
                             ></textarea>
                         </div>
 

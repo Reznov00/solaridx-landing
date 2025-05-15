@@ -20,7 +20,7 @@ const NotifyForm = () => {
                         Be the First to Know
                     </h2>
                     <p className="mt-3 text-gray-600">
-                        Sign up to be notified when ScanAR launches and get exclusive early access.
+                        Sign up to be notified when ScanAR warehouse management system launches and get exclusive early access.
                     </p>
                     {isSubmitted ? (
                         <div className="mt-8 p-4 bg-green-50 rounded-lg border border-green-200">

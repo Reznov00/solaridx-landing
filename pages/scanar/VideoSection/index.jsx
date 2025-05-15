@@ -31,7 +31,7 @@ const VideoSection = () => {
                     <div className="text-center mb-8">
                         <h2 className="text-3xl font-bold text-gray-800 mb-2">See ScanAR in Action</h2>
                         <p className="text-gray-600 max-w-2xl mx-auto">
-                            Watch our comprehensive walkthrough showcasing how ScanAR transforms your solar analysis experience with augmented reality visualization and intelligent analytics.
+                            Watch our comprehensive walkthrough showcasing how ScanAR transforms warehouse management with augmented reality scanning and intelligent inventory tracking.
                         </p>
                     </div>
                     <div

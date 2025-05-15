@@ -12,24 +12,24 @@ const CTA = () => {
                         <Image
                             src={ctaImage}
                             className="rounded-lg md:max-w-lg"
-                            alt="Unlock the Power of AR Solar Analysis with ScanAR"
+                            alt="Unlock the Power of AR Warehouse Management with ScanAR"
                         />
                         {/* Dark overlay */}
                         <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg"></div>
                     </div>
                     <div className="max-w-xl mt-6 md:mt-0 lg:max-w-2xl relative">
                         <h2 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
-                            Unlock the Power of AR Solar Analysis with ScanAR
+                            Unlock the Power of AR Warehouse Management with ScanAR
                         </h2>
                         <p className="mt-3 text-gray-600">
-                            ScanAR brings augmented reality to solar energy analysis, combining advanced computer vision,
-                            machine learning, and AR technology to provide real-time solar installation assessment.
-                            Whether you're a solar installer, homeowner, or energy consultant, our cutting-edge technology
-                            helps you visualize and optimize solar panel placement with unprecedented accuracy.
+                            ScanAR brings augmented reality to warehouse management, combining advanced computer vision,
+                            machine learning, and AR technology to provide real-time inventory tracking and management.
+                            Whether you're a warehouse manager, logistics coordinator, or inventory specialist, our cutting-edge technology
+                            helps you scan, track, and optimize product placement with unprecedented accuracy.
                         </p>
                         <p className="mt-3 text-gray-600">
-                            Get immersive visualization, precise energy production estimates, and installation guidance—
-                            all through your mobile device. Ready to revolutionize your solar analysis experience?
+                            Get seamless integration with Snapchat Spectacles, precise inventory tracking, and real-time notifications—
+                            all through your mobile device and AR glasses. Ready to revolutionize your warehouse management experience?
                         </p>
                     </div>
                 </div>
